@@ -23,6 +23,7 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
   void SimulationInit() override;
   void SimulationPeriodic() override;
+  void Climb();
 
  private:
   frc::SendableChooser<std::string> m_chooser;

@@ -6,6 +6,25 @@
 
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/motorcontrol/VictorSP.h>
+#include <frc/Joystick.h>
+
+// PWM ports - TODO Check
+const int motorClimbLeftPort = 0;
+const int motorClimbRightPort = 1;
+
+// USB ports - TODO Check
+const int driveJoystickPort = 0;
+
+// Joystick buttons - TODO Check
+const int leftUpButton = 1;
+const int leftDownButton = 2;
+const int rightUpButton = 3;
+const int rightDownButton = 4;
+
+// Speed constants
+const int climbUpSpeed = 0.8;
+const int climbDownSpeed = -0.8;
 
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
@@ -21,7 +40,97 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() 
+{
+      
+}
+
+/**
+ * Controls the climbing arms.
+ * Controls 2 Victor SP motors independently.
+ * Controlled by the Joystick controller using the top buttons
+ * This will allow the driver to raise and lower the climb arms independently
+ * 
+ * TODO - research how to 'lock' our climb
+ */
+void Robot::Climb() {
+  frc::VictorSP motorClimbLeft{motorClimbLeftPort};
+  frc::VictorSP motorClimbRight{motorClimbRightPort};
+  frc::Joystick driveJoyStick{driveJoystickPort};
+
+  /* Lauren's code 
+  if (driveJoystick.GetRawButton(leftUpButton))
+  {
+    motorClimbLeft.Set(0.8);
+  }
+  */
+ 
+  //Ariya's code 
+  /*if (driveJoyStick.GetRawButton(leftUpButton))
+  {
+    motorClimbLeft.Set(0.8);
+  }
+  else if (driveJoyStick.GetRawButtonReleased(leftUpButton))
+  {
+    motorClimbLeft.Set(0);
+  }
+  if (driveJoyStick.GetRawButton(leftDownButton))
+  {
+    motorClimbLeft.Set(-0.8);
+  }
+   else if (driveJoyStick.GetRawButtonReleased(leftDownButton))
+  {
+    motorClimbLeft.Set(0);
+  }
+
+
+  if (driveJoyStick.GetRawButton(rightUpButton))
+  {
+    motorClimbRight.Set(0.8);
+  }
+   else if (driveJoyStick.GetRawButtonReleased(rightUpButton))
+  {
+    motorClimbRight.Set(0);
+  }
+    if (driveJoyStick.GetRawButton(rightDownButton))
+  {
+    motorClimbRight.Set(-0.8);
+  }
+   else if (driveJoyStick.GetRawButtonReleased(rightDownButton))
+  {
+    motorClimbRight.Set(0);
+  }*/
+
+  // Mikaela's code
+  /*if (driveJoyStick.GetRawButton(leftUpButton))
+{
+  motorClimbLeft.Set(climbUpSpeed);
+}
+else if (driveJoyStick.GetRawButton(leftDownButton))
+{
+  motorClimbLeft.Set(climbDownSpeed);
+}
+else
+{
+  motorClimbLeft.Set(0);
+}
+
+if (driveJoyStick.GetRawButton(rightUpButton))
+{
+  motorClimbRight.Set(climbUpSpeed);
+}
+else if (driveJoyStick.GetRawButton(rightDownButton))
+{
+  motorClimbRight.Set(climbDownSpeed);
+}
+else
+{
+  motorClimbRight.Set(0);
+}
+*/
+
+
+}
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
