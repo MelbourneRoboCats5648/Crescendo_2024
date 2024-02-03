@@ -7,14 +7,19 @@
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/motorcontrol/VictorSP.h>
+
 #include <frc/Joystick.h>
+#include <frc/XboxController.h>
 
 // PWM ports - TODO Check
 const int motorClimbLeftPort = 0;
 const int motorClimbRightPort = 1;
+const int motorShooterLeftPort = 2;
+const int motorShooterRightPort = 3;
 
 // USB ports - TODO Check
 const int driveJoystickPort = 0;
+const int xboxControllerPort = 1;
 
 // Joystick buttons - TODO Check
 const int leftUpButton = 1;
@@ -22,9 +27,14 @@ const int leftDownButton = 2;
 const int rightUpButton = 3;
 const int rightDownButton = 4;
 
-// Speed constants
 const int climbUpSpeed = 0.8;
 const int climbDownSpeed = -0.8;
+
+const int speakerShooterSpeed = 1;
+const int ampShooterSpeed = 0.5;
+
+
+
 
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
@@ -131,6 +141,40 @@ else
 
 
 }
+
+//When Shooting, the Y and A buttons will control the speed for the shooter
+//When The driver wants to shoot the note, they will use the intake release button
+//Make sure the shooter wheels are running before releasing intake to shoot
+void Robot::Shooter(){
+
+frc::VictorSP motorShooterLeft{motorShooterLeftPort};
+frc::VictorSP motorShooterRight{motorShooterRightPort};
+
+
+frc::XboxController xboxController{xboxControllerPort};
+
+//Speaker
+if (xboxController.GetYButtonPressed())
+{
+  motorShooterLeft.Set(speakerShooterSpeed);
+  motorShooterRight.Set(speakerShooterSpeed);
+}
+
+//Amp
+else if (xboxController.GetAButtonPressed())
+{
+  motorShooterLeft.Set(ampShooterSpeed);
+  motorShooterRight.Set(ampShooterSpeed);
+}
+else
+{
+  motorShooterLeft.Set(0);
+  motorShooterRight.Set(0);
+}
+
+
+}
+
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
