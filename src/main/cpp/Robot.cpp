@@ -10,6 +10,10 @@
 
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
+#include <frc/Encoder.h>
+
+#include "hal/AnalogTrigger.h"
+#include "hal/Types.h"
 
 // PWM ports - TODO Check
 const int motorClimbLeftPort = 0;
@@ -41,11 +45,15 @@ const int intakeArmExtendSpeed = -0.8;
 const int intakeWheelInSpeed = 0.5;
 const int intakeWheelOutSpeed = -0.5;
 
+// Intake encoder
+const int aChannel = 0; 
+const int bChannel = 1; 
+
 // xbox buttons
 const int dpadUpButton = 0;
 const int dpadDownButton = 180;
 
-
+frc::XboxController xbox{xboxControllerPort};
 
 
 void Robot::RobotInit() {
@@ -165,17 +173,17 @@ frc::VictorSP motorShooterLeft{motorShooterLeftPort};
 frc::VictorSP motorShooterRight{motorShooterRightPort};
 
 
-frc::XboxController xboxController{xboxControllerPort};
+
 
 //Speaker
-if (xboxController.GetYButtonPressed())
+if (xbox.GetYButtonPressed())
 {
   motorShooterLeft.Set(speakerShooterSpeed);
   motorShooterRight.Set(speakerShooterSpeed);
 }
 
 //Amp
-else if (xboxController.GetAButtonPressed())
+else if (xbox.GetAButtonPressed())
 {
   motorShooterLeft.Set(ampShooterSpeed);
   motorShooterRight.Set(ampShooterSpeed);
@@ -203,7 +211,7 @@ void Robot::Intake() {
 
 frc::VictorSP motorIntakeArm{motorIntakeArmPort};
 frc::VictorSP motorIntakeWheel{motorIntakeWheelPort};
-frc::XboxController xbox{xboxControllerPort};
+frc::Encoder encoderIntake{aChannel, bChannel};
 
 // arm in and out
 if (xbox.GetPOV(dpadUpButton))
