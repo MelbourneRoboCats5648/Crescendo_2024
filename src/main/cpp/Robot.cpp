@@ -53,7 +53,13 @@ const int bChannel = 1;
 const int dpadUpButton = 0;
 const int dpadDownButton = 180;
 
+// Controllers
 frc::XboxController xbox{xboxControllerPort};
+
+// Climb variables
+frc::VictorSP motorClimbLeft{motorClimbLeftPort};
+frc::VictorSP motorClimbRight{motorClimbRightPort};
+frc::Joystick driveJoyStick{driveJoystickPort};
 
 
 void Robot::RobotInit() {
@@ -85,82 +91,32 @@ void Robot::RobotPeriodic()
  */
 
 void Robot::Climb() {
-  frc::VictorSP motorClimbLeft{motorClimbLeftPort};
-  frc::VictorSP motorClimbRight{motorClimbRightPort};
-  frc::Joystick driveJoyStick{driveJoystickPort};
 
-  /* Lauren's code 
-  if (driveJoystick.GetRawButton(leftUpButton))
+  if (driveJoyStick.GetRawButton(leftUpButton))
   {
-    motorClimbLeft.Set(0.8);
+    motorClimbLeft.Set(climbUpSpeed);
   }
-  */
- 
-  //Ariya's code 
-  /*if (driveJoyStick.GetRawButton(leftUpButton))
+  else if (driveJoyStick.GetRawButton(leftDownButton))
   {
-    motorClimbLeft.Set(0.8);
+    motorClimbLeft.Set(climbDownSpeed);
   }
-  else if (driveJoyStick.GetRawButtonReleased(leftUpButton))
+  else
   {
     motorClimbLeft.Set(0);
   }
-  if (driveJoyStick.GetRawButton(leftDownButton))
-  {
-    motorClimbLeft.Set(-0.8);
-  }
-   else if (driveJoyStick.GetRawButtonReleased(leftDownButton))
-  {
-    motorClimbLeft.Set(0);
-  }
-
 
   if (driveJoyStick.GetRawButton(rightUpButton))
   {
-    motorClimbRight.Set(0.8);
+    motorClimbRight.Set(climbUpSpeed);
   }
-   else if (driveJoyStick.GetRawButtonReleased(rightUpButton))
+  else if (driveJoyStick.GetRawButton(rightDownButton))
+  {
+    motorClimbRight.Set(climbDownSpeed);
+  }
+  else
   {
     motorClimbRight.Set(0);
   }
-    if (driveJoyStick.GetRawButton(rightDownButton))
-  {
-    motorClimbRight.Set(-0.8);
-  }
-   else if (driveJoyStick.GetRawButtonReleased(rightDownButton))
-  {
-    motorClimbRight.Set(0);
-  }*/
-
-  // Mikaela's code
-  /*if (driveJoyStick.GetRawButton(leftUpButton))
-{
-  motorClimbLeft.Set(climbUpSpeed);
-}
-else if (driveJoyStick.GetRawButton(leftDownButton))
-{
-  motorClimbLeft.Set(climbDownSpeed);
-}
-else
-{
-  motorClimbLeft.Set(0);
-}
-
-if (driveJoyStick.GetRawButton(rightUpButton))
-{
-  motorClimbRight.Set(climbUpSpeed);
-}
-else if (driveJoyStick.GetRawButton(rightDownButton))
-{
-  motorClimbRight.Set(climbDownSpeed);
-}
-else
-{
-  motorClimbRight.Set(0);
-}
-*/
-
-
 }
 
 //When Shooting, the Y and A buttons will control the speed for the shooter
