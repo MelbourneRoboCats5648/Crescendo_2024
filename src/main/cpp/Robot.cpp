@@ -67,6 +67,11 @@ frc::VictorSP motorClimbRight{motorClimbRightPort};
 frc::VictorSP motorShooterLeft{motorShooterLeftPort};
 frc::VictorSP motorShooterRight{motorShooterRightPort};
 
+//Intake variables
+frc::VictorSP motorIntakeArm{motorIntakeArmPort};
+frc::VictorSP motorIntakeWheel{motorIntakeWheelPort};
+//frc::Encoder encoderIntake{aChannel, bChannel};
+
 
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
@@ -160,10 +165,6 @@ else
  * Plus button for arm in and out
 **/
 void Robot::Intake() {
-
-frc::VictorSP motorIntakeArm{motorIntakeArmPort};
-frc::VictorSP motorIntakeWheel{motorIntakeWheelPort};
-//frc::Encoder encoderIntake{aChannel, bChannel};
 
 // arm in and out
 if (xbox.GetPOV(dpadUpButton))
