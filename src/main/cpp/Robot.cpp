@@ -50,18 +50,22 @@ const int aChannel = 0;
 const int bChannel = 1; 
 */
 
-
 // xbox buttons
 const int dpadUpButton = 0;
 const int dpadDownButton = 180;
 
 // Controllers
 frc::XboxController xbox{xboxControllerPort};
+frc::Joystick driveJoyStick{driveJoystickPort};
 
 // Climb variables
 frc::VictorSP motorClimbLeft{motorClimbLeftPort};
 frc::VictorSP motorClimbRight{motorClimbRightPort};
-frc::Joystick driveJoyStick{driveJoystickPort};
+
+
+//Shooter Motors
+frc::VictorSP motorShooterLeft{motorShooterLeftPort};
+frc::VictorSP motorShooterRight{motorShooterRightPort};
 
 
 void Robot::RobotInit() {
@@ -91,7 +95,6 @@ void Robot::RobotPeriodic()
  * 
  * TODO - research how to 'lock' our climb
  */
-
 void Robot::Climb() {
 
   if (driveJoyStick.GetRawButton(leftUpButton))
@@ -124,14 +127,7 @@ void Robot::Climb() {
 //When Shooting, the Y and A buttons will control the speed for the shooter
 //When The driver wants to shoot the note, they will use the intake release button
 //Make sure the shooter wheels are running before releasing intake to shoot
-
 void Robot::Shooter(){
-
-frc::VictorSP motorShooterLeft{motorShooterLeftPort};
-frc::VictorSP motorShooterRight{motorShooterRightPort};
-
-
-
 
 //Speaker
 if (xbox.GetYButtonPressed())
@@ -152,7 +148,6 @@ else
   motorShooterRight.Set(0);
 }
 
-
 }
 
 
@@ -164,7 +159,6 @@ else
  * Triggers are for note in and out (wheel spinning)
  * Plus button for arm in and out
 **/
-
 void Robot::Intake() {
 
 frc::VictorSP motorIntakeArm{motorIntakeArmPort};
@@ -214,9 +208,6 @@ else
 // assign plus button thingy $$
 // deine xbox $$
 // code the encoder
-
-
-
 
 
 /**
