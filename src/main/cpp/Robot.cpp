@@ -89,7 +89,9 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() 
 {
-      
+  Climb();
+  Intake();
+  Shooter();
 }
 
 /**
