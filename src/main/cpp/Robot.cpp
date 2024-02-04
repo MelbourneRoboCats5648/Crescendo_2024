@@ -63,6 +63,11 @@ frc::VictorSP motorClimbLeft{motorClimbLeftPort};
 frc::VictorSP motorClimbRight{motorClimbRightPort};
 frc::Joystick driveJoyStick{driveJoystickPort};
 
+//Intake variables
+frc::VictorSP motorIntakeArm{motorIntakeArmPort};
+frc::VictorSP motorIntakeWheel{motorIntakeWheelPort};
+//frc::Encoder encoderIntake{aChannel, bChannel};
+
 
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
@@ -166,10 +171,6 @@ else
 **/
 
 void Robot::Intake() {
-
-frc::VictorSP motorIntakeArm{motorIntakeArmPort};
-frc::VictorSP motorIntakeWheel{motorIntakeWheelPort};
-//frc::Encoder encoderIntake{aChannel, bChannel};
 
 // arm in and out
 if (xbox.GetPOV(dpadUpButton))
