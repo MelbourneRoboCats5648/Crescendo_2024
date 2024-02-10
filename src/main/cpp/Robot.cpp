@@ -3,9 +3,12 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
+#include "Climb.h"
+#include "Intake.h"
 
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+
 #include <frc/motorcontrol/VictorSP.h>
 
 #include <frc/Joystick.h>
@@ -16,61 +19,26 @@
 #include "hal/Types.h"
 
 // PWM ports - TODO Check
-const int motorClimbLeftPort = 0;
-const int motorClimbRightPort = 1;
 const int motorShooterLeftPort = 2;
 const int motorShooterRightPort = 3;
-const int motorIntakeArmPort = 4;
-const int motorIntakeWheelPort = 5;
 
 // USB ports - TODO Check
 const int driveJoystickPort = 0;
 const int xboxControllerPort = 1;
 
-// Joystick buttons - TODO Check
-const int leftUpButton = 1;
-const int leftDownButton = 2;
-const int rightUpButton = 3;
-const int rightDownButton = 4;
 
 // Speeds
-const int climbUpSpeed = 0.8;
-const int climbDownSpeed = -0.8;
-
 const int speakerShooterSpeed = 1;
 const int ampShooterSpeed = 0.5;
-
-const int intakeArmRetractSpeed = 0.8;
-const int intakeArmExtendSpeed = -0.8;
-const int intakeWheelInSpeed = 0.5;
-const int intakeWheelOutSpeed = -0.5;
-
-/** Intake encoder
-const int aChannel = 0; 
-const int bChannel = 1; 
-*/
-
-// xbox buttons
-const int dpadUpButton = 0;
-const int dpadDownButton = 180;
 
 // Controllers
 frc::XboxController xbox{xboxControllerPort};
 frc::Joystick driveJoyStick{driveJoystickPort};
 
-// Climb variables
-frc::VictorSP motorClimbLeft{motorClimbLeftPort};
-frc::VictorSP motorClimbRight{motorClimbRightPort};
-
 
 //Shooter Motors
 frc::VictorSP motorShooterLeft{motorShooterLeftPort};
 frc::VictorSP motorShooterRight{motorShooterRightPort};
-
-//Intake variables
-frc::VictorSP motorIntakeArm{motorIntakeArmPort};
-frc::VictorSP motorIntakeWheel{motorIntakeWheelPort};
-//frc::Encoder encoderIntake{aChannel, bChannel};
 
 
 void Robot::RobotInit() {
@@ -89,47 +57,11 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() 
 {
-  Climb();
-  Intake();
+  Climb(driveJoyStick);
+  Intake(xbox);
   Shooter();
 }
 
-/**
- * Controls the climbing arms.
- * Controls 2 Victor SP motors independently.
- * Controlled by the Joystick controller using the top buttons
- * This will allow the driver to raise and lower the climb arms independently
- * 
- * TODO - research how to 'lock' our climb
- */
-void Robot::Climb() {
-
-  if (driveJoyStick.GetRawButton(leftUpButton))
-  {
-    motorClimbLeft.Set(climbUpSpeed);
-  }
-  else if (driveJoyStick.GetRawButton(leftDownButton))
-  {
-    motorClimbLeft.Set(climbDownSpeed);
-  }
-  else
-  {
-    motorClimbLeft.Set(0);
-  }
-
-  if (driveJoyStick.GetRawButton(rightUpButton))
-  {
-    motorClimbRight.Set(climbUpSpeed);
-  }
-  else if (driveJoyStick.GetRawButton(rightDownButton))
-  {
-    motorClimbRight.Set(climbDownSpeed);
-  }
-  else
-  {
-    motorClimbRight.Set(0);
-  }
-}
 
 //When Shooting, the Y and A buttons will control the speed for the shooter
 //When The driver wants to shoot the note, they will use the intake release button
@@ -157,60 +89,6 @@ else
 
 }
 
-
-/**
- * Controls the intake arms and wheels
- * Controls 2 motors independently (one for move arms one for wheels)
- * Swing arms up and down → 1 motor - up button for in, down button for out
- * Spin wheels opposite directions (1 motor)
- * Triggers are for note in and out (wheel spinning)
- * Plus button for arm in and out
-**/
-void Robot::Intake() {
-
-// arm in and out
-if (xbox.GetPOV(dpadUpButton))
-{
-  motorIntakeArm.Set(intakeArmRetractSpeed);
-}
-
-else if (xbox.GetPOV(dpadDownButton))
-{
-  motorIntakeArm.Set(intakeArmExtendSpeed);
-}
-
-else 
-{
-  motorIntakeArm.Set(0);
-}
-
-// intake wheels spinning
-// right trigger wheel in left trigger wheel out
-// josh help how to fix
-if (xbox.GetLeftTriggerAxis())
- {
-  motorIntakeWheel.Set(intakeWheelOutSpeed);
- }
-
-else if (xbox.GetRightTriggerAxis())
-{
-  motorIntakeWheel.Set(intakeWheelInSpeed);
-}
-
-else
-{
-  motorIntakeWheel.Set(0);
-}
-
-}
-
-// For intake:
-// define our motor $$
-// define 2 speeds $$
-// assign triggers $$
-// assign plus button thingy $$
-// deine xbox $$
-// code the encoder
 
 
 /**
