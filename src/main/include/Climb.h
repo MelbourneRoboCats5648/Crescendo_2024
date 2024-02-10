@@ -1,4 +1,6 @@
 
 #pragma once
 
-void Climb();
+#include <frc/Joystick.h>
+
+void Climb(frc::Joystick& joystick);

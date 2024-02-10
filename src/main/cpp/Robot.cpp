@@ -77,7 +77,7 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() 
 {
-  Climb();
+  Climb(driveJoyStick);
   Intake();
   Shooter();
 }

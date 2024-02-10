@@ -1,6 +1,6 @@
 #include "CLimb.h"
 #include <frc/motorcontrol/VictorSP.h>
-#include <frc/Joystick.h>
+
 
 
 // PWM ports - TODO Check
@@ -30,13 +30,13 @@ const int rightDownButton = 4;
  * 
  * TODO - research how to 'lock' our climb
  */
-void Climb() {
+void Climb(frc::Joystick& joystick) {
 
-  if (driveJoyStick.GetRawButton(leftUpButton))
+  if (joystick.GetRawButton(leftUpButton))
   {
     motorClimbLeft.Set(climbUpSpeed);
   }
-  else if (driveJoyStick.GetRawButton(leftDownButton))
+  else if (joystick.GetRawButton(leftDownButton))
   {
     motorClimbLeft.Set(climbDownSpeed);
   }
@@ -45,11 +45,11 @@ void Climb() {
     motorClimbLeft.Set(0);
   }
 
-  if (driveJoyStick.GetRawButton(rightUpButton))
+  if (joystick.GetRawButton(rightUpButton))
   {
     motorClimbRight.Set(climbUpSpeed);
   }
-  else if (driveJoyStick.GetRawButton(rightDownButton))
+  else if (joystick.GetRawButton(rightDownButton))
   {
     motorClimbRight.Set(climbDownSpeed);
   }
