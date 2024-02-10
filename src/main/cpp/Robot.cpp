@@ -3,9 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
+#include "Climb.h"
 
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+
 #include <frc/motorcontrol/VictorSP.h>
 
 #include <frc/Joystick.h>
@@ -16,8 +18,6 @@
 #include "hal/Types.h"
 
 // PWM ports - TODO Check
-const int motorClimbLeftPort = 0;
-const int motorClimbRightPort = 1;
 const int motorShooterLeftPort = 2;
 const int motorShooterRightPort = 3;
 const int motorIntakeArmPort = 4;
@@ -27,16 +27,8 @@ const int motorIntakeWheelPort = 5;
 const int driveJoystickPort = 0;
 const int xboxControllerPort = 1;
 
-// Joystick buttons - TODO Check
-const int leftUpButton = 1;
-const int leftDownButton = 2;
-const int rightUpButton = 3;
-const int rightDownButton = 4;
 
 // Speeds
-const int climbUpSpeed = 0.8;
-const int climbDownSpeed = -0.8;
-
 const int speakerShooterSpeed = 1;
 const int ampShooterSpeed = 0.5;
 
@@ -57,10 +49,6 @@ const int dpadDownButton = 180;
 // Controllers
 frc::XboxController xbox{xboxControllerPort};
 frc::Joystick driveJoyStick{driveJoystickPort};
-
-// Climb variables
-frc::VictorSP motorClimbLeft{motorClimbLeftPort};
-frc::VictorSP motorClimbRight{motorClimbRightPort};
 
 
 //Shooter Motors
@@ -94,42 +82,6 @@ void Robot::RobotPeriodic()
   Shooter();
 }
 
-/**
- * Controls the climbing arms.
- * Controls 2 Victor SP motors independently.
- * Controlled by the Joystick controller using the top buttons
- * This will allow the driver to raise and lower the climb arms independently
- * 
- * TODO - research how to 'lock' our climb
- */
-void Robot::Climb() {
-
-  if (driveJoyStick.GetRawButton(leftUpButton))
-  {
-    motorClimbLeft.Set(climbUpSpeed);
-  }
-  else if (driveJoyStick.GetRawButton(leftDownButton))
-  {
-    motorClimbLeft.Set(climbDownSpeed);
-  }
-  else
-  {
-    motorClimbLeft.Set(0);
-  }
-
-  if (driveJoyStick.GetRawButton(rightUpButton))
-  {
-    motorClimbRight.Set(climbUpSpeed);
-  }
-  else if (driveJoyStick.GetRawButton(rightDownButton))
-  {
-    motorClimbRight.Set(climbDownSpeed);
-  }
-  else
-  {
-    motorClimbRight.Set(0);
-  }
-}
 
 //When Shooting, the Y and A buttons will control the speed for the shooter
 //When The driver wants to shoot the note, they will use the intake release button
