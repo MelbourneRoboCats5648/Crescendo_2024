@@ -5,6 +5,7 @@
 #include "Robot.h"
 #include "Climb.h"
 #include "Intake.h"
+#include "Shooter.h"
 
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -18,27 +19,14 @@
 #include "hal/AnalogTrigger.h"
 #include "hal/Types.h"
 
-// PWM ports - TODO Check
-const int motorShooterLeftPort = 2;
-const int motorShooterRightPort = 3;
 
 // USB ports - TODO Check
 const int driveJoystickPort = 0;
 const int xboxControllerPort = 1;
 
-
-// Speeds
-const int speakerShooterSpeed = 1;
-const int ampShooterSpeed = 0.5;
-
 // Controllers
 frc::XboxController xbox{xboxControllerPort};
 frc::Joystick driveJoyStick{driveJoystickPort};
-
-
-//Shooter Motors
-frc::VictorSP motorShooterLeft{motorShooterLeftPort};
-frc::VictorSP motorShooterRight{motorShooterRightPort};
 
 
 void Robot::RobotInit() {
@@ -59,37 +47,8 @@ void Robot::RobotPeriodic()
 {
   Climb(driveJoyStick);
   Intake(xbox);
-  Shooter();
+  Shooter(xbox);
 }
-
-
-//When Shooting, the Y and A buttons will control the speed for the shooter
-//When The driver wants to shoot the note, they will use the intake release button
-//Make sure the shooter wheels are running before releasing intake to shoot
-void Robot::Shooter(){
-
-//Speaker
-if (xbox.GetYButtonPressed())
-{
-  motorShooterLeft.Set(speakerShooterSpeed);
-  motorShooterRight.Set(speakerShooterSpeed);
-}
-
-//Amp
-else if (xbox.GetAButtonPressed())
-{
-  motorShooterLeft.Set(ampShooterSpeed);
-  motorShooterRight.Set(ampShooterSpeed);
-}
-else
-{
-  motorShooterLeft.Set(0);
-  motorShooterRight.Set(0);
-}
-
-}
-
-
 
 /**
  * This autonomous (along with the chooser code above) shows how to select
