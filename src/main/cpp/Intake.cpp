@@ -1,6 +1,5 @@
 #include "Intake.h"
 #include <frc/motorcontrol/VictorSP.h>
-
 //Speeds
 const int intakeArmRetractSpeed = 0.8;
 const int intakeArmExtendSpeed = -0.8;
@@ -33,7 +32,7 @@ frc::VictorSP motorIntakeWheel{motorIntakeWheelPort};
  * Triggers are for note in and out (wheel spinning)
  * Plus button for arm in and out
 **/
-void Intake() {
+void Intake(frc::XboxController& xbox) {
 
     // arm in and out
 

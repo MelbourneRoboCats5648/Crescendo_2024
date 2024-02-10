@@ -8,6 +8,8 @@
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
+#include <frc/motorcontrol/VictorSP.h>
+
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
 #include <frc/Encoder.h>
@@ -69,7 +71,7 @@ void Robot::RobotInit() {
 void Robot::RobotPeriodic() 
 {
   Climb();
-  Intake();
+  Intake(xbox);
   Shooter();
 }
 

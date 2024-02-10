@@ -1,7 +1,8 @@
 
 #pragma once
 
+#include <frc/XboxController.h>
 
-void Intake();
+void Intake(frc::XboxController& xbox);
 
 
