@@ -20,3 +20,35 @@ ctre::phoenix6::hardware::CANcoder backRightDirectionEncoder(12,"rio");
 
 //Encoder Counts Per RV
 const int countsPerRevolution = 4096;
+
+
+/*
+ * tell motors how to move
+ * get motor angle and speed from module state info
+ * move each motor
+ * 
+ * 1
+*/
+
+
+void setModule(frc::SwerveModuleState state, ctre::phoenix6::hardware::TalonFX& driveMotor, ctre::phoenix6::hardware::TalonFX& directionMotor) {
+//setting direction motors
+
+// Setting Motor Speed
+const units::meters_per_second_t MAX_SPEED_MPS = 32.203_mps;
+
+double normalisedSpeed = (double)state.speed / (double)MAX_SPEED_MPS;
+
+driveMotor.Set(normalisedSpeed);
+
+
+//Setting Motor Direction
+
+// Find out current angle of direction motor from encoder
+// FInd out which direction to rotate direction motor
+// Drive the angle motor
+// Find out when to stop (maybe need to check if you are ate the required angle)
+
+
+};
+
