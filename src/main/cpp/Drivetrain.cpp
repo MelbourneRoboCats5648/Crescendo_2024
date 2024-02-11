@@ -67,6 +67,12 @@ frc::SwerveModuleState::Optimize(state, encoderRotation);
     {encoderRotation}, state.angle.Radians());
 
 
+
+// Set the motor outputs for the turning of the wheels
+directionMotor.SetVoltage(units::volt_t{turnOutput}); //+ drFeedforward);
+
+
+
 };
 
 // Find out current angle of direction motor from encoder

@@ -6,6 +6,7 @@
 
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/controller/ProfiledPIDController.h>
+#include <frc/motorcontrol/PWMSparkMax.h>
 
 
 
