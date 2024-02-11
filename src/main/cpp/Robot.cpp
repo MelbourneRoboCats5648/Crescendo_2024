@@ -6,6 +6,7 @@
 #include "Climb.h"
 #include "Intake.h"
 #include "Shooter.h"
+#include "DriveTrain.h"
 
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
