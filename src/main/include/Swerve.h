@@ -9,6 +9,7 @@
 #include <units/angular_velocity.h>
 #include <frc/ADIS16470_IMU.h>
 #include <frc/geometry/Rotation2d.h>
+#include <math.h>
 
 
 class Swerve {

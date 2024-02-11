@@ -26,7 +26,7 @@ frc::Translation2d m_frontRightLocation{0.381_m, -0.381_m};
 frc::Translation2d m_backLeftLocation{-0.381_m, 0.381_m};
 frc::Translation2d m_backRightLocation{-0.381_m, -0.381_m};
 const frc::SwerveDriveKinematics<4> kinematics{
-                                        m_frontLeftLocation, 
+                                         m_frontLeftLocation, 
                                         m_frontRightLocation, 
                                         m_backLeftLocation,
                                         m_backRightLocation};
@@ -34,6 +34,8 @@ const frc::SwerveDriveKinematics<4> kinematics{
 const units::revolutions_per_minute_t falcon500RPM{6380};
 const units::length::meter_t wheelCircumference{0.32};
 const units::meters_per_second_t maxVelocity{(falcon500RPM/60.0)*wheelCircumference}; //Limit this to half??
+const units::meters_per_second_t chosenMaxVelocity{5.0};
+const units::radians_per_second_t chosenRotationSpeed{M_PI*2};  
 
 // 1) Move according to joystick input - joystick
 // 2) Translate movement into field oriented drive for each module - gyro angle and the physical dimensions of the robot
@@ -43,9 +45,11 @@ void Swerve::MoveTeleop(frc::Joystick& joystick){
 
     // will need to actually convert the double output from joystick to a meters per sec velocity later
     // TODO CONVERT to speeds
-    units::meters_per_second_t xSpeed = (units::velocity::meters_per_second_t)(joystick.GetX());
-    units::meters_per_second_t ySpeed = (units::velocity::meters_per_second_t)(joystick.GetY());
-    units::radians_per_second_t rotationSpeed = (units::radians_per_second_t)(joystick.GetTwist());
+
+    units::meters_per_second_t xSpeed = (joystick.GetX()*units::velocity::meters_per_second_t{chosenMaxVelocity});
+    units::meters_per_second_t ySpeed = (joystick.GetY()*units::velocity::meters_per_second_t{chosenMaxVelocity});
+    //assuming joystick twist is one to negative one
+    units::radians_per_second_t rotationSpeed = (joystick.GetTwist()*units::angular_velocity::radians_per_second_t{chosenRotationSpeed});
     units::angle::degree_t robotAngle = gyro.GetAngle();
 
     // The robot is moving at however speed the joystick tells it. 
@@ -60,6 +64,10 @@ void Swerve::MoveTeleop(frc::Joystick& joystick){
     // bindings feature to automatically split up the array into its
     // individual SwerveModuleState components.
     auto [fl, fr, bl, br] = kinematics.ToSwerveModuleStates(fieldSpeeds);
+    SetModule(fl, frontLeftSpeedMotor, frontLeftDirectionMotor, frontLeftDirectionEncoder);
+    SetModule(fr, frontRightSpeedMotor, frontRightDirectionMotor, frontRightDirectionEncoder);
+    SetModule(bl, backLeftSpeedMotor, backLeftDirectionMotor, backLeftDirectionEncoder);
+    SetModule(br, backRightSpeedMotor, backRightDirectionMotor, backRightDirectionEncoder);
 }
 
 
