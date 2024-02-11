@@ -8,12 +8,12 @@
 #include <ctre/phoenix6/CANcoder.hpp>
 #include <units/angular_velocity.h>
 #include <frc/ADIS16470_IMU.h>
+#include <frc/geometry/Rotation2d.h>
 
 
 class Swerve {
 public:
 //calculates the chassis x and y speed and rotation speed based on joystick
     void MoveTeleop(frc::Joystick& joystick);
-    void kinematicsObject();
     void SetModule(frc::SwerveModuleState state, TalonFX& driveMotor, TalonFX& angleMotor, CANcoder& angleEncoder);
 };
