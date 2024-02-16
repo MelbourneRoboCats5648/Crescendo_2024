@@ -6,7 +6,7 @@
 #include "Climb.h"
 #include "Intake.h"
 #include "Shooter.h"
-#include "DriveTrain.h"
+#include "Swerve.h"
 
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -29,11 +29,14 @@ const int xboxControllerPort = 1;
 frc::XboxController xbox{xboxControllerPort};
 frc::Joystick driveJoyStick{driveJoystickPort};
 
+// Swerve drive base
+Swerve swerveDrive{};
 
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  swerveDrive.CalibrateGyro();
 }
 
 /**
@@ -49,6 +52,7 @@ void Robot::RobotPeriodic()
   Climb(driveJoyStick);
   Intake(xbox);
   Shooter(xbox);
+  swerveDrive.MoveTeleop(driveJoyStick);
 }
 
 /**

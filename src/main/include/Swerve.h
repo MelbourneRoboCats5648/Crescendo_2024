@@ -19,4 +19,5 @@ public:
 //calculates the chassis x and y speed and rotation speed based on joystick
     void MoveTeleop(frc::Joystick& joystick);
     void SetModule(frc::SwerveModuleState state, TalonFX& driveMotor, TalonFX& angleMotor, CANcoder& angleEncoder);
+    void CalibrateGyro();
 };
