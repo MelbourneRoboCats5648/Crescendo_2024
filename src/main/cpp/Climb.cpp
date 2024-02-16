@@ -16,9 +16,9 @@ frc::VictorSP motorClimbLeft{motorClimbLeftPort};
 frc::VictorSP motorClimbRight{motorClimbRightPort};
 
 // Joystick buttons - TODO Check
-const int leftUpButton = 1;
-const int leftDownButton = 2;
-const int rightUpButton = 3;
+const int leftUpButton = 5;
+const int leftDownButton = 3;
+const int rightUpButton = 6;
 const int rightDownButton = 4;
 
 
