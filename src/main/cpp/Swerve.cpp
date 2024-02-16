@@ -1,5 +1,7 @@
 #include "Swerve.h"
+#include "DriveTrain.h"
 
+using namespace ctre::phoenix6::hardware;
 
 TalonFX frontLeftSpeedMotor(1,"rio");
 TalonFX frontRightSpeedMotor(2,"rio");
@@ -78,12 +80,4 @@ void Swerve::CalibrateGyro()
 {
     gyro.Calibrate();
 }
-
-// 3) Each module needs to move according to the speed and angle calculated - module motors and the current angle of the wheel
-void Swerve::SetModule(frc::SwerveModuleState state, TalonFX& driveMotor, TalonFX& angleMotor, CANcoder& angleEncoder)
-{
-
-}
-
-
 
