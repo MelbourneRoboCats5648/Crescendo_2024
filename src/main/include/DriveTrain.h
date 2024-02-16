@@ -8,6 +8,9 @@
 #include <frc/controller/ProfiledPIDController.h>
 #include <frc/motorcontrol/PWMSparkMax.h>
 
+//using namespace ctre::phoenix6::hardware;
+
+void SetModule(frc::SwerveModuleState state, TalonFX& driveMotor, ctre::phoenix6::hardware::TalonFX& angleMotor, CANcoder& angleEncoder);
 
 
 
