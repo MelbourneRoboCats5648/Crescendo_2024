@@ -31,12 +31,12 @@ const frc::SwerveDriveKinematics<4> kinematics{
                                         m_backLeftLocation,
                                         m_backRightLocation};
 
-const units::revolutions_per_minute_t falcon500RPM{6380};
+const double falcon500RPM{6380};
 const units::length::meter_t wheelCircumference{0.32};
 const double L1GearRatio(8.41/1);
 const double L2GearRatio(6.75/1);
 const double L3GearRatio(612/1);
-const units::meters_per_second_t maxVelocity{((falcon500RPM/L1GearRatio)/60.0)*wheelCircumference}; //Limit this to half??
+const units::meters_per_second_t maxVelocity{((falcon500RPM/L1GearRatio)/60_s)*wheelCircumference}; //Limit this to half??
 const units::meters_per_second_t chosenMaxVelocity{5.0};
 const units::radians_per_second_t chosenRotationSpeed{M_PI*2};  
 
