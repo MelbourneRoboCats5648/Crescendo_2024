@@ -12,6 +12,8 @@
 #include <math.h>
 
 
+using namespace ctre::phoenix6::hardware;
+
 class Swerve {
 public:
 //calculates the chassis x and y speed and rotation speed based on joystick

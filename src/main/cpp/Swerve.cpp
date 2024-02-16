@@ -1,6 +1,6 @@
 #include "Swerve.h"
 
-using namespace ctre::phoenix6::hardware;TalonFX frontLeftSpeedMotor(1,"rio");
+
 TalonFX frontLeftSpeedMotor(1,"rio");
 TalonFX frontRightSpeedMotor(2,"rio");
 TalonFX backLeftSpeedMotor(3,"rio");
@@ -21,7 +21,7 @@ frc::ADIS16470_IMU gyro{};
 
 // Locations for the swerve drive modules relative to the robot center.
 //THESE NEED TO BE FIXED!!!!
-frc::Translation2d m_frontLeftLocation{0.381_m, 0.381_m};
+frc::Translation2d m_frontLeftLocation{0.1995_m, 0.2015_m};
 frc::Translation2d m_frontRightLocation{0.381_m, -0.381_m};
 frc::Translation2d m_backLeftLocation{-0.381_m, 0.381_m};
 frc::Translation2d m_backRightLocation{-0.381_m, -0.381_m};
@@ -33,9 +33,13 @@ const frc::SwerveDriveKinematics<4> kinematics{
 
 const units::revolutions_per_minute_t falcon500RPM{6380};
 const units::length::meter_t wheelCircumference{0.32};
-const units::meters_per_second_t maxVelocity{(falcon500RPM/60.0)*wheelCircumference}; //Limit this to half??
+const double L1GearRatio(8.41/1);
+const double L2GearRatio(6.75/1);
+const double L3GearRatio(612/1);
+const units::meters_per_second_t maxVelocity{((falcon500RPM/L1GearRatio)/60.0)*wheelCircumference}; //Limit this to half??
 const units::meters_per_second_t chosenMaxVelocity{5.0};
 const units::radians_per_second_t chosenRotationSpeed{M_PI*2};  
+
 
 // 1) Move according to joystick input - joystick
 // 2) Translate movement into field oriented drive for each module - gyro angle and the physical dimensions of the robot
