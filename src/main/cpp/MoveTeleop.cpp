@@ -1,5 +1,4 @@
-#include "Swerve.h"
-
+#include "MoveTeleop.h"
 
 
 //gyro
@@ -19,7 +18,7 @@ const units::radians_per_second_t chosenRotationSpeed{M_PI*2};
 // 2) Translate movement into field oriented drive for each module - gyro angle and the physical dimensions of the robot
 // 3) Each module needs to move according to the speed and angle calculated - module motors and the current angle of the wheel
 
-void Swerve::MoveTeleop(frc::Joystick& joystick){
+void MoveTeleop::moveTeleop(frc::Joystick& joystick){
 
     // will need to actually convert the double output from joystick to a meters per sec velocity later
     // TODO CONVERT to speeds
@@ -41,7 +40,7 @@ void Swerve::MoveTeleop(frc::Joystick& joystick){
     m_DriveTrain.SetAllModules(fieldSpeeds);
 }
 
-void Swerve::CalibrateGyro()
+void MoveTeleop::CalibrateGyro()
 {
     gyro.Calibrate();
 }

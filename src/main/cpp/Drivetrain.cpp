@@ -21,7 +21,6 @@ CANcoder backLeftDirectionEncoder(11,"rio");
 CANcoder backRightDirectionEncoder(12,"rio");
 
 // Locations for the swerve drive modules relative to the robot center.
-//THESE NEED TO BE FIXED!!!!
 frc::Translation2d m_frontLeftLocation{0.260825_m, 0.260825_m};
 frc::Translation2d m_frontRightLocation{0.259325_m, -260825_m};
 frc::Translation2d m_backLeftLocation{-0.260825_m, 0.259825_m};
