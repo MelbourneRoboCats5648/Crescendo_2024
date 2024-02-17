@@ -30,6 +30,7 @@ void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
  * tell motors how to move
  * get motor angle and speed from module state info
  * move each motor
+ * update the PID controller
 */
 void DriveTrain::SetModule(frc::SwerveModuleState state, DriveModule& driveModule) {
   // Setting Motor Speed
@@ -38,17 +39,16 @@ void DriveTrain::SetModule(frc::SwerveModuleState state, DriveModule& driveModul
 
   driveModule.m_speedMotor.Set(normalisedSpeed);
 
-  //TODO check encoder range
-  double encoderCurrentState = driveModule.m_directionEncoder.GetAbsolutePosition().GetValueAsDouble();
-  units::angle::radian_t encoderRotation = units::angle::radian_t{encoderCurrentState/(2* M_PI)};
+  //TODO check encoder range, also check if the GetValue returns radians or degrees
+  units::angle::radian_t encoderCurrentAngle = driveModule.m_directionEncoder.GetAbsolutePosition().GetValue();
+  //double encoderRotation = (encoderCurrentAngle/(2 * M_PI));
 
   //optimise
-  frc::SwerveModuleState::Optimize(state, encoderRotation);
+  frc::SwerveModuleState::Optimize(state, encoderCurrentAngle);
 
   // Calculate the turning motor output from the turning PID controller.
     const auto turnOutput = driveModule.m_turningPIDController.Calculate(
-      {encoderRotation}, state.angle.Radians());
-
+      encoderCurrentAngle, state.angle.Radians());
 
   // Set the motor outputs for the turning of the wheels
   driveModule.m_directionMotor.SetVoltage(units::volt_t{turnOutput}); //+ drFeedforward);
