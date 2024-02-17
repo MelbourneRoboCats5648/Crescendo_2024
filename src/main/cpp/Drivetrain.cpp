@@ -35,7 +35,7 @@ void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
 void DriveTrain::SetModule(frc::SwerveModuleState state, DriveModule& driveModule) {
   // Setting Motor Speed
   const units::meters_per_second_t MAX_SPEED_MPS = 32.203_mps;
-  double normalisedSpeed = (double)state.speed / (double)MAX_SPEED_MPS;
+  double normalisedSpeed = state.speed / MAX_SPEED_MPS;
 
   driveModule.m_speedMotor.Set(normalisedSpeed);
 

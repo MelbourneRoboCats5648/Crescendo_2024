@@ -37,6 +37,22 @@ public:
     frc::ProfiledPIDController<units::radians> m_turningPIDController;
 };
 
+
+const int FRONT_LEFT_SPEED_MOTOR_ID = 1;
+const int FRONT_RIGHT_SPEED_MOTOR_ID = 2;
+const int BACK_LEFT_SPEED_MOTOR_ID = 3;
+const int BACK_RIGHT_SPEED_MOTOR_ID = 4;
+
+const int FRONT_LEFT_DIRECTION_MOTOR_ID = 5;
+const int FRONT_RIGHT_DIRECTION_MOTOR_ID = 6;
+const int BACK_LEFT_DIRECTION_MOTOR_ID = 7;
+const int BACK_RIGHT_DIRECTION_MOTOR_ID = 8;
+
+const int FRONT_LEFT_DIRECTION_ENCODER_ID = 9;
+const int FRONT_RIGHT_DIRECTION_ENCODER_ID = 10;
+const int BACK_LEFT_DIRECTION_ENCODER_ID = 11;
+const int BACK_RIGHT_DIRECTION_ENCODER_ID = 12;
+
 class DriveTrain{
 public:
     void SetAllModules(frc::ChassisSpeeds chasisSpeed);
@@ -45,9 +61,8 @@ private:
     void SetModule(frc::SwerveModuleState state, DriveModule& driveModule);
 
 private:
-    // Todo - update these hard coded id numbers to constants
-    DriveModule m_frontLeftModule{1, 5, 9};
-    DriveModule m_frontRightModule{2, 6, 10};
-    DriveModule m_backLeftModule{3, 7, 11};
-    DriveModule m_backRightModule{4, 5, 12};
+    DriveModule m_frontLeftModule{FRONT_LEFT_SPEED_MOTOR_ID, FRONT_LEFT_DIRECTION_MOTOR_ID, FRONT_LEFT_DIRECTION_ENCODER_ID};
+    DriveModule m_frontRightModule{FRONT_RIGHT_SPEED_MOTOR_ID, FRONT_RIGHT_DIRECTION_MOTOR_ID, FRONT_RIGHT_DIRECTION_ENCODER_ID};
+    DriveModule m_backLeftModule{BACK_LEFT_SPEED_MOTOR_ID, BACK_LEFT_DIRECTION_MOTOR_ID, BACK_LEFT_DIRECTION_ENCODER_ID};
+    DriveModule m_backRightModule{BACK_RIGHT_SPEED_MOTOR_ID, BACK_RIGHT_DIRECTION_MOTOR_ID, BACK_RIGHT_DIRECTION_ENCODER_ID};
 };

@@ -30,6 +30,6 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     frc::ChassisSpeeds chassisSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(
     xSpeed, ySpeed, rotationSpeed, frc::Rotation2d{robotAngle});
 
-    // command the drive train to move based on the the required field oriented spped
+    // command the drive train to move based on the the required field oriented speed
     driveTrain.SetAllModules(chassisSpeed);
 }
