@@ -7,6 +7,7 @@
 #include "Intake.h"
 #include "Shooter.h"
 #include "MoveTeleop.h"
+#include "MoveAutonomous.h"
 
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -77,6 +78,7 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
+    MoveAutonomous(driveTrain);
   }
 }
 
