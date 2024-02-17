@@ -1,5 +1,6 @@
 #include "MoveTeleop.h"
 
+//FIXME needs to be removed 
 DriveTrain driveTrain;
 
 //gyro
@@ -19,7 +20,7 @@ const units::radians_per_second_t chosenRotationSpeed{M_PI*2};
 // 2) Translate movement into field oriented drive for each module - gyro angle and the physical dimensions of the robot
 // 3) Each module needs to move according to the speed and angle calculated - module motors and the current angle of the wheel
 
-void MoveTeleop::moveTeleop(frc::Joystick& joystick){
+void MoveTeleop(frc::Joystick& joystick){
 
     // will need to actually convert the double output from joystick to a meters per sec velocity later
     // TODO CONVERT to speeds
@@ -41,7 +42,7 @@ void MoveTeleop::moveTeleop(frc::Joystick& joystick){
     driveTrain.SetAllModules(fieldSpeeds);
 }
 
-void MoveTeleop::CalibrateGyro()
+void CalibrateGyro()
 {
     gyro.Calibrate();
 }

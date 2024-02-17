@@ -22,14 +22,11 @@ const int xboxControllerPort = 1;
 frc::XboxController xbox{xboxControllerPort};
 frc::Joystick driveJoyStick{driveJoystickPort};
 
-// Swerve drive base
-MoveTeleop moveTeleop{};
-
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-  moveTeleop.CalibrateGyro();
+  CalibrateGyro();
 }
 
 /**
@@ -45,7 +42,7 @@ void Robot::RobotPeriodic()
   Climb(driveJoyStick);
   Intake(xbox);
   Shooter(xbox);
-  moveTeleop.moveTeleop(driveJoyStick);
+  MoveTeleop(driveJoyStick);
 }
 
 /**
