@@ -20,6 +20,4 @@ public:
     void moveTeleop(frc::Joystick& joystick);
     void CalibrateGyro();
 
-private:
-    DriveTrain m_DriveTrain;
 };

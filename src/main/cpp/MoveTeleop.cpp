@@ -1,5 +1,6 @@
 #include "MoveTeleop.h"
 
+DriveTrain driveTrain;
 
 //gyro
 frc::ADIS16470_IMU gyro{};
@@ -37,7 +38,7 @@ void MoveTeleop::moveTeleop(frc::Joystick& joystick){
     //need to convert speed into 4 swerve module states for each of the swerve modules (using kinemetaic stuff)
     //include swerve class inside robot class
 
-    m_DriveTrain.SetAllModules(fieldSpeeds);
+    driveTrain.SetAllModules(fieldSpeeds);
 }
 
 void MoveTeleop::CalibrateGyro()
