@@ -1,36 +1,9 @@
 #include "Swerve.h"
 
-using namespace ctre::phoenix6::hardware;
 
-TalonFX frontLeftSpeedMotor(1,"rio");
-TalonFX frontRightSpeedMotor(2,"rio");
-TalonFX backLeftSpeedMotor(3,"rio");
-TalonFX backRightSpeedMotor(4,"rio");
-TalonFX frontLeftDirectionMotor(5,"rio");
-TalonFX frontRightDirectionMotor(6,"rio");
-TalonFX backLeftDirectionMotor(7,"rio");
-TalonFX backRightDirectionMotor(8,"rio");
-
-//direction encoders
-CANcoder frontLeftDirectionEncoder(9,"rio");
-CANcoder frontRightDirectionEncoder(10,"rio");
-CANcoder backLeftDirectionEncoder(11,"rio");
-CANcoder backRightDirectionEncoder(12,"rio");
 
 //gyro
 frc::ADIS16470_IMU gyro{};
-
-// Locations for the swerve drive modules relative to the robot center.
-//THESE NEED TO BE FIXED!!!!
-frc::Translation2d m_frontLeftLocation{0.260825_m, 0.260825_m};
-frc::Translation2d m_frontRightLocation{0.259325_m, -260825_m};
-frc::Translation2d m_backLeftLocation{-0.260825_m, 0.259825_m};
-frc::Translation2d m_backRightLocation{-0.259325_m, -0.259825_m};
-const frc::SwerveDriveKinematics<4> kinematics{
-                                         m_frontLeftLocation, 
-                                        m_frontRightLocation, 
-                                        m_backLeftLocation,
-                                        m_backRightLocation};
 
 const double falcon500RPM{6380};
 const units::length::meter_t wheelCircumference{0.32};
@@ -65,14 +38,7 @@ void Swerve::MoveTeleop(frc::Joystick& joystick){
     //need to convert speed into 4 swerve module states for each of the swerve modules (using kinemetaic stuff)
     //include swerve class inside robot class
 
-    // Convert to module states. Here, we can use C++17's structured
-    // bindings feature to automatically split up the array into its
-    // individual SwerveModuleState components.
-    auto [fl, fr, bl, br] = kinematics.ToSwerveModuleStates(fieldSpeeds);
-    m_DriveTrain.SetModule(fl, frontLeftSpeedMotor, frontLeftDirectionMotor, frontLeftDirectionEncoder);
-    m_DriveTrain.SetModule(fr, frontRightSpeedMotor, frontRightDirectionMotor, frontRightDirectionEncoder);
-    m_DriveTrain.SetModule(bl, backLeftSpeedMotor, backLeftDirectionMotor, backLeftDirectionEncoder);
-    m_DriveTrain.SetModule(br, backRightSpeedMotor, backRightDirectionMotor, backRightDirectionEncoder);
+    m_DriveTrain.SetAllModules(fieldSpeeds);
 }
 
 void Swerve::CalibrateGyro()

@@ -3,15 +3,52 @@
 //Encoder Counts Per RV
 const int countsPerRevolution = 4096;
 
+using namespace ctre::phoenix6::hardware;
+
+TalonFX frontLeftSpeedMotor(1,"rio");
+TalonFX frontRightSpeedMotor(2,"rio");
+TalonFX backLeftSpeedMotor(3,"rio");
+TalonFX backRightSpeedMotor(4,"rio");
+TalonFX frontLeftDirectionMotor(5,"rio");
+TalonFX frontRightDirectionMotor(6,"rio");
+TalonFX backLeftDirectionMotor(7,"rio");
+TalonFX backRightDirectionMotor(8,"rio");
+
+//direction encoders
+CANcoder frontLeftDirectionEncoder(9,"rio");
+CANcoder frontRightDirectionEncoder(10,"rio");
+CANcoder backLeftDirectionEncoder(11,"rio");
+CANcoder backRightDirectionEncoder(12,"rio");
+
+// Locations for the swerve drive modules relative to the robot center.
+//THESE NEED TO BE FIXED!!!!
+frc::Translation2d m_frontLeftLocation{0.260825_m, 0.260825_m};
+frc::Translation2d m_frontRightLocation{0.259325_m, -260825_m};
+frc::Translation2d m_backLeftLocation{-0.260825_m, 0.259825_m};
+frc::Translation2d m_backRightLocation{-0.259325_m, -0.259825_m};
+const frc::SwerveDriveKinematics<4> kinematics{
+                                        m_frontLeftLocation, 
+                                        m_frontRightLocation, 
+                                        m_backLeftLocation,
+                                        m_backRightLocation};
+
+void DriveTrain::SetAllModules(frc::ChassisSpeeds fieldSpeeds){
+     
+    // Convert to module states. Here, we can use C++17's structured
+    // bindings feature to automatically split up the array into its
+    // individual SwerveModuleState components.
+    auto [fl, fr, bl, br] = kinematics.ToSwerveModuleStates(fieldSpeeds);
+    SetModule(fl, frontLeftSpeedMotor, frontLeftDirectionMotor, frontLeftDirectionEncoder);
+    SetModule(fr, frontRightSpeedMotor, frontRightDirectionMotor, frontRightDirectionEncoder);
+    SetModule(bl, backLeftSpeedMotor, backLeftDirectionMotor, backLeftDirectionEncoder);
+    SetModule(br, backRightSpeedMotor, backRightDirectionMotor, backRightDirectionEncoder);
+}
 
 /*
  * tell motors how to move
  * get motor angle and speed from module state info
  * move each motor
 */
-
-
-
 void DriveTrain::SetModule(frc::SwerveModuleState state, ctre::phoenix6::hardware::TalonFX& driveMotor, ctre::phoenix6::hardware::TalonFX& directionMotor, ctre::phoenix6::hardware::CANcoder& encoder) {
 //reference state
 

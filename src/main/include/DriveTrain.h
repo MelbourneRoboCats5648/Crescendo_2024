@@ -12,5 +12,8 @@
 
 class DriveTrain{
 public:
+    void SetAllModules(frc::ChassisSpeeds state);
+private:
     void SetModule(frc::SwerveModuleState state, ctre::phoenix6::hardware::TalonFX& driveMotor, ctre::phoenix6::hardware::TalonFX& directionMotor, ctre::phoenix6::hardware::CANcoder& encoder);
+
 };
