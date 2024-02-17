@@ -15,5 +15,5 @@
 #include "DriveTrain.h"
 
 //calculates the chassis x and y speed and rotation speed based on joystick
-void MoveTeleop(frc::Joystick& joystick);
+void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick);
 void CalibrateGyro();

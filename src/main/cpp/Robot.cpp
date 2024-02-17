@@ -18,6 +18,9 @@
 const int driveJoystickPort = 0;
 const int xboxControllerPort = 1;
 
+//Drivetrain
+DriveTrain driveTrain{};
+
 // Controllers
 frc::XboxController xbox{xboxControllerPort};
 frc::Joystick driveJoyStick{driveJoystickPort};
@@ -42,7 +45,7 @@ void Robot::RobotPeriodic()
   Climb(driveJoyStick);
   Intake(xbox);
   Shooter(xbox);
-  MoveTeleop(driveJoyStick);
+  MoveTeleop(driveTrain, driveJoyStick);
 }
 
 /**
