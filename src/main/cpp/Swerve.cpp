@@ -1,5 +1,4 @@
 #include "Swerve.h"
-#include "DriveTrain.h"
 
 using namespace ctre::phoenix6::hardware;
 
@@ -70,10 +69,10 @@ void Swerve::MoveTeleop(frc::Joystick& joystick){
     // bindings feature to automatically split up the array into its
     // individual SwerveModuleState components.
     auto [fl, fr, bl, br] = kinematics.ToSwerveModuleStates(fieldSpeeds);
-    SetModule(fl, frontLeftSpeedMotor, frontLeftDirectionMotor, frontLeftDirectionEncoder);
-    SetModule(fr, frontRightSpeedMotor, frontRightDirectionMotor, frontRightDirectionEncoder);
-    SetModule(bl, backLeftSpeedMotor, backLeftDirectionMotor, backLeftDirectionEncoder);
-    SetModule(br, backRightSpeedMotor, backRightDirectionMotor, backRightDirectionEncoder);
+    m_DriveTrain.SetModule(fl, frontLeftSpeedMotor, frontLeftDirectionMotor, frontLeftDirectionEncoder);
+    m_DriveTrain.SetModule(fr, frontRightSpeedMotor, frontRightDirectionMotor, frontRightDirectionEncoder);
+    m_DriveTrain.SetModule(bl, backLeftSpeedMotor, backLeftDirectionMotor, backLeftDirectionEncoder);
+    m_DriveTrain.SetModule(br, backRightSpeedMotor, backRightDirectionMotor, backRightDirectionEncoder);
 }
 
 void Swerve::CalibrateGyro()

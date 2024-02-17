@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <frc/kinematics/ChassisSpeeds.h>
 #include <frc/Joystick.h>
 #include <frc/kinematics/SwerveDriveKinematics.h>
@@ -11,10 +12,14 @@
 #include <frc/geometry/Rotation2d.h>
 #include <math.h>
 
+#include "DriveTrain.h"
 
 class Swerve {
 public:
 //calculates the chassis x and y speed and rotation speed based on joystick
     void MoveTeleop(frc::Joystick& joystick);
     void CalibrateGyro();
+
+private:
+    DriveTrain m_DriveTrain{};
 };
