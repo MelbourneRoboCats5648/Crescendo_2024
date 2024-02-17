@@ -1,7 +1,6 @@
 #include "MoveTeleop.h"
 
-//gyro
-frc::ADIS16470_IMU gyro{};
+
 
 const double falcon500RPM{6380};
 const units::length::meter_t wheelCircumference{0.32};
@@ -17,7 +16,7 @@ const units::radians_per_second_t chosenRotationSpeed{M_PI*2};
 // 2) Translate movement into field oriented drive for each module - gyro angle and the physical dimensions of the robot
 // 3) Each module needs to move according to the speed and angle calculated - module motors and the current angle of the wheel
 
-void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick){
+void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_IMU& gyro){
 
     // will need to actually convert the double output from joystick to a meters per sec velocity later
     // TODO CONVERT to speeds
@@ -38,9 +37,3 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick){
 
     driveTrain.SetAllModules(fieldSpeeds);
 }
-
-void CalibrateGyro()
-{
-    gyro.Calibrate();
-}
-

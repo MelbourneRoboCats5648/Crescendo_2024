@@ -22,6 +22,9 @@ const int xboxControllerPort = 1;
 //Drivetrain
 DriveTrain driveTrain{};
 
+//gyro
+frc::ADIS16470_IMU gyro{};
+
 // Controllers
 frc::XboxController xbox{xboxControllerPort};
 frc::Joystick driveJoyStick{driveJoystickPort};
@@ -30,7 +33,7 @@ void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-  CalibrateGyro();
+  gyro.Calibrate();
 }
 
 /**
@@ -46,7 +49,7 @@ void Robot::RobotPeriodic()
   Climb(driveJoyStick);
   Intake(xbox);
   Shooter(xbox);
-  MoveTeleop(driveTrain, driveJoyStick);
+  MoveTeleop(driveTrain, driveJoyStick, gyro);
 }
 
 /**
@@ -78,7 +81,7 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    MoveAutonomous(driveTrain);
+    MoveAutonomous(driveTrain, gyro);
   }
 }
 
