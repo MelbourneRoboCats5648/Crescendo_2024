@@ -11,15 +11,8 @@
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-#include <frc/motorcontrol/VictorSP.h>
-
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
-#include <frc/Encoder.h>
-
-#include "hal/AnalogTrigger.h"
-#include "hal/Types.h"
-
 
 // USB ports - TODO Check
 const int driveJoystickPort = 0;
