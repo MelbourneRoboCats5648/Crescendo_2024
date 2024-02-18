@@ -46,10 +46,7 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() 
 {
-  Climb(driveJoyStick);
-  Intake(xbox);
-  Shooter(xbox);
-  MoveTeleop(driveTrain, driveJoyStick, gyro);
+
 }
 
 /**
@@ -87,7 +84,12 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {}
 
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+  Climb(driveJoyStick);
+  Intake(xbox);
+  Shooter(xbox);
+  MoveTeleop(driveTrain, driveJoyStick, gyro);
+}
 
 void Robot::DisabledInit() {}
 
