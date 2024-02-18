@@ -21,7 +21,7 @@ void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
     // individual SwerveModuleState components.
     auto [fl, fr, bl, br] = kinematics.ToSwerveModuleStates(chassisSpeed);
     SetModule(fl, m_frontLeftModule);
-    SetModule(fr, m_frontRightModule);
+    //SetModule(fr, m_frontRightModule);
     SetModule(bl, m_backLeftModule);
     SetModule(br, m_backRightModule);
 }
@@ -48,7 +48,8 @@ void DriveModule::SetZero()
 */
 void DriveTrain::SetModule(frc::SwerveModuleState state, DriveModule& driveModule) {
   // Setting Motor Speed
-  const units::meters_per_second_t MAX_SPEED_MPS = 32.203_mps;
+  const units::meters_per_second_t MAX_SPEED_MPS = 30.0_mps;
+
   double normalisedSpeed = state.speed / MAX_SPEED_MPS;
 
   driveModule.m_speedMotor.Set(normalisedSpeed);
@@ -58,14 +59,16 @@ void DriveTrain::SetModule(frc::SwerveModuleState state, DriveModule& driveModul
   //double encoderRotation = (encoderCurrentAngle/(2 * M_PI));
 
   //optimise
-  frc::SwerveModuleState::Optimize(state, encoderCurrentAngle);
+  //frc::SwerveModuleState::Optimize(state, encoderCurrentAngle);
 
   // Calculate the turning motor output from the turning PID controller.
-    const auto turnOutput = driveModule.m_turningPIDController.Calculate(
-      encoderCurrentAngle, state.angle.Radians());
+  //  const auto turnOutput = driveModule.m_turningPIDController.Calculate(
+  //    encoderCurrentAngle, state.angle.Radians());
 
   // Set the motor outputs for the turning of the wheels
-  driveModule.m_directionMotor.SetVoltage(units::volt_t{turnOutput}); //+ drFeedforward);
+  double normalisedAngle = state.angle.Radians() / units::angle::radian_t(10 * 2 * M_PI);
+  //driveModule.m_directionMotor.Set(normalisedAngle);
+  driveModule.m_directionMotor.Set(normalisedAngle);
 
 };
 

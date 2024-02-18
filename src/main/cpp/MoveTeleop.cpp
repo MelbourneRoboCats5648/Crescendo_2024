@@ -5,9 +5,9 @@ const double falcon500RPM{6380};
 const units::length::meter_t wheelCircumference{0.32};
 const double L1GearRatio(8.41/1);
 const double L2GearRatio(6.75/1);
-const double L3GearRatio(612/1);
+const double L3GearRatio(6.12/1);
 const units::meters_per_second_t maxVelocity{((falcon500RPM/L1GearRatio)/60_s) * wheelCircumference}; // fixme - Limit this to half??
-const units::meters_per_second_t chosenMaxVelocity{5.0};
+const units::meters_per_second_t chosenMaxVelocity{4.0};
 const units::radians_per_second_t chosenRotationSpeed{M_PI*2};
 
 
@@ -26,9 +26,14 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     // measured robot angle
     units::angle::degree_t robotAngle = gyro.GetAngle();
 
+    // fixme - overriding real gyro reading and making it zero
+    robotAngle = units::angle::degree_t(0);
+
     //getting the chassis speed based on the field centric speeds
-    frc::ChassisSpeeds chassisSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(
-    xSpeed, ySpeed, rotationSpeed, frc::Rotation2d{robotAngle});
+    //frc::ChassisSpeeds chassisSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(
+    //xSpeed, ySpeed, rotationSpeed, frc::Rotation2d{robotAngle});
+
+    frc::ChassisSpeeds chassisSpeed{xSpeed, -1.0 * ySpeed, rotationSpeed};
 
     // command the drive train to move based on the the required field oriented speed
     driveTrain.SetAllModules(chassisSpeed);
