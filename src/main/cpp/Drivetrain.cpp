@@ -26,6 +26,20 @@ void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
     SetModule(br, m_backRightModule);
 }
 
+void DriveTrain::SetAllModulesZero()
+{
+  m_frontLeftModule.SetZero();
+  m_frontRightModule.SetZero();
+  m_backLeftModule.SetZero();
+  m_backRightModule.SetZero();
+}
+
+void DriveModule::SetZero()
+{
+  m_speedMotor.Set(0.0);
+  m_directionMotor.Set(0.0);
+}
+
 /*
  * tell motors how to move
  * get motor angle and speed from module state info

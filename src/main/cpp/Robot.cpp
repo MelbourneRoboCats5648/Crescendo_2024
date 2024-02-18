@@ -33,7 +33,11 @@ void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
   gyro.Calibrate();
+
+  driveTrain.SetAllModulesZero();
+
 }
 
 /**
@@ -44,7 +48,7 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() 
+void Robot::RobotPeriodic()
 {
 
 }
@@ -82,13 +86,20 @@ void Robot::AutonomousPeriodic() {
   }
 }
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+
+    driveTrain.SetAllModulesZero();
+
+
+}
 
 void Robot::TeleopPeriodic() {
   Climb(driveJoyStick);
   Intake(xbox);
   Shooter(xbox);
-  MoveTeleop(driveTrain, driveJoyStick, gyro);
+
+
+  //MoveTeleop(driveTrain, driveJoyStick, gyro);
 }
 
 void Robot::DisabledInit() {}

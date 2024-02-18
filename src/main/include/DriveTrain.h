@@ -30,6 +30,9 @@ public:
     {
     }
 
+    // sets the drive of all motors to zero
+    void SetZero();
+
 public:
     TalonFX m_speedMotor;
     TalonFX m_directionMotor;
@@ -56,6 +59,7 @@ const int BACK_RIGHT_DIRECTION_ENCODER_ID = 12;
 class DriveTrain{
 public:
     void SetAllModules(frc::ChassisSpeeds chasisSpeed);
+    void SetAllModulesZero();
 
 private:
     void SetModule(frc::SwerveModuleState state, DriveModule& driveModule);
