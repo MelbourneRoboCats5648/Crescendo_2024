@@ -26,18 +26,18 @@ void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
     SetModule(br, m_backRightModule);
 }
 
-void DriveTrain::SetAllModulesZero()
+void DriveTrain::StopAllModules()
 {
-  m_frontLeftModule.SetZero();
-  m_frontRightModule.SetZero();
-  m_backLeftModule.SetZero();
-  m_backRightModule.SetZero();
+  m_frontLeftModule.Stop();
+  m_frontRightModule.Stop();
+  m_backLeftModule.Stop();
+  m_backRightModule.Stop();
 }
 
-void DriveModule::SetZero()
+void DriveModule::Stop()
 {
-  m_speedMotor.Set(0.0);
-  m_directionMotor.Set(0.0);
+  m_speedMotor.StopMotor();
+  m_directionMotor.StopMotor();
 }
 
 /*

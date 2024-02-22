@@ -36,7 +36,7 @@ void Robot::RobotInit() {
 
   gyro.Calibrate();
 
-  driveTrain.SetAllModulesZero();
+  driveTrain.StopAllModules();
 
 }
 
@@ -88,7 +88,7 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
 
-    driveTrain.SetAllModulesZero();
+    driveTrain.StopAllModules();
 
 
 }
