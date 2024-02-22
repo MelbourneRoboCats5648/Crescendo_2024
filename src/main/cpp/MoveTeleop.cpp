@@ -29,6 +29,9 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     // fixme - overriding real gyro reading and making it zero
     robotAngle = units::angle::degree_t(0);
 
+    xSpeed = units::velocity::meters_per_second_t(0);
+    ySpeed = units::velocity::meters_per_second_t(1);
+
     //getting the chassis speed based on the field centric speeds
     //frc::ChassisSpeeds chassisSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(
     //xSpeed, ySpeed, rotationSpeed, frc::Rotation2d{robotAngle});

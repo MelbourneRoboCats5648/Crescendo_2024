@@ -16,6 +16,11 @@ using namespace ctre::phoenix6::hardware;
  static constexpr auto kModuleMaxAngularAcceleration =
     std::numbers::pi * 2_rad_per_s / 1_s;  // radians per second^2
 
+//PID control constants
+const double kP = 1.0;
+const double kI = 0.0;
+const double kD = 0.0;
+
 class DriveModule{
 public:
     DriveModule(int speedMotorID, int directionMotorID, int directionEncoderID) :
@@ -23,10 +28,11 @@ public:
         m_directionMotor(directionMotorID, "rio"),
         m_directionEncoder(directionEncoderID, "rio"),
         m_turningPIDController{
-            1.0,
-            0.0,
-            0.0,
-            {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}}
+            kP,
+            kI,
+            kD,
+            {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}},
+            m_normalPID_Controller{kP, kI, kD}
     {
     }
 
@@ -37,6 +43,7 @@ public:
     TalonFX m_speedMotor;
     TalonFX m_directionMotor;
     CANcoder m_directionEncoder;
+    frc::PIDController m_normalPID_Controller;
     frc::ProfiledPIDController<units::radians> m_turningPIDController;
 };
 
