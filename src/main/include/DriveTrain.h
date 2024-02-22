@@ -34,10 +34,13 @@ public:
             {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}},
             m_normalPID_Controller{kP, kI, kD}
     {
+
     }
 
     // sets the drive of all motors to zero
     void SetZero();
+
+    void Initialise();
 
 public:
     TalonFX m_speedMotor;
@@ -67,6 +70,7 @@ class DriveTrain{
 public:
     void SetAllModules(frc::ChassisSpeeds chasisSpeed);
     void SetAllModulesZero();
+    void InitialiseAllModules();
 
 private:
     void SetModule(frc::SwerveModuleState state, DriveModule& driveModule);

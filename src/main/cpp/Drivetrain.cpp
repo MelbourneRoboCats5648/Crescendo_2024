@@ -26,6 +26,14 @@ void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
     SetModule(br, m_backRightModule);
 }
 
+void DriveTrain::InitialiseAllModules()
+{
+  m_frontLeftModule.Initialise();
+  m_frontRightModule.Initialise();
+  m_backLeftModule.Initialise();
+  m_backRightModule.Initialise();
+}
+
 void DriveTrain::SetAllModulesZero()
 {
   m_frontLeftModule.SetZero();
@@ -38,6 +46,14 @@ void DriveModule::SetZero()
 {
   m_speedMotor.Set(0.0);
   m_directionMotor.Set(0.0);
+}
+
+void DriveModule::Initialise()
+{
+    // Wait for at most 250ms for a CAN position update
+    // From:
+    // https://www.chiefdelphi.com/t/converting-c-swerve-code-from-phoenix-5-to-phoenix-6-not-pro/450050/2
+    m_directionMotor.SetPosition(m_directionEncoder.GetPosition().WaitForUpdate(250_ms).GetValue());
 }
 
 /*

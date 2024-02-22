@@ -20,7 +20,7 @@ const int driveJoystickPort = 0;
 const int xboxControllerPort = 1;
 
 //Drivetrain
-DriveTrain driveTrain{};
+//DriveTrain driveTrain{};
 
 //gyro
 frc::ADIS16470_IMU gyro{};
@@ -29,6 +29,8 @@ frc::ADIS16470_IMU gyro{};
 frc::XboxController xbox{xboxControllerPort};
 frc::Joystick driveJoyStick{driveJoystickPort};
 
+DriveModule testBackLeftModule{BACK_LEFT_SPEED_MOTOR_ID, BACK_LEFT_DIRECTION_MOTOR_ID, BACK_LEFT_DIRECTION_ENCODER_ID};
+
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
@@ -36,8 +38,10 @@ void Robot::RobotInit() {
 
   gyro.Calibrate();
 
-  driveTrain.SetAllModulesZero();
+  //driveTrain.SetAllModulesZero();
+  //driveTrain.InitialiseAllModules();
 
+  testBackLeftModule.Initialise();
 }
 
 /**
@@ -82,23 +86,35 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    MoveAutonomous(driveTrain, gyro);
+    //MoveAutonomous(driveTrain, gyro);
   }
 }
 
 void Robot::TeleopInit() {
-
+  /*
     driveTrain.SetAllModulesZero();
+  */
 
+ testBackLeftModule.SetZero();
+ 
 
 }
 
 void Robot::TeleopPeriodic() {
+  /*
   Climb(driveJoyStick);
   Intake(xbox);
   Shooter(xbox);
 
   MoveTeleop(driveTrain, driveJoyStick, gyro);
+  */
+
+  testBackLeftModule.m_directionEncoder.GetPosition();
+
+
+
+  testBackLeftModule.m_directionMotor.Set(-0.1);
+
 }
 
 void Robot::DisabledInit() {}
