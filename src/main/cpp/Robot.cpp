@@ -99,7 +99,7 @@ void Robot::TeleopPeriodic() {
   Shooter(xbox);
 
 
-  //MoveTeleop(driveTrain, driveJoyStick, gyro);
+  MoveTeleop(driveTrain, driveJoyStick, gyro);
 }
 
 void Robot::DisabledInit() {}

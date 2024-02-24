@@ -1,11 +1,12 @@
 #include "DriveModule.h"
+#include <iostream>
 
-
-void DriveModule::SetZero()
+//encoders might have to be calibrated manually.
+/*void DriveModule::SetEncodersZero()
 {
-  m_speedMotor.Set(0.0);
-  m_directionMotor.Set(0.0);
-}
+  m_directionEncoder.
+
+}*/
 
 void DriveModule::Stop()
 {
@@ -23,14 +24,15 @@ void DriveModule::Initialise()
 
 void DriveModule::SetModule(frc::SwerveModuleState state) {
   // Setting Motor Speed
-  const units::meters_per_second_t MAX_SPEED_MPS = 30.0_mps;
+  const units::meters_per_second_t MAX_SPEED_MPS = 5.0_mps;
 
   double normalisedSpeed = state.speed / MAX_SPEED_MPS;
 
     m_speedMotor.Set(normalisedSpeed);
 
-  //TODO check encoder range, also check if the GetValue returns radians or degrees
-  units::angle::radian_t encoderCurrentAngle = m_directionEncoder.GetAbsolutePosition().GetValue();
+  //encoder range -0.5 +0.5,  GetValue returns rotation
+  // encoder current angle is -pi to +pi
+  units::angle::radian_t encoderCurrentAngle = m_directionEncoder.GetAbsolutePosition().GetValue()*2*M_PI;
   //double encoderRotation = (encoderCurrentAngle/(2 * M_PI));
 
   //optimise
@@ -41,8 +43,11 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
   //    encoderCurrentAngle, state.angle.Radians());
 
   // Set the motor outputs for the turning of the wheels
-  double normalisedAngle = state.angle.Radians() / units::angle::radian_t(10 * 2 * M_PI);
+  units::angle::radian_t error = state.angle.Radians() - encoderCurrentAngle;
+  double normalisedAngle = error / units::angle::radian_t(M_PI);
   //driveModule.m_directionMotor.Set(normalisedAngle);
+  std::cout << "State speed " << double{state.speed} << " state angle " << double{state.angle.Radians()} << "encoder current angle " << double{encoderCurrentAngle} << "\n";
+    
   m_directionMotor.Set(normalisedAngle);
 
 };

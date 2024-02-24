@@ -12,8 +12,8 @@
 
 class DriveTrain{
 public:
-    void SetAllModules(frc::ChassisSpeeds chasisSpeed, DriveModule& driveModule);
-    void StopAllModules(DriveModule& driveModule);
-    void InitialiseAllModules(DriveModule& driveModule);
-    void SetAllModulesZero(DriveModule& driveModule);
+    void SetAllModules(frc::ChassisSpeeds chasisSpeed);
+    void StopAllModules();
+    void InitialiseAllModules();
+    void SetAllModulesZero();
 };

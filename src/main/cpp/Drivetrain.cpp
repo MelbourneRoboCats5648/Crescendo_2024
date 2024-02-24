@@ -5,7 +5,7 @@ const int countsPerRevolution = 4096;
 
 // Locations for the swerve drive modules relative to the robot center.
 frc::Translation2d m_frontLeftLocation{0.260825_m, 0.260825_m};
-frc::Translation2d m_frontRightLocation{0.259325_m, -260825_m};
+frc::Translation2d m_frontRightLocation{0.259325_m, -0.260825_m};
 frc::Translation2d m_backLeftLocation{-0.260825_m, 0.259825_m};
 frc::Translation2d m_backRightLocation{-0.259325_m, -0.259825_m};
 const frc::SwerveDriveKinematics<4> kinematics{
@@ -20,7 +20,7 @@ DriveModule m_frontRightModule{FRONT_RIGHT_SPEED_MOTOR_ID, FRONT_RIGHT_DIRECTION
 DriveModule m_backLeftModule{BACK_LEFT_SPEED_MOTOR_ID, BACK_LEFT_DIRECTION_MOTOR_ID, BACK_LEFT_DIRECTION_ENCODER_ID};
 DriveModule m_backRightModule{BACK_RIGHT_SPEED_MOTOR_ID, BACK_RIGHT_DIRECTION_MOTOR_ID, BACK_RIGHT_DIRECTION_ENCODER_ID};
 
-void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed, DriveModule& driveModule){
+void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
      
     // Convert to module states. Here, we can use C++17's structured
     // bindings feature to automatically split up the array into its
@@ -32,7 +32,7 @@ void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed, DriveModule& dri
     m_backRightModule.SetModule(br);
 }
 
-void DriveTrain::InitialiseAllModules(DriveModule& driveModule)
+void DriveTrain::InitialiseAllModules()
 {
   m_frontLeftModule.Initialise();
   m_frontRightModule.Initialise();
@@ -40,15 +40,21 @@ void DriveTrain::InitialiseAllModules(DriveModule& driveModule)
   m_backRightModule.Initialise();
 }
 
-void DriveTrain::SetAllModulesZero(DriveModule& driveModule)
+/*void DriveTrain::SetAllModulesZero()
 {
   m_frontLeftModule.SetZero();
   m_frontRightModule.SetZero();
   m_backLeftModule.SetZero();
   m_backRightModule.SetZero();
+}*/
+
+void DriveTrain::StopAllModules()
+{
+  m_frontLeftModule.Stop();
+  m_frontRightModule.Stop();
+  m_backLeftModule.Stop();
+  m_backRightModule.Stop();
 }
-
-
 
 /*
  * tell motors how to move
