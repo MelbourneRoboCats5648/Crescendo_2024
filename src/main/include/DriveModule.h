@@ -56,7 +56,6 @@ public:
 
     // sets the drive of all motors to zero
     void Stop();
-    void SetEncodersZero();
     void Initialise();
     void SetModule(frc::SwerveModuleState state);
 

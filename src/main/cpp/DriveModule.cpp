@@ -4,13 +4,6 @@
 using namespace ctre::phoenix6::configs;
 using namespace ctre::phoenix6::signals;
 
-//encoders might have to be calibrated manually.
-/*void DriveModule::SetEncodersZero()
-{
-  m_directionEncoder.
-
-}*/
-
 void DriveModule::Stop()
 {
   m_speedMotor.StopMotor();
@@ -44,7 +37,7 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
   // encoder current angle is -pi to +pi
   units::angle::radian_t encoderCurrentAngleRadians = units::angle::radian_t{m_directionEncoder.GetAbsolutePosition().GetValueAsDouble()*2*M_PI};
 
-  //optimise
+  // updates state variable to the optimum change in angle
   frc::SwerveModuleState::Optimize(state, encoderCurrentAngleRadians);
 
   // Calculate the turning motor output from the turning PID controller.

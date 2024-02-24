@@ -15,7 +15,6 @@ public:
     void SetAllModules(frc::ChassisSpeeds chasisSpeed);
     void StopAllModules();
     void InitialiseAllModules();
-    void SetAllModulesZero();
 
 public:                                         
     DriveModule m_frontLeftModule{FRONT_LEFT_SPEED_MOTOR_ID, FRONT_LEFT_DIRECTION_MOTOR_ID, FRONT_LEFT_DIRECTION_ENCODER_ID, FRONT_LEFT_MAG_OFFSET};

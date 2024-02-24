@@ -37,6 +37,7 @@ void Robot::RobotInit() {
   gyro.Calibrate();
 
   driveTrain.InitialiseAllModules();
+  driveTrain.StopAllModules();
 
 }
 
@@ -88,8 +89,7 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
 
-    driveTrain.StopAllModules();
-
+  driveTrain.StopAllModules();
 
 }
 
@@ -97,8 +97,7 @@ void Robot::TeleopPeriodic() {
   Climb(driveJoyStick);
   Intake(xbox);
   Shooter(xbox);
-
-
+  
   MoveTeleop(driveTrain, driveJoyStick, gyro);
 }
 
