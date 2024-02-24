@@ -20,7 +20,7 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
 
     // will need to actually convert the double output from joystick to a meters per sec velocity later
     double xSpeed = (DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
-    double ySpeed = -(DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
+    double ySpeed = (DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
     //assuming joystick twist is one to negative one
     double rotationSpeed = (DeadBand(joystick.GetTwist(), 0.1) * chosenRotationSpeed);
     std::cout << "xSpeed " << xSpeed << " ySpeed " << ySpeed << "rotation Speed " << rotationSpeed << "\n";

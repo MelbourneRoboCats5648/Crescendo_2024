@@ -24,11 +24,11 @@ void DriveModule::Initialise()
     // https://www.chiefdelphi.com/t/converting-c-swerve-code-from-phoenix-5-to-phoenix-6-not-pro/450050/2
     m_directionMotor.SetPosition(m_directionEncoder.GetPosition().WaitForUpdate(250_ms).GetValue());
     // Config CANCoder
-    CANcoderConfiguration cancoderConfig;
+    /*CANcoderConfiguration cancoderConfig;
     cancoderConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue::Signed_PlusMinusHalf;
     cancoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue::CounterClockwise_Positive;
     cancoderConfig.MagnetSensor.MagnetOffset = m_magOffset;
-    m_directionEncoder.GetConfigurator().Apply(cancoderConfig);
+    m_directionEncoder.GetConfigurator().Apply(cancoderConfig);*/
 
 }
 
@@ -45,19 +45,20 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
 
   //encoder range -0.5 +0.5,  GetValue returns rotation
   // encoder current angle is -pi to +pi
-  units::angle::radian_t encoderCurrentAngle = m_directionEncoder.GetAbsolutePosition().GetValue()*2*M_PI;
+  units::angle::radian_t encoderCurrentAngle = units::angle::radian_t{m_directionEncoder.GetAbsolutePosition().GetValueAsDouble()*2*M_PI};
   //double encoderRotation = (encoderCurrentAngle/(2 * M_PI));
 
   // Calculate the turning motor output from the turning PID controller.
-  //  const auto turnOutput = driveModule.m_turningPIDController.Calculate(
-  //    encoderCurrentAngle, state.angle.Radians());
+  const auto turnOutput = m_turningPIDController.Calculate(
+    encoderCurrentAngle, state.angle.Radians());
 
   // Set the motor outputs for the turning of the wheels
-  units::angle::radian_t error = state.angle.Radians() - encoderCurrentAngle;
-  double normalisedAngle = error / units::angle::radian_t(M_PI);
+  //units::angle::radian_t error = state.angle.Radians() - encoderCurrentAngle;
+  //double normalisedAngle = error / units::angle::radian_t(10*M_PI);
   //driveModule.m_directionMotor.Set(normalisedAngle);
   std::cout << "State speed " << double{state.speed} << " state angle " << double{state.angle.Radians()} << "encoder current angle " << double{encoderCurrentAngle} << "\n";
+  std::cout << "turnoutput " << double{turnOutput} << "\n";
     
-  m_directionMotor.Set(normalisedAngle);
+  m_directionMotor.SetVoltage(units::voltage::volt_t{turnOutput});
 
 };

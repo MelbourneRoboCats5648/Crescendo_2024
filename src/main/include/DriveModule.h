@@ -31,8 +31,8 @@ const int BACK_RIGHT_DIRECTION_MOTOR_ID = 8;
 
 const int FRONT_LEFT_DIRECTION_ENCODER_ID = 9;
 const int FRONT_RIGHT_DIRECTION_ENCODER_ID = 10;
-const int BACK_LEFT_DIRECTION_ENCODER_ID = 11;
-const int BACK_RIGHT_DIRECTION_ENCODER_ID = 12;
+const int BACK_LEFT_DIRECTION_ENCODER_ID = 12;
+const int BACK_RIGHT_DIRECTION_ENCODER_ID = 11;
 
 const double FRONT_LEFT_MAG_OFFSET = -0.362305;
 const double FRONT_RIGHT_MAG_OFFSET = -0.124268;
@@ -47,7 +47,7 @@ public:
         m_directionEncoder(directionEncoderID, "rio"),
         m_magOffset(magOffset),
         m_turningPIDController{
-            1.0,
+            0.5,
             0.0,
             0.0,
             {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}}
