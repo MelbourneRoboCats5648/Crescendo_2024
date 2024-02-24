@@ -8,17 +8,12 @@ frc::Translation2d m_frontLeftLocation{0.260825_m, 0.260825_m};
 frc::Translation2d m_frontRightLocation{0.259325_m, -0.260825_m};
 frc::Translation2d m_backLeftLocation{-0.260825_m, 0.259825_m};
 frc::Translation2d m_backRightLocation{-0.259325_m, -0.259825_m};
+
 const frc::SwerveDriveKinematics<4> kinematics{
                                         m_frontLeftLocation, 
                                         m_frontRightLocation, 
                                         m_backLeftLocation,
                                         m_backRightLocation};
-
-                                        
-DriveModule m_frontLeftModule{FRONT_LEFT_SPEED_MOTOR_ID, FRONT_LEFT_DIRECTION_MOTOR_ID, FRONT_LEFT_DIRECTION_ENCODER_ID, FRONT_LEFT_MAG_OFFSET};
-DriveModule m_frontRightModule{FRONT_RIGHT_SPEED_MOTOR_ID, FRONT_RIGHT_DIRECTION_MOTOR_ID, FRONT_RIGHT_DIRECTION_ENCODER_ID, FRONT_RIGHT_MAG_OFFSET};
-DriveModule m_backLeftModule{BACK_LEFT_SPEED_MOTOR_ID, BACK_LEFT_DIRECTION_MOTOR_ID, BACK_LEFT_DIRECTION_ENCODER_ID, BACK_LEFT_MAG_OFFSET};
-DriveModule m_backRightModule{BACK_RIGHT_SPEED_MOTOR_ID, BACK_RIGHT_DIRECTION_MOTOR_ID, BACK_RIGHT_DIRECTION_ENCODER_ID, BACK_RIGHT_MAG_OFFSET};
 
 void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
      
