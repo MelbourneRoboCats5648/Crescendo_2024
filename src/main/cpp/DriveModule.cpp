@@ -1,6 +1,9 @@
 #include "DriveModule.h"
 #include <iostream>
 
+using namespace ctre::phoenix6::configs;
+using namespace ctre::phoenix6::signals;
+
 //encoders might have to be calibrated manually.
 /*void DriveModule::SetEncodersZero()
 {
@@ -20,23 +23,30 @@ void DriveModule::Initialise()
     // From:
     // https://www.chiefdelphi.com/t/converting-c-swerve-code-from-phoenix-5-to-phoenix-6-not-pro/450050/2
     m_directionMotor.SetPosition(m_directionEncoder.GetPosition().WaitForUpdate(250_ms).GetValue());
+    // Config CANCoder
+    CANcoderConfiguration cancoderConfig;
+    cancoderConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue::Signed_PlusMinusHalf;
+    cancoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue::CounterClockwise_Positive;
+    cancoderConfig.MagnetSensor.MagnetOffset = m_magOffset;
+    m_directionEncoder.GetConfigurator().Apply(cancoderConfig);
+
 }
 
 void DriveModule::SetModule(frc::SwerveModuleState state) {
+  //optimise
+  //frc::SwerveModuleState::Optimize(state, encoderCurrentAngle);
+  
   // Setting Motor Speed
   const units::meters_per_second_t MAX_SPEED_MPS = 5.0_mps;
 
   double normalisedSpeed = state.speed / MAX_SPEED_MPS;
 
-    m_speedMotor.Set(normalisedSpeed);
+  m_speedMotor.Set(normalisedSpeed);
 
   //encoder range -0.5 +0.5,  GetValue returns rotation
   // encoder current angle is -pi to +pi
   units::angle::radian_t encoderCurrentAngle = m_directionEncoder.GetAbsolutePosition().GetValue()*2*M_PI;
   //double encoderRotation = (encoderCurrentAngle/(2 * M_PI));
-
-  //optimise
-  //frc::SwerveModuleState::Optimize(state, encoderCurrentAngle);
 
   // Calculate the turning motor output from the turning PID controller.
   //  const auto turnOutput = driveModule.m_turningPIDController.Calculate(

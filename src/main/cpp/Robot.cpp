@@ -36,7 +36,7 @@ void Robot::RobotInit() {
 
   gyro.Calibrate();
 
-  driveTrain.StopAllModules();
+  driveTrain.InitialiseAllModules();
 
 }
 

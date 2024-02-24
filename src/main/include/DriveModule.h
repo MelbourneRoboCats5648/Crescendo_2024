@@ -2,6 +2,9 @@
 
 #include <ctre/phoenix6/TalonFX.hpp>
 #include <ctre/phoenix6/CANcoder.hpp>
+#include <ctre/phoenix6/core/CoreCANcoder.hpp>
+#include <ctre/phoenix6/configs/Configs.hpp>
+#include <ctre/phoenix6/signals/SpnEnums.hpp>
 #include <units/angle.h>
 
 #include <frc/kinematics/SwerveDriveKinematics.h>
@@ -31,12 +34,18 @@ const int FRONT_RIGHT_DIRECTION_ENCODER_ID = 10;
 const int BACK_LEFT_DIRECTION_ENCODER_ID = 11;
 const int BACK_RIGHT_DIRECTION_ENCODER_ID = 12;
 
+const double FRONT_LEFT_MAG_OFFSET = -0.362305;
+const double FRONT_RIGHT_MAG_OFFSET = -0.124268;
+const double BACK_LEFT_MAG_OFFSET = 0.148682;
+const double BACK_RIGHT_MAG_OFFSET = 0.237061;
+
 class DriveModule{
 public:
-    DriveModule(int speedMotorID, int directionMotorID, int directionEncoderID) :
+    DriveModule(int speedMotorID, int directionMotorID, int directionEncoderID, double magOffset) :
         m_speedMotor(speedMotorID, "rio"),
         m_directionMotor(directionMotorID, "rio"),
         m_directionEncoder(directionEncoderID, "rio"),
+        m_magOffset(magOffset),
         m_turningPIDController{
             1.0,
             0.0,
@@ -55,6 +64,7 @@ public:
     TalonFX m_speedMotor;
     TalonFX m_directionMotor;
     CANcoder m_directionEncoder;
+    double m_magOffset;
     frc::ProfiledPIDController<units::radians> m_turningPIDController;
  
 };
