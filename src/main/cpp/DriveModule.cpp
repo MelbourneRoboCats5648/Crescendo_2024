@@ -32,24 +32,39 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
 
   //m_speedMotor.Set(normalisedSpeed);
 
-  //encoder range -0.5 +0.5,  GetValue returns rotation
+  // encoder range -0.5 +0.5,  GetValue returns rotation
   // encoder current angle is -pi to +pi
   units::angle::radian_t encoderCurrentAngleRadians = units::angle::radian_t{m_directionEncoder.GetAbsolutePosition().GetValueAsDouble()*2*M_PI};
+  
+  std::cout << "Encoder current angle " << double{encoderCurrentAngleRadians} << std::endl;
+  std::cout << "State angle before optimize " << double{state.angle.Radians()} << std::endl;
 
   // updates state variable angle to the optimum change in angle
-  // frc::SwerveModuleState::Optimize(state, encoderCurrentAngleRadians);
+  frc::SwerveModuleState::Optimize(state, encoderCurrentAngleRadians);
+
+  std::cout << "State angle after optimize " << double{state.angle.Radians()} << std::endl;
+
+  // ensuring state angle is within -0.5 to +0.5 rotations
+  units::angle::radian_t goal_angle = state.angle.Radians();
+  if (goal_angle > units::angle::radian_t{M_PI})
+  {
+    goal_angle = state.angle.Radians() - units::angle::radian_t{2.0 * M_PI};
+  }
+  else if (goal_angle < units::angle::radian_t{M_PI})
+  {
+    goal_angle = state.angle.Radians() + units::angle::radian_t{2.0 * M_PI};
+  }
 
   // Calculate the turning motor output from the turning PID controller.
   const auto turnOutput = m_turningPIDController.Calculate(
-    encoderCurrentAngleRadians, state.angle.Radians());
+    encoderCurrentAngleRadians, goal_angle);
 
   // Set the motor outputs for the turning of the wheels
   //units::angle::radian_t error = state.angle.Radians() - encoderCurrentAngle;
   //double normalisedAngle = error / units::angle::radian_t(10*M_PI);
   //driveModule.m_directionMotor.Set(normalisedAngle);
-  std::cout << "State speed " << double{state.speed} << std::endl;
-  std::cout << "State angle " << double{state.angle.Radians()} << std::endl;
-  std::cout << "Encoder current angle " << double{encoderCurrentAngleRadians} << std::endl;
+  //std::cout << "State speed " << double{state.speed} << std::endl;
+  std::cout << "Goal angle " << double{goal_angle} << std::endl;
   std::cout << "Turn output " << double{turnOutput} << std::endl << std::endl;
     
   m_directionMotor.SetVoltage(units::voltage::volt_t{1.0 * turnOutput});
