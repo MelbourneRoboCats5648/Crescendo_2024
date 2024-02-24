@@ -6,7 +6,7 @@ const double falcon500RPM{6380};
 const units::length::meter_t wheelCircumference{0.32};
 const double L1GearRatio(8.41/1);
 const double L2GearRatio(6.75/1);
-const double L3GearRatio(612/1);
+const double L3GearRatio(6.12/1);
 const units::meters_per_second_t maxVelocity{((falcon500RPM/L1GearRatio)/60_s) * wheelCircumference}; // fixme - Limit this to half??
 const double chosenMaxVelocity{5.0};
 const double chosenRotationSpeed{M_PI*2};
