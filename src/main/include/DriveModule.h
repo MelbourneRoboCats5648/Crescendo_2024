@@ -37,7 +37,7 @@ const int BACK_RIGHT_DIRECTION_ENCODER_ID = 11;
 const double FRONT_LEFT_MAG_OFFSET = -0.362305;
 const double FRONT_RIGHT_MAG_OFFSET = -0.124268;
 const double BACK_LEFT_MAG_OFFSET = 0.148682;
-const double BACK_RIGHT_MAG_OFFSET = 0.237061;
+const double BACK_RIGHT_MAG_OFFSET = 0.0; // this mag offset has been set by the phoenix tuner
 
 class DriveModule{
 public:
@@ -47,8 +47,8 @@ public:
         m_directionEncoder(directionEncoderID, "rio"),
         m_magOffset(magOffset),
         m_turningPIDController{
-            0.5,
-            0.0,
+            0.2,
+            0.1,
             0.0,
             {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}}
     {

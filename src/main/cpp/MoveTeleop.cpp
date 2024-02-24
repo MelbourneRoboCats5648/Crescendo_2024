@@ -23,7 +23,10 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     double ySpeed = (DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
     //assuming joystick twist is one to negative one
     double rotationSpeed = (DeadBand(joystick.GetTwist(), 0.1) * chosenRotationSpeed);
-    std::cout << "xSpeed " << xSpeed << " ySpeed " << ySpeed << "rotation Speed " << rotationSpeed << "\n";
+    
+    //std::cout << "xSpeed " << xSpeed << " ySpeed " << ySpeed << " rotation Speed " << rotationSpeed << "\n";
+    std::cout << " rotation speed " << rotationSpeed << std::endl;
+
     // measured robot angle - TODO reenable
     //units::angle::degree_t robotAngle = gyro.GetAngle();
 

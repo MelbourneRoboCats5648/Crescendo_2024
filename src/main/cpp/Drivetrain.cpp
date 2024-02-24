@@ -1,10 +1,10 @@
 #include "DriveTrain.h"
 
 // Locations for the swerve drive modules relative to the robot center.
-frc::Translation2d m_frontLeftLocation{0.260825_m, 0.260825_m};
-frc::Translation2d m_frontRightLocation{0.259325_m, -0.260825_m};
-frc::Translation2d m_backLeftLocation{-0.260825_m, 0.259825_m};
-frc::Translation2d m_backRightLocation{-0.259325_m, -0.259825_m};
+frc::Translation2d m_frontLeftLocation{0.26_m, 0.26_m};
+frc::Translation2d m_frontRightLocation{0.26_m, -0.26_m};
+frc::Translation2d m_backLeftLocation{-0.26_m, 0.26_m};
+frc::Translation2d m_backRightLocation{-0.26_m, -0.26_m};
 
 const frc::SwerveDriveKinematics<4> kinematics{
                                         m_frontLeftLocation, 
