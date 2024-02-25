@@ -20,12 +20,11 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
 
     // will need to actually convert the double output from joystick to a meters per sec velocity later
     double xSpeed = (DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
-    double ySpeed = (DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
+    double ySpeed = (-1.0*DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
     //assuming joystick twist is one to negative one
     double rotationSpeed = (DeadBand(joystick.GetTwist(), 0.1) * chosenRotationSpeed);
     
-    //std::cout << "xSpeed " << xSpeed << " ySpeed " << ySpeed << " rotation Speed " << rotationSpeed << "\n";
-    std::cout << " rotation speed " << rotationSpeed << std::endl;
+    std::cout << "xSpeed " << xSpeed << " ySpeed " << ySpeed << " rotation Speed " << rotationSpeed << std::endl;
 
     // measured robot angle - TODO reenable
     //units::angle::degree_t robotAngle = gyro.GetAngle();
@@ -34,7 +33,7 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     /*frc::ChassisSpeeds chassisSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(
     xSpeed, ySpeed, rotationSpeed, frc::Rotation2d{robotAngle});*/
 
-    frc::ChassisSpeeds chassisSpeed(units::meters_per_second_t{xSpeed}, units::meters_per_second_t{ySpeed}, units::radians_per_second_t{rotationSpeed});
+    frc::ChassisSpeeds chassisSpeed(units::meters_per_second_t{ySpeed}, units::meters_per_second_t{xSpeed}, units::radians_per_second_t{rotationSpeed});
 
     // command the drive train to move based on the the required field oriented speed
     driveTrain.SetAllModules(chassisSpeed);

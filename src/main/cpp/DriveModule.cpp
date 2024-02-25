@@ -18,54 +18,39 @@ void DriveModule::Initialise()
     m_directionMotor.SetPosition(m_directionEncoder.GetAbsolutePosition().WaitForUpdate(250_ms).GetValue());
     
     // Config CANCoder   
-    CANcoderConfiguration cancoderConfig;
+    /*CANcoderConfiguration cancoderConfig;
     cancoderConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue::Signed_PlusMinusHalf;
     cancoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue::CounterClockwise_Positive;
     cancoderConfig.MagnetSensor.MagnetOffset = m_magOffset;
-    m_directionEncoder.GetConfigurator().Apply(cancoderConfig);
+    m_directionEncoder.GetConfigurator().Apply(cancoderConfig);*/
 }
 
 void DriveModule::SetModule(frc::SwerveModuleState state) {
-  // Setting Motor Speed
-  const units::meters_per_second_t MAX_SPEED_MPS = 5.0_mps;
-  double normalisedSpeed = state.speed / MAX_SPEED_MPS;
-
-  //m_speedMotor.Set(normalisedSpeed);
-
   // encoder range -0.5 +0.5,  GetValue returns rotation
   // encoder current angle is -pi to +pi
   units::angle::radian_t encoderCurrentAngleRadians = units::angle::radian_t{m_directionEncoder.GetAbsolutePosition().GetValueAsDouble()*2*M_PI};
   
-  std::cout << "Encoder current angle " << double{encoderCurrentAngleRadians} << std::endl;
-  std::cout << "State angle before optimize " << double{state.angle.Radians()} << std::endl;
-
-  // updates state variable angle to the optimum change in angle
+    // updates state variable angle to the optimum change in angle
   frc::SwerveModuleState::Optimize(state, encoderCurrentAngleRadians);
 
-  std::cout << "State angle after optimize " << double{state.angle.Radians()} << std::endl;
-
-  // ensuring state angle is within -0.5 to +0.5 rotations
-  units::angle::radian_t goal_angle = state.angle.Radians();
-  if (goal_angle > units::angle::radian_t{M_PI})
-  {
-    goal_angle = state.angle.Radians() - units::angle::radian_t{2.0 * M_PI};
-  }
-  else if (goal_angle < units::angle::radian_t{M_PI})
-  {
-    goal_angle = state.angle.Radians() + units::angle::radian_t{2.0 * M_PI};
-  }
+  // Setting Motor Speed
+  const units::meters_per_second_t MAX_SPEED_MPS = 5.0_mps;
+  double normalisedSpeed = state.speed / MAX_SPEED_MPS;
+  //m_speedMotor.Set(normalisedSpeed);
 
   // Calculate the turning motor output from the turning PID controller.
   const auto turnOutput = m_turningPIDController.Calculate(
-    encoderCurrentAngleRadians, goal_angle);
+    encoderCurrentAngleRadians, state.angle.Radians());
 
   // Set the motor outputs for the turning of the wheels
   //units::angle::radian_t error = state.angle.Radians() - encoderCurrentAngle;
   //double normalisedAngle = error / units::angle::radian_t(10*M_PI);
   //driveModule.m_directionMotor.Set(normalisedAngle);
-  //std::cout << "State speed " << double{state.speed} << std::endl;
-  std::cout << "Goal angle " << double{goal_angle} << std::endl;
-  std::cout << "Turn output " << double{turnOutput} << std::endl << std::endl;
+
+  std::cout << "State speed " << double{state.speed} << std::endl;
+  std::cout << "Encoder current angle " << double{encoderCurrentAngleRadians} << std::endl;
+  std::cout << "State angle " << double{state.angle.Radians()} << std::endl;
+  std::cout << "Turn output " << double{-1.0 * turnOutput} << std::endl << std::endl;
     
-  m_directionMotor.SetVoltage(units::voltage::volt_t{1.0 * turnOutput});
+  m_directionMotor.SetVoltage(units::voltage::volt_t{-1.0 * turnOutput});
 };
