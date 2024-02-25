@@ -18,11 +18,15 @@ void DriveModule::Initialise()
     m_directionMotor.SetPosition(m_directionEncoder.GetAbsolutePosition().WaitForUpdate(250_ms).GetValue());
     
     // Config CANCoder   
-    /*CANcoderConfiguration cancoderConfig;
+    CANcoderConfiguration cancoderConfig;
     cancoderConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue::Signed_PlusMinusHalf;
     cancoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue::CounterClockwise_Positive;
     cancoderConfig.MagnetSensor.MagnetOffset = m_magOffset;
-    m_directionEncoder.GetConfigurator().Apply(cancoderConfig);*/
+    m_directionEncoder.GetConfigurator().Apply(cancoderConfig);
+
+    m_turningPIDController.EnableContinuousInput(
+      units::angle::radian_t{-1.0*M_PI},
+      units::angle::radian_t{M_PI});
 }
 
 void DriveModule::SetModule(frc::SwerveModuleState state) {
@@ -36,7 +40,7 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
   // Setting Motor Speed
   const units::meters_per_second_t MAX_SPEED_MPS = 5.0_mps;
   double normalisedSpeed = state.speed / MAX_SPEED_MPS;
-  //m_speedMotor.Set(normalisedSpeed);
+  m_speedMotor.Set(normalisedSpeed);
 
   // Calculate the turning motor output from the turning PID controller.
   const auto turnOutput = m_turningPIDController.Calculate(
@@ -52,5 +56,7 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
   std::cout << "State angle " << double{state.angle.Radians()} << std::endl;
   std::cout << "Turn output " << double{-1.0 * turnOutput} << std::endl << std::endl;
     
+  
+
   m_directionMotor.SetVoltage(units::voltage::volt_t{-1.0 * turnOutput});
 };

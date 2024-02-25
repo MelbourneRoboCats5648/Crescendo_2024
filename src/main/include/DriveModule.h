@@ -47,7 +47,7 @@ public:
         m_directionEncoder(directionEncoderID, "rio"),
         m_magOffset(magOffset),
         m_turningPIDController{
-            0.3,
+            3,
             0.05,
             0.0,
             {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}}

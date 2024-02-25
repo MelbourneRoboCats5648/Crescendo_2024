@@ -19,9 +19,9 @@ void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
     // individual SwerveModuleState components.
     auto [fl, fr, bl, br] = kinematics.ToSwerveModuleStates(chassisSpeed);
     m_frontLeftModule.SetModule(fl);
-    //m_frontRightModule.SetModule(fr);
-    //m_backLeftModule.SetModule(bl);
-    //m_backRightModule.SetModule(br);
+    m_frontRightModule.SetModule(fr);
+    m_backLeftModule.SetModule(bl);
+    m_backRightModule.SetModule(br);
 }
 
 void DriveTrain::InitialiseAllModules()
