@@ -24,6 +24,31 @@ void DriveModule::Initialise()
     cancoderConfig.MagnetSensor.MagnetOffset = m_magOffset;
     m_directionEncoder.GetConfigurator().Apply(cancoderConfig);
 
+    // Drive motor config
+    // To setup the drive motor to be able to drive at a target speed
+    TalonFXConfiguration speedMotorConfig;
+    speedMotorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue::RotorSensor;
+    speedMotorConfig.Feedback.SensorToMechanismRatio = DRIVE_GEAR_RATIO;
+    speedMotorConfig.ClosedLoopGeneral.ContinuousWrap = false;
+    speedMotorConfig.Slot0.kP = 0.031489;
+    speedMotorConfig.Slot0.kI = 0.0;
+    speedMotorConfig.Slot0.kD = 0.0;
+    speedMotorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+    speedMotorConfig.Slot0.kV = 0.0;
+    //speedMotorConfig.CurrentLimits.SupplyCurrentLimit = 50;      // Amps
+    //speedMotorConfig.CurrentLimits.SupplyCurrentThreshold = 60;  // Amps
+    //speedMotorConfig.CurrentLimits.SupplyTimeThreshold = 0.1;    // Seconds
+    speedMotorConfig.MotorOutput.Inverted = true;  // +V should rotate the motor counter-clockwise
+    speedMotorConfig.MotorOutput.NeutralMode = NeutralModeValue::Brake;
+    m_speedMotor.GetConfigurator().Apply(speedMotorConfig);
+
+    //example: https://github.com/Liam-Stow/flex-commandsInSubsystems/blob/master/src/main/cpp/utilities/SwerveModule.cpp
+    // speedMotorConfig.Feedback.FeedbackSensorSource = FeedbaclSensorSourceValue::RotorSensor;
+    // other things to config
+    /*
+      speedMotorConfig.Slot0.kV = <amount of volts to drive at 1 wheel turn per second> // tune this first, then PID
+    */
+
     m_turningPIDController.EnableContinuousInput(
       units::angle::radian_t{-1.0*M_PI},
       units::angle::radian_t{M_PI});
@@ -35,16 +60,22 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
   units::angle::radian_t encoderCurrentAngleRadians = units::angle::radian_t{m_directionEncoder.GetAbsolutePosition().GetValueAsDouble()*2*M_PI};
   
     // updates state variable angle to the optimum change in angle
-  frc::SwerveModuleState::Optimize(state, encoderCurrentAngleRadians);
+  auto optimizedState = state = frc::SwerveModuleState::Optimize(state, encoderCurrentAngleRadians);
 
   // Setting Motor Speed
-  const units::meters_per_second_t MAX_SPEED_MPS = 5.0_mps;
-  double normalisedSpeed = state.speed / MAX_SPEED_MPS;
-  m_speedMotor.Set(normalisedSpeed);
+  ////const units::meters_per_second_t MAX_SPEED_MPS = 5.0_mps;
+  // double normalisedSpeed = state.speed / MAX_SPEED_MPS; // max speed set in DriveTrain::SetAllModules()
+
+  //to find desired wheel speed:
+  // divide desired robot speed (m/s) by wheel circumference (set CIRCUMFERECNE in header file)
+  // to set the speed using control onboard the motor, use m_speedMotor.SetControl(ctre::phoenix6::controls::VelocityVoltage{desiredWheelSpeed}); // desiredWheelSpeed in turns per second
+  units::velocity::meters_per_second_t desiredWheelSpeed = state.speed*DRIVE_GEAR_RATIO/WHEEL_CIRCUMFERENCE;
+  m_speedMotor.SetControl(ctre::phoenix6::controls::VelocityVoltage{desiredWheelSpeed});
+  ////m_speedMotor.Set(normalisedSpeed);
 
   // Calculate the turning motor output from the turning PID controller.
   const auto turnOutput = m_turningPIDController.Calculate(
-    encoderCurrentAngleRadians, state.angle.Radians());
+    encoderCurrentAngleRadians, optimizedState.angle.Radians());
 
   // Set the motor outputs for the turning of the wheels
   //units::angle::radian_t error = state.angle.Radians() - encoderCurrentAngle;
@@ -57,6 +88,6 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
   std::cout << "Turn output " << double{-1.0 * turnOutput} << std::endl << std::endl;
     
   
-
+  // alternative to using negative voltage is to invert the motor with motorConfig.MotorOutput.Inverted = true; when setting up the configs.
   m_directionMotor.SetVoltage(units::voltage::volt_t{-1.0 * turnOutput});
 };

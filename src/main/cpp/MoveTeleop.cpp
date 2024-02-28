@@ -1,13 +1,14 @@
 #include "MoveTeleop.h"
 #include <iostream>
+#include <frc/filter/SlewRateLimiter.h>
 
 
-const double falcon500RPM{6380};
-const units::length::meter_t wheelCircumference{0.32};
-const double L1GearRatio(8.41/1);
-const double L2GearRatio(6.75/1);
-const double L3GearRatio(6.12/1);
-const units::meters_per_second_t maxVelocity{((falcon500RPM/L1GearRatio)/60_s) * wheelCircumference}; // fixme - Limit this to half??
+//const double falcon500RPM{6380};
+//const units::length::meter_t wheelCircumference{0.32};
+//const double L1GearRatio(8.41/1);
+//const double L2GearRatio(6.75/1);
+//const double L3GearRatio(6.12/1);
+//const units::meters_per_second_t maxVelocity{((falcon500RPM/L1GearRatio)/60_s) * wheelCircumference}; // fixme - Limit this to half??
 const double chosenMaxVelocity{5.0};
 const double chosenRotationSpeed{M_PI*2};
 
@@ -18,6 +19,10 @@ const double chosenRotationSpeed{M_PI*2};
 
 void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_IMU& gyro){
 
+// for smoother ride
+    static frc::SlewRateLimiter<units::scalar> xLimiter{3 / 1_s};
+    static frc::SlewRateLimiter<units::scalar> yLimiter{3 / 1_s};
+    static frc::SlewRateLimiter<units::scalar> rotLimiter{3 / 1_s};
     // will need to actually convert the double output from joystick to a meters per sec velocity later
     double xSpeed = (DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
     double ySpeed = (-1.0*DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
@@ -25,6 +30,9 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     double rotationSpeed = (DeadBand(joystick.GetTwist(), 0.1) * chosenRotationSpeed);
     
     std::cout << "xSpeed " << xSpeed << " ySpeed " << ySpeed << " rotation Speed " << rotationSpeed << std::endl;
+
+    // May need to limit acceleration with something like this https://github.com/Liam-Stow/flex-commandsInSubsystems/blob/e150c482f54ff3f080e057e53795809a7af17466/src/main/cpp/subsystems/DriveBase.cpp#L108
+    // (if its hard to drive)
 
     // measured robot angle - TODO reenable
     //units::angle::degree_t robotAngle = gyro.GetAngle();

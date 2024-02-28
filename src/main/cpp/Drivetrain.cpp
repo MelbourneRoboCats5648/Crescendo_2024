@@ -17,7 +17,15 @@ void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
     // Convert to module states. Here, we can use C++17's structured
     // bindings feature to automatically split up the array into its
     // individual SwerveModuleState components.
-    auto [fl, fr, bl, br] = kinematics.ToSwerveModuleStates(chassisSpeed);
+    // chassisSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(chassisSpeed, robotAngle) // <- switch to FR
+    auto states = kinematics.ToSwerveModuleStates(chassisSpeed);
+
+  // limit to max speed
+  const units::meters_per_second_t MAX_SPEED_MPS = 5.0_mps;
+  kinematics.DesaturateWheelSpeeds(&states, MAX_SPEED_MPS);
+
+  auto [fl, fr, bl, br] = states;
+
     m_frontLeftModule.SetModule(fl);
     m_frontRightModule.SetModule(fr);
     m_backLeftModule.SetModule(bl);

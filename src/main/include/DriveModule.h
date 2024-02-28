@@ -38,7 +38,7 @@ const double FRONT_LEFT_MAG_OFFSET = -0.091796875;
 const double FRONT_RIGHT_MAG_OFFSET = 0.437255859375;
 const double BACK_LEFT_MAG_OFFSET = -0.066162109375;
 const double BACK_RIGHT_MAG_OFFSET = 0.15380859375; // this mag offset has been set by the phoenix tuner
-
+// set the offsets by using pheonix tuner
 class DriveModule{
 public:
     DriveModule(int speedMotorID, int directionMotorID, int directionEncoderID, double magOffset) :
@@ -47,14 +47,15 @@ public:
         m_directionEncoder(directionEncoderID, "rio"),
         m_magOffset(magOffset),
         m_turningPIDController{
-            3,
-            0.05,
-            0.0,
-            {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}}
-    {
+           3,
+           0.05,
+           0.0,
+          {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}}
+{
     }
 
-    // sets the drive of all motors to zero
+    // Ki is enough
+    // sets the drive of all motors to zero    
     void Stop();
     void Initialise();
     void SetModule(frc::SwerveModuleState state);
@@ -65,7 +66,14 @@ public:
     CANcoder m_directionEncoder;
     double m_magOffset;
     frc::ProfiledPIDController<units::radians> m_turningPIDController;
- 
+    //const units::meter_t WHEEL_RADIUS = 0.0508_m;
+    // CIRCUMFERECNE calc here
+     private:
+  // Mechanical Constants
+  static constexpr double TURNING_GEAR_RATIO = 150.0 / 7.0;
+  static constexpr double DRIVE_GEAR_RATIO = 6.75;  // L2 - Fast kit check the gear ratio
+  static constexpr units::meter_t WHEEL_RADIUS = 0.0508_m;
+  static constexpr units::meter_t WHEEL_CIRCUMFERENCE = 2 * std::numbers::pi * WHEEL_RADIUS;
 };
 
 
