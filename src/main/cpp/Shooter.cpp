@@ -2,12 +2,12 @@
 #include <frc/motorcontrol/VictorSP.h>
 
 // PWM ports - TODO Check
-const int motorShooterLeftPort = 2;
-const int motorShooterRightPort = 3;
+const int motorShooterLeftPort = 4;
+const int motorShooterRightPort = 5;
 
 // Speeds
-const int speakerShooterSpeed = 1;
-const int ampShooterSpeed = 0.5;
+const double speakerShooterSpeed = 0.2;
+const double ampShooterSpeed = 0.2;
 
 //Shooter Motors
 frc::VictorSP motorShooterLeft{motorShooterLeftPort};
@@ -20,22 +20,22 @@ frc::VictorSP motorShooterRight{motorShooterRightPort};
 void Shooter(frc::XboxController& xbox){
 
 //Speaker
-if (xbox.GetYButtonPressed())
+if (true == xbox.GetYButton())
 {
   motorShooterLeft.Set(speakerShooterSpeed);
-  motorShooterRight.Set(speakerShooterSpeed);
+  motorShooterRight.Set(-1.0*speakerShooterSpeed); //inverting motor direction
 }
-
 //Amp
-else if (xbox.GetAButtonPressed())
+else if (true == xbox.GetAButton())
 {
   motorShooterLeft.Set(ampShooterSpeed);
-  motorShooterRight.Set(ampShooterSpeed);
+  motorShooterRight.Set(-1.0*ampShooterSpeed); //inverting motor direction
 }
 else
 {
-  motorShooterLeft.Set(0);
-  motorShooterRight.Set(0);
+  motorShooterLeft.Set(0.0);
+  motorShooterRight.Set(0.0);
 }
+
 
 }

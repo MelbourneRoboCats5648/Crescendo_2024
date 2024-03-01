@@ -1,18 +1,18 @@
 #include "Intake.h"
 #include <frc/motorcontrol/VictorSP.h>
 //Speeds
-const int intakeArmRetractSpeed = 0.8;
-const int intakeArmExtendSpeed = -0.8;
-const int intakeWheelInSpeed = 0.5;
-const int intakeWheelOutSpeed = -0.5;
+const double intakeArmRetractSpeed = 1.0;
+const double intakeArmExtendSpeed = -1.0;
+const double intakeWheelInSpeed = 0.6;
+const double intakeWheelOutSpeed = -0.6;
 
 // xbox buttons
 const int dpadUpButton = 0;
 const int dpadDownButton = 180;
 
-//Ports
-const int motorIntakeArmPort = 4;
-const int motorIntakeWheelPort = 5;
+//PWM Ports
+const int motorIntakeArmPort = 2;
+const int motorIntakeWheelPort = 3;
 
 /** Intake encoder
 const int aChannel = 0; 
@@ -36,19 +36,19 @@ void Intake(frc::XboxController& xbox) {
 
     // arm in and out
 
-    if (xbox.GetPOV(dpadUpButton))
+    if (xbox.GetXButton())
     {
     motorIntakeArm.Set(intakeArmRetractSpeed);
     }
 
-    else if (xbox.GetPOV(dpadDownButton))
+    else if (xbox.GetBButton())
     {
     motorIntakeArm.Set(intakeArmExtendSpeed);
     }
 
     else 
     {
-    motorIntakeArm.Set(0);
+    motorIntakeArm.Set(0.0);
     }
 
     // intake wheels spinning
@@ -66,7 +66,7 @@ void Intake(frc::XboxController& xbox) {
 
     else
     {
-    motorIntakeWheel.Set(0);
+    motorIntakeWheel.Set(0.0);
     }
 
 }

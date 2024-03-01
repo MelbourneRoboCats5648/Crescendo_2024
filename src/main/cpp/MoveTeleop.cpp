@@ -24,7 +24,7 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     static frc::SlewRateLimiter<units::scalar> yLimiter{3 / 1_s};
     static frc::SlewRateLimiter<units::scalar> rotLimiter{3 / 1_s};
     // will need to actually convert the double output from joystick to a meters per sec velocity later
-    double xSpeed = xLimiter.Calculate(DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
+    double xSpeed = xLimiter.Calculate(-1.0*DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
     double ySpeed = yLimiter.Calculate(-1.0*DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
     //assuming joystick twist is one to negative one
     double rotationSpeed = rotLimiter.Calculate(DeadBand(joystick.GetTwist(), 0.1) * chosenRotationSpeed);
