@@ -30,7 +30,7 @@ void DriveModule::Initialise()
     speedMotorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue::RotorSensor;
     speedMotorConfig.Feedback.SensorToMechanismRatio = DRIVE_GEAR_RATIO;
     speedMotorConfig.ClosedLoopGeneral.ContinuousWrap = false;
-    speedMotorConfig.Slot0.kP = 0.031489;
+    speedMotorConfig.Slot0.kP = 1.0;
     speedMotorConfig.Slot0.kI = 0.0;
     speedMotorConfig.Slot0.kD = 0.0;
     speedMotorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
@@ -68,12 +68,13 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
 
   //to find desired wheel speed:
   // divide desired robot speed (m/s) by wheel circumference (set CIRCUMFERECNE in header file)
+  
   // to set the speed using control onboard the motor, use m_speedMotor.SetControl(ctre::phoenix6::controls::VelocityVoltage{desiredWheelSpeed}); // desiredWheelSpeed in turns per second
-  units::velocity::meters_per_second_t desiredWheelSpeed = state.speed*DRIVE_GEAR_RATIO/WHEEL_CIRCUMFERENCE;
+  units::angular_velocity::turns_per_second_t desiredWheelSpeed{(state.speed.value())/WHEEL_CIRCUMFERENCE.value()};
   m_speedMotor.SetControl(ctre::phoenix6::controls::VelocityVoltage{desiredWheelSpeed});
   ////m_speedMotor.Set(normalisedSpeed);
 
-  // Calculate the turning motor output from the turning PID controller.
+  // Calculate the turning motor output from the turning PID controller. 
   const auto turnOutput = m_turningPIDController.Calculate(
     encoderCurrentAngleRadians, optimizedState.angle.Radians());
 
@@ -83,7 +84,7 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
   //driveModule.m_directionMotor.Set(normalisedAngle);
 
   std::cout << "State speed " << double{state.speed} << std::endl;
-  std::cout << "Encoder current angle " << double{encoderCurrentAngleRadians} << std::endl;
+  std::cout << "desiredWheelSpeed " << double{desiredWheelSpeed} << std::endl;
   std::cout << "State angle " << double{state.angle.Radians()} << std::endl;
   std::cout << "Turn output " << double{-1.0 * turnOutput} << std::endl << std::endl;
     

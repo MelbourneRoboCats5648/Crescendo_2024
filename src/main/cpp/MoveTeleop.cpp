@@ -24,10 +24,10 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     static frc::SlewRateLimiter<units::scalar> yLimiter{3 / 1_s};
     static frc::SlewRateLimiter<units::scalar> rotLimiter{3 / 1_s};
     // will need to actually convert the double output from joystick to a meters per sec velocity later
-    double xSpeed = (DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
-    double ySpeed = (-1.0*DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
+    double xSpeed = xLimiter.Calculate(DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
+    double ySpeed = yLimiter.Calculate(-1.0*DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
     //assuming joystick twist is one to negative one
-    double rotationSpeed = (DeadBand(joystick.GetTwist(), 0.1) * chosenRotationSpeed);
+    double rotationSpeed = rotLimiter.Calculate(DeadBand(joystick.GetTwist(), 0.1) * chosenRotationSpeed);
     
     std::cout << "xSpeed " << xSpeed << " ySpeed " << ySpeed << " rotation Speed " << rotationSpeed << std::endl;
 
@@ -41,7 +41,10 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     /*frc::ChassisSpeeds chassisSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(
     xSpeed, ySpeed, rotationSpeed, frc::Rotation2d{robotAngle});*/
 
-    frc::ChassisSpeeds chassisSpeed(units::meters_per_second_t{ySpeed}, units::meters_per_second_t{xSpeed}, units::radians_per_second_t{rotationSpeed});
+    frc::ChassisSpeeds chassisSpeed(
+        units::meters_per_second_t{ySpeed}, 
+        units::meters_per_second_t{xSpeed}, 
+        units::radians_per_second_t{rotationSpeed});
 
     // command the drive train to move based on the the required field oriented speed
     driveTrain.SetAllModules(chassisSpeed);
