@@ -3,12 +3,14 @@
 //Speeds
 const double intakeArmRetractSpeed = 0.4;
 const double intakeArmExtendSpeed = -0.4;
+
 const double intakeWheelInSpeed = 0.6;
-const double intakeWheelOutSpeed = -1.0;
+const double ampIntakeWheelOutSpeed = -0.6;
+const double speakerIntakeWheelOutSpeed = -1.0;
 
 // xbox buttons - not being used *******
-const int dpadUpButton = 0;
-const int dpadDownButton = 180;
+//const int dpadUpButton = 0;
+//const int dpadDownButton = 180;
 
 //PWM Ports
 const int motorIntakeArmPort = 2;
@@ -36,12 +38,12 @@ void Intake(frc::XboxController& xbox) {
 
     // arm in and out
 
-    if (xbox.GetPOV(180)==180)
+    if (xbox.GetBButton())
     {
         motorIntakeArm.Set(intakeArmRetractSpeed);
     }
 
-    else if (xbox.GetPOV(0)==0)
+    else if (xbox.GetXButton())
     {
         motorIntakeArm.Set(intakeArmExtendSpeed);
     }
@@ -55,7 +57,12 @@ void Intake(frc::XboxController& xbox) {
     // josh help how to fix
     if (xbox.GetRightTriggerAxis())
     {
-    motorIntakeWheel.Set(intakeWheelOutSpeed);
+    motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
+    }
+
+    else if (xbox.GetRightBumperPressed())
+    {
+    motorIntakeWheel.Set(ampIntakeWheelOutSpeed);
     }
 
     else if (xbox.GetLeftTriggerAxis())
