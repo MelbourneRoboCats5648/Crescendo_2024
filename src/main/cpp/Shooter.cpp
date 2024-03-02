@@ -6,8 +6,8 @@ const int motorShooterLeftPort = 4;
 const int motorShooterRightPort = 5;
 
 // Speeds
-const double speakerShooterSpeed = 0.2;
-const double ampShooterSpeed = 0.2;
+const double speakerShooterSpeed = 1.0;
+const double ampShooterSpeed = 0.4;
 
 //Shooter Motors
 frc::VictorSP motorShooterLeft{motorShooterLeftPort};

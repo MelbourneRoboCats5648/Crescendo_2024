@@ -1,10 +1,10 @@
 #include "Intake.h"
 #include <frc/motorcontrol/VictorSP.h>
 //Speeds
-const double intakeArmRetractSpeed = 1.0;
-const double intakeArmExtendSpeed = -1.0;
+const double intakeArmRetractSpeed = 0.4;
+const double intakeArmExtendSpeed = -0.4;
 const double intakeWheelInSpeed = 0.6;
-const double intakeWheelOutSpeed = -0.6;
+const double intakeWheelOutSpeed = -1.0;
 
 // xbox buttons - not being used *******
 const int dpadUpButton = 0;

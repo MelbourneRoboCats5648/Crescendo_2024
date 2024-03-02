@@ -83,9 +83,10 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    MoveAutonomous(driveTrain, gyro);
-  }
+    //MoveAutonomous(driveTrain, gyro);
 }
+  }
+
 
 void Robot::TeleopInit() {
 
