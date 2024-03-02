@@ -1,5 +1,7 @@
 #pragma once
 #include "DriveTrain.h"
+#include "Intake.h"
+#include "Shooter.h"
 #include <frc/ADIS16470_IMU.h>
 
-void MoveAutonomous(DriveTrain& driveTrain, frc::ADIS16470_IMU& gyro);
+void AutoYay();

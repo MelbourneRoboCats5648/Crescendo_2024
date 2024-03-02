@@ -83,8 +83,9 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    //MoveAutonomous(driveTrain, gyro);
-}
+    AutoYay();
+  
+  }
   }
 
 
