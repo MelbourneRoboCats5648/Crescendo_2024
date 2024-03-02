@@ -6,7 +6,7 @@ const double intakeArmExtendSpeed = -1.0;
 const double intakeWheelInSpeed = 0.6;
 const double intakeWheelOutSpeed = -0.6;
 
-// xbox buttons
+// xbox buttons - not being used *******
 const int dpadUpButton = 0;
 const int dpadDownButton = 180;
 
@@ -36,37 +36,35 @@ void Intake(frc::XboxController& xbox) {
 
     // arm in and out
 
-    if (xbox.GetXButton())
+    if (xbox.GetPOV(180)==180)
     {
-    motorIntakeArm.Set(intakeArmRetractSpeed);
+        motorIntakeArm.Set(intakeArmRetractSpeed);
     }
 
-    else if (xbox.GetBButton())
+    else if (xbox.GetPOV(0)==0)
     {
-    motorIntakeArm.Set(intakeArmExtendSpeed);
+        motorIntakeArm.Set(intakeArmExtendSpeed);
     }
-
     else 
     {
-    motorIntakeArm.Set(0.0);
+        motorIntakeArm.Set(0.0);
     }
 
     // intake wheels spinning
     // right trigger wheel in left trigger wheel out
     // josh help how to fix
-    if (xbox.GetLeftTriggerAxis())
+    if (xbox.GetRightTriggerAxis())
     {
     motorIntakeWheel.Set(intakeWheelOutSpeed);
     }
 
-    else if (xbox.GetRightTriggerAxis())
+    else if (xbox.GetLeftTriggerAxis())
     {
     motorIntakeWheel.Set(intakeWheelInSpeed);
     }
-
     else
     {
-    motorIntakeWheel.Set(0.0);
+        motorIntakeWheel.Set(0.0);
     }
 
 }

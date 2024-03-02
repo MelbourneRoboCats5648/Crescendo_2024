@@ -12,6 +12,11 @@
 const double chosenMaxVelocity{5.0};
 const double chosenRotationSpeed{M_PI*2};
 
+// for smoother ride
+static frc::SlewRateLimiter<units::scalar> xLimiter{3 / 1_s};
+static frc::SlewRateLimiter<units::scalar> yLimiter{3 / 1_s};
+static frc::SlewRateLimiter<units::scalar> rotLimiter{3 / 1_s};
+
 
 // 1) Move according to joystick input - joystick
 // 2) Translate movement into field oriented drive for each module - gyro angle and the physical dimensions of the robot
@@ -19,10 +24,6 @@ const double chosenRotationSpeed{M_PI*2};
 
 void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_IMU& gyro){
 
-// for smoother ride
-    static frc::SlewRateLimiter<units::scalar> xLimiter{3 / 1_s};
-    static frc::SlewRateLimiter<units::scalar> yLimiter{3 / 1_s};
-    static frc::SlewRateLimiter<units::scalar> rotLimiter{3 / 1_s};
     // will need to actually convert the double output from joystick to a meters per sec velocity later
     double xSpeed = xLimiter.Calculate(-1.0*DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
     double ySpeed = yLimiter.Calculate(-1.0*DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
