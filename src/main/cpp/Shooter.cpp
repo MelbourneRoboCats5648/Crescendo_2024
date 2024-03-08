@@ -1,14 +1,6 @@
 #include "Shooter.h"
 #include <frc/motorcontrol/VictorSP.h>
 
-// PWM ports - TODO Check
-const int motorShooterLeftPort = 4;
-const int motorShooterRightPort = 5;
-
-// Speeds
-const double speakerShooterSpeed = 1.0;
-const double ampShooterSpeed = 0.4;
-
 //Shooter Motors
 frc::VictorSP motorShooterLeft{motorShooterLeftPort};
 frc::VictorSP motorShooterRight{motorShooterRightPort};

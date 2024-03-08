@@ -1,25 +1,11 @@
 #include "Intake.h"
 #include <frc/motorcontrol/VictorSP.h>
 //Speeds
-const double intakeArmRetractSpeed = 0.4;
-const double intakeArmExtendSpeed = -0.4;
-
-const double intakeWheelInSpeed = 0.6;
-const double ampIntakeWheelOutSpeed = -0.6;
-const double speakerIntakeWheelOutSpeed = -1.0;
 
 // xbox buttons - not being used *******
 //const int dpadUpButton = 0;
 //const int dpadDownButton = 180;
 
-//PWM Ports
-const int motorIntakeArmPort = 2;
-const int motorIntakeWheelPort = 3;
-
-/** Intake encoder
-const int aChannel = 0; 
-const int bChannel = 1; 
-*/
 
 //Intake variables
 frc::VictorSP motorIntakeArm{motorIntakeArmPort};

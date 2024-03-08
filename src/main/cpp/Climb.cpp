@@ -4,12 +4,12 @@
 
 
 // PWM ports - TODO Check
-const int motorClimbLeftPort = 0;
-const int motorClimbRightPort = 1;
+const int motorClimbLeftPort = 1;
+const int motorClimbRightPort = 0;
 
 // Speeds
-const int climbUpSpeed = 0.8;
-const int climbDownSpeed = -0.8;
+const double climbUpSpeed = 0.25;
+const double climbDownSpeed = -0.25;
 
 // Climb variables
 frc::VictorSP motorClimbLeft{motorClimbLeftPort};

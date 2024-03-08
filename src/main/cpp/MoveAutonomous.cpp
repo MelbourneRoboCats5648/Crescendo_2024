@@ -1,30 +1,34 @@
 #include "MoveAutonomous.h"
-#include "Shooter.cpp"
-#include "Intake.cpp"
-#include "time.h"
-#include "future"
+#include <frc/Timer.h>
+#include "frc/DriverStation.h"
 
+frc::Timer autoTimer{};
 
-
-
-void AutoYay()
+void AutoInit()
 {
-   
-if(Timer.getMatchTime()=2) 
-{
-    motorShooterLeft.Set(ampShooterSpeed);
-    motorShooterRight.Set(-1.0*ampShooterSpeed);
+    autoTimer.Start();
+    frc::DriverStation::GetAlliance();
 }
-if(Timer.getMatchTime()=6)
+
+// Do our autonomous, called from AutoPeriodic
+void AutoYay(
+    frc::VictorSP motorShooterLeft,
+    frc::VictorSP motorShooterRight,
+    frc::VictorSP motorIntakeWheel)
 {
-   motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
-}
-if(Timer.getMatchTime()=8)
-{
-    motorShooterLeft.Set(0);
-    motorShooterRight.Set(0);
-    motorIntakeWheel.Set(0);
-};
+    auto seconds = autoTimer.Get();
+    // shooter always on
+    motorShooterLeft.Set(speakerShooterSpeed);
+    motorShooterRight.Set(-1.0*speakerShooterSpeed);
+    
+    if(seconds<5_s&&seconds>3_s)
+    {
+        motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
+    }
+    if(seconds>5_s)
+    {
+        motorIntakeWheel.Set(0);
+    }
 }
 
 

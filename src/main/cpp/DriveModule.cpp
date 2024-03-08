@@ -30,14 +30,14 @@ void DriveModule::Initialise()
     speedMotorConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue::RotorSensor;
     speedMotorConfig.Feedback.SensorToMechanismRatio = DRIVE_GEAR_RATIO;
     speedMotorConfig.ClosedLoopGeneral.ContinuousWrap = false;
-    speedMotorConfig.Slot0.kP = 1.0;
+    speedMotorConfig.Slot0.kP = 0.3;
     speedMotorConfig.Slot0.kI = 0.0;
     speedMotorConfig.Slot0.kD = 0.0;
     speedMotorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-    speedMotorConfig.Slot0.kV = 0.0;
-    //speedMotorConfig.CurrentLimits.SupplyCurrentLimit = 50;      // Amps
-    //speedMotorConfig.CurrentLimits.SupplyCurrentThreshold = 60;  // Amps
-    //speedMotorConfig.CurrentLimits.SupplyTimeThreshold = 0.1;    // Seconds
+    speedMotorConfig.Slot0.kV = 0.1;
+    speedMotorConfig.CurrentLimits.SupplyCurrentLimit = 50;      // Amps
+    speedMotorConfig.CurrentLimits.SupplyCurrentThreshold = 60;  // Amps
+    speedMotorConfig.CurrentLimits.SupplyTimeThreshold = 0.1;    // Seconds
     speedMotorConfig.MotorOutput.Inverted = true;  // +V should rotate the motor counter-clockwise
     speedMotorConfig.MotorOutput.NeutralMode = NeutralModeValue::Brake;
     m_speedMotor.GetConfigurator().Apply(speedMotorConfig);

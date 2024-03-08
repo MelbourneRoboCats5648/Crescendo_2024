@@ -83,7 +83,7 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    AutoYay();
+    //AutoYay();  
   
   }
   }
