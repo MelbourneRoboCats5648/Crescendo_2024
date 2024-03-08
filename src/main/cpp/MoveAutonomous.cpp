@@ -4,37 +4,43 @@
 
 frc::Timer autoTimer{};
 
-void AutoInit(DriveModule& driveModule)
+frc::VictorSP motorIntakeArmAuto{motorIntakeArmPort};
+frc::VictorSP motorIntakeWheelAuto{motorIntakeWheelPort};
+
+frc::VictorSP motorShooterLeftAuto{motorShooterLeftPort};
+frc::VictorSP motorShooterRightAuto{motorShooterRightPort};
+
+void AutoInit()
 {
     autoTimer.Start();
     frc::DriverStation::GetAlliance();
-    driveModule.Initialise();
 }
 
 // Do our autonomous, called from AutoPeriodic
-void AutoYay(
-    frc::VictorSP motorShooterLeft,
-    frc::VictorSP motorShooterRight,
-    frc::VictorSP motorIntakeWheel,
-    DriveTrain& drivetrain,
-    DriveModule& drivemodule)
+void AutoYay(DriveTrain& driveTrain)
 {
-    frc::ChassisSpeeds speeds{3.0_mps, -2.0_mps,
+    frc::ChassisSpeeds speeds{3.0_mps, 0.0_mps,
      units::radians_per_second_t(0)};
-     
+
     auto seconds = autoTimer.Get();
     // shooter always on
-    motorShooterLeft.Set(speakerShooterSpeed);
-    motorShooterRight.Set(-1.0*speakerShooterSpeed);
+    motorShooterLeftAuto.Set(speakerShooterSpeed);
+    motorShooterRightAuto.Set(-1.0*speakerShooterSpeed);
     
     if(seconds<5_s&&seconds>3_s)
     {
-        motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
+        motorIntakeWheelAuto.Set(speakerIntakeWheelOutSpeed);
     }
     if(seconds>5_s)
     {
-        motorIntakeWheel.Set(0);
-        drivetrain.SetAllModules(speeds);
+        motorIntakeWheelAuto.Set(0);
+        driveTrain.SetAllModules(speeds);
+    }
+    if(seconds==6_s)
+    {
+        motorShooterLeftAuto.Set(0);
+        motorShooterRightAuto.Set(0);
+        driveTrain.StopAllModules();
     }
 }
 

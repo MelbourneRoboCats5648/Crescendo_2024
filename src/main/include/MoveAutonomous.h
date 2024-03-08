@@ -15,11 +15,6 @@
 #include <frc/kinematics/ChassisSpeeds.h>
 
 
-void AutoInit(DriveModule& driveModule);
-void AutoYay(
-    frc::VictorSP motorShooterLeft,
-    frc::VictorSP motorShooterRight,
-    frc::VictorSP motorIntakeWheel,
-    DriveTrain& drivetrain,
-    DriveModule& drivemodule);
+void AutoInit();
+void AutoYay(DriveTrain& driveTrain);
 

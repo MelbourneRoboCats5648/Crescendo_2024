@@ -18,6 +18,9 @@
   "files.associations": {
     "ostream": "cpp",
     "condition_variable": "cpp",
-    "future": "cpp"
+    "future": "cpp",
+    "bitset": "cpp",
+    "set": "cpp",
+    "*.inc": "cpp"
   }
 }
