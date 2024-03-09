@@ -91,4 +91,14 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
   
   // alternative to using negative voltage is to invert the motor with motorConfig.MotorOutput.Inverted = true; when setting up the configs.
   m_directionMotor.SetVoltage(units::voltage::volt_t{-1.0 * turnOutput});
-};
+}
+
+double DriveModule::GetModulePositionDistance()
+{
+  return m_speedMotor.GetPosition().GetValueAsDouble()*31.98;
+}
+
+void DriveModule::SetModulePositionToZeroDistance()
+{
+  m_speedMotor.SetPosition(units::angle::turn_t {0.0});
+}

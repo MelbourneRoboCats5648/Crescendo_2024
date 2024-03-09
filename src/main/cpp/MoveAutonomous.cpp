@@ -26,6 +26,7 @@ void AutoYay(DriveTrain& driveTrain)
     // shooter always on
     motorShooterLeftAuto.Set(speakerShooterSpeed);
     motorShooterRightAuto.Set(-1.0*speakerShooterSpeed);
+    driveTrain.SetPositionToZeroDistance();
     
     if(seconds<5_s&&seconds>3_s)
     {
@@ -36,12 +37,17 @@ void AutoYay(DriveTrain& driveTrain)
         motorIntakeWheelAuto.Set(0);
         driveTrain.SetAllModules(speeds);
     }
+    if(driveTrain.GetPositionDistance()==113.0)
+    {
+        driveTrain.StopAllModules();
+    }
     if(seconds==6_s)
     {
         motorShooterLeftAuto.Set(0);
         motorShooterRightAuto.Set(0);
-        driveTrain.StopAllModules();
+        //driveTrain.StopAllModules();
     }
+   
 }
 
 

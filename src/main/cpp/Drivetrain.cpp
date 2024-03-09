@@ -48,4 +48,13 @@ void DriveTrain::StopAllModules()
   m_backRightModule.Stop();
 }
 
+double DriveTrain::GetPositionDistance()
+{
+
+}
+
+void DriveTrain::SetPositionToZeroDistance()
+{
+
+}
 

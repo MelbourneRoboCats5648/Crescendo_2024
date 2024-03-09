@@ -59,6 +59,8 @@ public:
     void Stop();
     void Initialise();
     void SetModule(frc::SwerveModuleState state);
+    double GetModulePositionDistance();
+    void SetModulePositionToZeroDistance();
 
 public:
     TalonFX m_speedMotor;
