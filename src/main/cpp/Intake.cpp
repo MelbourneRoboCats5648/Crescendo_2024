@@ -7,9 +7,6 @@
 //const int dpadDownButton = 180;
 
 
-//Intake variables
-frc::VictorSP motorIntakeArm{motorIntakeArmPort};
-frc::VictorSP motorIntakeWheel{motorIntakeWheelPort};
 //frc::Encoder encoderIntake{aChannel, bChannel};
 
 /**
@@ -20,8 +17,8 @@ frc::VictorSP motorIntakeWheel{motorIntakeWheelPort};
  * Triggers are for note in and out (wheel spinning)
  * Plus button for arm in and out
 **/
-void Intake(frc::XboxController& xbox) {
-
+void Intake(frc::XboxController& xbox, frc::VictorSP& motorIntakeArm, frc::VictorSP& motorIntakeWheel) 
+{
     // arm in and out
 
     if (xbox.GetBButton())

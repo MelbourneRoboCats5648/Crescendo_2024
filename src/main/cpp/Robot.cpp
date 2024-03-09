@@ -29,6 +29,21 @@ frc::ADIS16470_IMU gyro{};
 frc::XboxController xbox{xboxControllerPort};
 frc::Joystick driveJoyStick{driveJoystickPort};
 
+//MotorPorts
+// PWM ports - TODO Check
+const int motorShooterLeftPort = 4;
+const int motorShooterRightPort = 5;
+//PWM Ports
+const int motorIntakeArmPort = 2;
+const int motorIntakeWheelPort = 3;
+
+//Motors
+frc::VictorSP motorIntakeArm{motorIntakeArmPort};
+frc::VictorSP motorIntakeWheel{motorIntakeWheelPort};
+
+frc::VictorSP motorShooterLeft{motorShooterLeftPort};
+frc::VictorSP motorShooterRight{motorShooterRightPort};
+
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
@@ -84,7 +99,7 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    AutoYay(driveTrain);
+    AutoYay(driveTrain, motorShooterLeft, motorShooterRight, motorIntakeArm, motorIntakeWheel);
   
   }
   }
@@ -98,8 +113,8 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
   Climb(driveJoyStick);
-  Intake(xbox);
-  Shooter(xbox);
+  Intake(xbox, motorIntakeArm, motorIntakeWheel);
+  Shooter(xbox, motorShooterLeft, motorShooterRight);
   
   MoveTeleop(driveTrain, driveJoyStick, gyro);
 }

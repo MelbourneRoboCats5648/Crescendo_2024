@@ -16,5 +16,9 @@
 
 
 void AutoInit();
-void AutoYay(DriveTrain& driveTrain);
+void AutoYay(DriveTrain& driveTrain,
+            frc::VictorSP& motorShooterLeft, 
+            frc::VictorSP& motorShooterRight,
+            frc::VictorSP& motorIntakeArm, 
+            frc::VictorSP& motorIntakeWheel);
 
