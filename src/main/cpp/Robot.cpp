@@ -15,6 +15,8 @@
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
 
+#include "cameraserver/CameraServer.h"
+
 // USB ports - TODO Check
 const int driveJoystickPort = 0;
 const int xboxControllerPort = 1;
@@ -38,6 +40,9 @@ void Robot::RobotInit() {
 
   driveTrain.InitialiseAllModules();
   driveTrain.StopAllModules();
+
+  cs::UsbCamera usbCamera = frc::CameraServer::StartAutomaticCapture();
+  usbCamera.SetResolution(640, 480);
 
 }
 
