@@ -1,13 +1,15 @@
 #include "MoveAutonomous.h"
 #include <frc/Timer.h>
 #include "frc/DriverStation.h"
+#include <iostream>
 
 frc::Timer autoTimer{};
 
-void AutoInit()
+void AutoInit(DriveTrain& driveTrain)
 {
     autoTimer.Start();
-    frc::DriverStation::GetAlliance();
+    frc::DriverStation::GetAlliance();    
+    driveTrain.SetPositionToZeroDistance();
 }
 
 // Do our autonomous, called from AutoPeriodic
@@ -16,38 +18,43 @@ void AutoYay(DriveTrain& driveTrain,
             frc::VictorSP& motorShooterRight,
             frc::VictorSP& motorIntakeArm, 
             frc::VictorSP& motorIntakeWheel)
+
 {
     frc::ChassisSpeeds speeds{3.0_mps, 0.0_mps,
      units::radians_per_second_t(0)};
 
     auto seconds = autoTimer.Get();
     // shooter always on
-    motorShooterLeft.Set(.3);
-    motorShooterRight.Set(-1.0*.3);
-    driveTrain.SetPositionToZeroDistance();
+
+    if(seconds<9_s&&seconds>0_s)
+    {
+        motorShooterLeft.Set(1.0);
+        motorShooterRight.Set(-1.0*1.0);
+    }
+    else
+    {
+        motorShooterLeft.Set(0.0);
+        motorShooterRight.Set(0.0);
+    }
+    
     
     if(seconds<5_s&&seconds>3_s)
     {
-        motorIntakeWheel.Set(-.3);
+        motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
     }
     else{
         motorIntakeWheel.Set(0);
     }
-    /*if(seconds>5_s)
+    if(driveTrain.GetPositionDistance()>1.130)
     {
-        motorIntakeWheel.Set(0);
-        driveTrain.SetAllModules(speeds);
+       driveTrain.StopAllModules();
     }
-    if(driveTrain.GetPositionDistance()==113.0)
+    else if(seconds>5_s)
     {
-        driveTrain.StopAllModules();
+       driveTrain.SetAllModules(speeds);
+       std::cout << "driveTrainPosition " << driveTrain.GetPositionDistance() << std::endl;
     }
-    if(seconds==6_s)
-    {
-        motorShooterLeft.Set(0);
-        motorShooterRight.Set(0);
-        //driveTrain.StopAllModules();
-    }*/
+    
    
 }
 

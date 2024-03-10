@@ -50,11 +50,17 @@ void DriveTrain::StopAllModules()
 
 double DriveTrain::GetPositionDistance()
 {
-
+  return (m_frontLeftModule.GetModulePositionDistance()+
+  m_frontRightModule.GetModulePositionDistance()+
+  m_backLeftModule.GetModulePositionDistance()+
+  m_backRightModule.GetModulePositionDistance())/4;
 }
 
 void DriveTrain::SetPositionToZeroDistance()
 {
-
+  m_frontLeftModule.SetModulePositionToZeroDistance();
+  m_frontRightModule.SetModulePositionToZeroDistance();
+  m_backLeftModule.SetModulePositionToZeroDistance();
+  m_backRightModule.SetModulePositionToZeroDistance();
 }
 

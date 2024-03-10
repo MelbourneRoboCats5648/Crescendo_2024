@@ -34,18 +34,19 @@ const int FRONT_RIGHT_DIRECTION_ENCODER_ID = 10;
 const int BACK_LEFT_DIRECTION_ENCODER_ID = 12;
 const int BACK_RIGHT_DIRECTION_ENCODER_ID = 11;
 
-const double FRONT_LEFT_MAG_OFFSET = 0.4599609375;
-const double FRONT_RIGHT_MAG_OFFSET = 0.41162109375;
-const double BACK_LEFT_MAG_OFFSET = 0.389404296875;
-const double BACK_RIGHT_MAG_OFFSET = 0.192138671875; // this mag offset has been set by the phoenix tuner set the new offsets
+const double FRONT_LEFT_MAG_OFFSET = -0.4541015625;
+const double FRONT_RIGHT_MAG_OFFSET = 0.460205078125;
+const double BACK_LEFT_MAG_OFFSET = 0.38037109375;
+const double BACK_RIGHT_MAG_OFFSET = 0.1474609375; // this mag offset has been set by the phoenix tuner set the new offsets
 // set the offsets by using pheonix tuner
 class DriveModule{
 public:
-    DriveModule(int speedMotorID, int directionMotorID, int directionEncoderID, double magOffset) :
+    DriveModule(int speedMotorID, int directionMotorID, int directionEncoderID, double magOffset, std::string name) :
         m_speedMotor(speedMotorID, "rio"),
         m_directionMotor(directionMotorID, "rio"),
         m_directionEncoder(directionEncoderID, "rio"),
         m_magOffset(magOffset),
+        m_name(name),
         m_turningPIDController{
            3,
            0.05,
@@ -63,6 +64,7 @@ public:
     void SetModulePositionToZeroDistance();
 
 public:
+    std::string m_name; 
     TalonFX m_speedMotor;
     TalonFX m_directionMotor;
     CANcoder m_directionEncoder;

@@ -83,10 +83,10 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
   //double normalisedAngle = error / units::angle::radian_t(10*M_PI);
   //driveModule.m_directionMotor.Set(normalisedAngle);
 
-  std::cout << "State speed " << double{state.speed} << std::endl;
-  std::cout << "desiredWheelSpeed " << double{desiredWheelSpeed} << std::endl;
+  /*std::cout << "State speed " << double{state.speed} << std::endl;
+  std::cout << "desiredANGLE " << double{optimizedState.angle.Radians()} << std::endl;
   std::cout << "State angle " << double{state.angle.Radians()} << std::endl;
-  std::cout << "Turn output " << double{-1.0 * turnOutput} << std::endl << std::endl;
+  std::cout << "Turn output " << double{-1.0 * turnOutput} << std::endl << std::endl;*/
     
   
   // alternative to using negative voltage is to invert the motor with motorConfig.MotorOutput.Inverted = true; when setting up the configs.
@@ -95,7 +95,9 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
 
 double DriveModule::GetModulePositionDistance()
 {
-  return m_speedMotor.GetPosition().GetValueAsDouble()*31.98;
+  double distance = m_speedMotor.GetPosition().GetValueAsDouble()*0.3198;  
+  std::cout << m_name << " modulePosition " << distance << std::endl;
+  return distance;
 }
 
 void DriveModule::SetModulePositionToZeroDistance()
