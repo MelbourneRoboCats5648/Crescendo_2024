@@ -6,6 +6,8 @@ using namespace ctre::phoenix6::signals;
 
 void DriveModule::Stop()
 {
+  m_directionMotor.Set(0);
+  m_speedMotor.Set(0);
   m_speedMotor.StopMotor();
   m_directionMotor.StopMotor();
 }

@@ -45,14 +45,23 @@ void AutoYay(DriveTrain& driveTrain,
     else{
         motorIntakeWheel.Set(0);
     }
-    if(driveTrain.GetPositionDistance()>1.130)
-    {
-       driveTrain.StopAllModules();
-    }
-    else if(seconds>5_s)
-    {
-       driveTrain.SetAllModules(speeds);
-       std::cout << "driveTrainPosition " << driveTrain.GetPositionDistance() << std::endl;
+
+    double position = driveTrain.GetPositionDistance();
+    if( seconds>5_s && seconds<8_s){        
+            std::cout << "DRIVING "<< std::endl;
+        if(position>1.130)
+        {
+            driveTrain.SetAllModules(frc::ChassisSpeeds{0.0_mps, 0.0_mps, units::radians_per_second_t(0)});
+            std::cout << "STOP POSITION REACHED"<< std::endl;
+        }
+        if(seconds>5_s && position<1.130)
+        {
+            driveTrain.SetAllModules(speeds);
+            std::cout << "driveTrainPosition " << position << std::endl;
+        }
+    } else {
+        driveTrain.StopAllModules();        
+            std::cout << "STOP "<< std::endl;
     }
     
    
