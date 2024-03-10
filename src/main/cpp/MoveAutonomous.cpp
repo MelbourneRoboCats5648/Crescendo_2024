@@ -3,9 +3,20 @@
 #include "frc/DriverStation.h"
 #include <iostream>
 
+/**The Autonomous Timeline :)))))
+ * Shooter wheels always running
+ * at 3-5 seconds intake wheels spins
+ * swerve moves from 5- 8 seconds
+ * intake arm starts coming down from 6 - 8 seconds
+ * intake sucks in note from 8-10 seconds
+ * 10 - 12 seconds intake retracts arm
+ * 10 - 13 seconds swerve goes back 
+**/
+
 frc::Timer autoTimer{};
 
 void AutoInit(DriveTrain& driveTrain)
+//timer
 {
     autoTimer.Start();
     frc::DriverStation::GetAlliance();    
@@ -37,15 +48,18 @@ void AutoYay(DriveTrain& driveTrain,
         motorShooterRight.Set(0.0);
     }
     
-    
-    if(seconds<5_s&&seconds>3_s)
-    {
+//intake wheels
+    if(seconds<5_s&&seconds>3_s){
         motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
+    }
+    if(seconds<8_s && seconds<10_s){
+        motorIntakeWheel.Set(intakeWheelInSpeed);
     }
     else{
         motorIntakeWheel.Set(0);
     }
 
+//swerve drive
     double position = driveTrain.GetPositionDistance();
     if( seconds>5_s && seconds<8_s){        
             std::cout << "DRIVING "<< std::endl;
@@ -59,6 +73,23 @@ void AutoYay(DriveTrain& driveTrain,
             driveTrain.SetAllModules(speeds);
             std::cout << "driveTrainPosition " << position << std::endl;
         }
+
+
+
+
+//Intake arm extending/retracting
+    if (seconds>6_s && seconds<8_s){
+        motorIntakeArm.Set(intakeArmExtendSpeed);
+    }
+
+    if (seconds>10_s && seconds<12_s){
+        motorIntakeArm.Set(intakeArmRetractSpeed);
+    }
+    else {
+        motorIntakeArm.Set(0);
+    }
+
+
     } else {
         driveTrain.StopAllModules();        
             std::cout << "STOP "<< std::endl;
