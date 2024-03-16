@@ -21,7 +21,7 @@ void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
     auto states = kinematics.ToSwerveModuleStates(chassisSpeed);
 
   // limit to max speed
-  const units::meters_per_second_t MAX_SPEED_MPS = 10.0_mps;
+  const units::meters_per_second_t MAX_SPEED_MPS = 8.0_mps;
   kinematics.DesaturateWheelSpeeds(&states, MAX_SPEED_MPS);
 
   auto [fl, fr, bl, br] = states;

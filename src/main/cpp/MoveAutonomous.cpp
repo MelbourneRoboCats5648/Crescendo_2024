@@ -55,22 +55,22 @@ void AutoYay(DriveTrain& driveTrain,
     if(seconds<5_s&&seconds>3_s){
         motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
     }
-    else if(seconds<9_s && seconds>7_s){
-        motorIntakeWheel.Set(intakeWheelInSpeed);
-    }
-    else if(seconds<14_s && seconds>12_s){
-        motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
-    }
+    //else if(seconds<9_s && seconds>7_s){
+       // motorIntakeWheel.Set(intakeWheelInSpeed);
+   // }
+   // else if(seconds<14_s && seconds>12_s){
+       // motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
+    //}
     else{
         motorIntakeWheel.Set(0);
     }
 
 //swerve drive
     double position = driveTrain.GetPositionDistance();
-    if( seconds>5_s && seconds<8_s)
+    if( seconds>5_s && seconds<10_s)
     {        
             std::cout << "DRIVING "<< std::endl;
-        if(position>1.130)
+        if(position>5.00)
         {
             driveTrain.SetAllModules(frc::ChassisSpeeds{0.0_mps, 0.0_mps, units::radians_per_second_t(0)});
             std::cout << "STOP POSITION REACHED"<< std::endl;
@@ -84,7 +84,7 @@ void AutoYay(DriveTrain& driveTrain,
     }
 
 //Intake arm extending/retracting
-    if(seconds>6_s && seconds<7_s)
+    /*if(seconds>6_s && seconds<7_s)
     {
         motorIntakeArm.Set(intakeArmExtendSpeed);
     }
@@ -114,11 +114,11 @@ void AutoYay(DriveTrain& driveTrain,
         }
     }
     
-    //} else {
+    } else {
        // driveTrain.StopAllModules();        
         //    std::cout << "STOP "<< std::endl;
     //}
-    
+    */
    
 }
 

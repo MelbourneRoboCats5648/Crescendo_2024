@@ -6,7 +6,7 @@
 
 // Speeds
 const double speakerShooterSpeed = 1.0;
-const double ampShooterSpeed = 0.3;
+const double ampShooterSpeed = 0.2;
 
 
 
