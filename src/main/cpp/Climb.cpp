@@ -21,7 +21,6 @@ const int leftDownButton = 3;
 const int rightUpButton = 6;
 const int rightDownButton = 4;
 
-
 /**
  * Controls the climbing arms.
  * Controls 2 Victor SP motors independently.
@@ -42,7 +41,7 @@ void Climb(frc::Joystick& joystick) {
   }
   else
   {
-    motorClimbLeft.Set(0);
+    motorClimbLeft.Set(0 );
   }
 
   if (joystick.GetRawButton(rightUpButton))

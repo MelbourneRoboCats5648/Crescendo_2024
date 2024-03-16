@@ -36,7 +36,7 @@ const int BACK_RIGHT_DIRECTION_ENCODER_ID = 11;
 
 const double FRONT_LEFT_MAG_OFFSET = 0.2939453125;
 const double FRONT_RIGHT_MAG_OFFSET = 0.346435546875;
-const double BACK_LEFT_MAG_OFFSET = 0.061279296875;
+const double BACK_LEFT_MAG_OFFSET = 0.06201171875;
 const double BACK_RIGHT_MAG_OFFSET = 0.012451171875; // this mag offset has been set by the phoenix tuner set the new offsets
 // set the offsets by using pheonix tuner
 class DriveModule{

@@ -19,6 +19,7 @@ frc::Timer autoTimer{};
 void AutoInit(DriveTrain& driveTrain)
 //timer
 {
+    autoTimer.Reset();
     autoTimer.Start();
     frc::DriverStation::GetAlliance();    
     driveTrain.SetPositionToZeroDistance();
@@ -54,10 +55,10 @@ void AutoYay(DriveTrain& driveTrain,
     if(seconds<5_s&&seconds>3_s){
         motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
     }
-    if(seconds<9_s && seconds<7_s){
+    else if(seconds<9_s && seconds>7_s){
         motorIntakeWheel.Set(intakeWheelInSpeed);
     }
-    if(seconds<14_s && seconds<12_s){
+    else if(seconds<14_s && seconds>12_s){
         motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
     }
     else{
@@ -83,14 +84,17 @@ void AutoYay(DriveTrain& driveTrain,
     }
 
 //Intake arm extending/retracting
-    if (seconds>6_s && seconds<7_s){
+    if(seconds>6_s && seconds<7_s)
+    {
         motorIntakeArm.Set(intakeArmExtendSpeed);
     }
 
-    if (seconds>9_s && seconds<10_s){
+    else if(seconds>9_s && seconds<10_s)
+    {
         motorIntakeArm.Set(intakeArmRetractSpeed);
     }
-    else {
+    else 
+    {
         motorIntakeArm.Set(0);
     }
 

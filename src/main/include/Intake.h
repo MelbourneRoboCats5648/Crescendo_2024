@@ -7,8 +7,8 @@
 const double intakeArmRetractSpeed = 0.4;
 const double intakeArmExtendSpeed = -0.4;
 
-const double intakeWheelInSpeed = 0.6;
-const double ampIntakeWheelOutSpeed = -0.6;
+const double intakeWheelInSpeed = 0.4;
+const double ampIntakeWheelOutSpeed = -1.0;
 const double speakerIntakeWheelOutSpeed = -1.0;
 
 
