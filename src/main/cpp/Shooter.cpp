@@ -8,7 +8,7 @@
 void Shooter(frc::XboxController& xbox, frc::VictorSP& motorShooterLeft, frc::VictorSP& motorShooterRight){
 
 //Speaker
-if (true == xbox.GetYButton())
+/*if (true == xbox.GetYButton())
 {
   motorShooterLeft.Set(speakerShooterSpeed);
   motorShooterRight.Set(-1.0*speakerShooterSpeed); //inverting motor direction
@@ -24,6 +24,6 @@ else
   motorShooterLeft.Set(0.0);
   motorShooterRight.Set(0.0);
 }
-
+*/
 
 }

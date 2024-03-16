@@ -75,7 +75,7 @@ void AutoYay(DriveTrain& driveTrain,
             driveTrain.SetAllModules(frc::ChassisSpeeds{0.0_mps, 0.0_mps, units::radians_per_second_t(0)});
             std::cout << "STOP POSITION REACHED"<< std::endl;
         }
-        if(seconds>5_s && position<1.130)
+        if(seconds>5_s && position<5.00)
         {
             driveTrain.SetAllModules(speeds);
             std::cout << "driveTrainPosition " << position << std::endl;
