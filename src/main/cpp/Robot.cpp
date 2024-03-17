@@ -17,6 +17,9 @@
 
 #include "cameraserver/CameraServer.h"
 
+//Path Weaver
+#include "PathFinder.h"
+
 // USB ports - TODO Check
 const int driveJoystickPort = 0;
 const int xboxControllerPort = 1;
@@ -58,6 +61,7 @@ void Robot::RobotInit() {
 
   cs::UsbCamera usbCamera = frc::CameraServer::StartAutomaticCapture();
   usbCamera.SetResolution(640, 480);
+
 
 }
 
@@ -122,6 +126,9 @@ void Robot::TeleopPeriodic() {
   Shooter(xbox, motorShooterLeft, motorShooterRight);
   
   MoveTeleop(driveTrain, driveJoyStick, gyro);
+
+  //TODO PATHFINDER TESTING
+  Path(xbox);
 }
 
 void Robot::DisabledInit() {}
