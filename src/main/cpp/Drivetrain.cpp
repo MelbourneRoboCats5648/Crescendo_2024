@@ -6,18 +6,27 @@ frc::Translation2d m_backRightLocation{-0.26_m, -0.26_m};
 frc::Translation2d m_frontLeftLocation{+0.26_m, +0.26_m};
 frc::Translation2d m_frontRightLocation{+0.26_m, -0.26_m};
 
+
 const frc::SwerveDriveKinematics<4> kinematics{
                                         m_frontLeftLocation, 
                                         m_frontRightLocation, 
                                         m_backLeftLocation,
                                         m_backRightLocation};
 
+  
+frc::SwerveDriveOdometry<4> m_odometry{kinematics, gyro.GetRotation2d(),
+  {m_frontLeft.GetPosition(), 
+  m_frontRight.GetPosition(),
+  m_backLeft.GetPosition(),
+  m_backRight.GetPosition()},
+  frc::Pose2d{5_m, 13.5_m, 0_rad}};          
+
 void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
      
     // Convert to module states. Here, we can use C++17's structured
     // bindings feature to automatically split up the array into its
     // individual SwerveModuleState components.
-    // chassisSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(chassisSpeed, robotAngle) // <- switch to FR
+    //chassisSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(chassisSpeed, robotAngle); // <- switch to FR
     auto states = kinematics.ToSwerveModuleStates(chassisSpeed);
 
   // limit to max speed
