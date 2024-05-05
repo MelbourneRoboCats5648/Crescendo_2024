@@ -73,8 +73,8 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
   
   // to set the speed using control onboard the motor, use m_speedMotor.SetControl(ctre::phoenix6::controls::VelocityVoltage{desiredWheelSpeed}); // desiredWheelSpeed in turns per second
   units::angular_velocity::turns_per_second_t desiredWheelSpeed{(state.speed.value())/WHEEL_CIRCUMFERENCE.value()};
-  m_speedMotor.SetControl(ctre::phoenix6::controls::VelocityVoltage{desiredWheelSpeed});
-  ////m_speedMotor.Set(normalisedSpeed);
+  m_speedMotor.SetControl(ctre::phoenix6::controls::VelocityVoltage{desiredWheelSpeed*6.75});
+  ////m_speedMotor.Set(normalisedSpeed); 
 
   // Calculate the turning motor output from the turning PID controller. 
   const auto turnOutput = m_turningPIDController.Calculate(

@@ -52,7 +52,7 @@ void AutoYay(DriveTrain& driveTrain,
     }
     
 //intake wheels
-    if(seconds<5_s&&seconds>3_s){
+    if(seconds<6_s&&seconds>4_s){
         motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
     }
     //else if(seconds<9_s && seconds>7_s){

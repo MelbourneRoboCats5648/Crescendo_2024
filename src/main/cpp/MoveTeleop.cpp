@@ -13,10 +13,17 @@ const double chosenMaxVelocity{8.0};
 const double chosenRotationSpeed{M_PI*2};
 
  //for smoother ride
-//static frc::SlewRateLimiter<units::scalar> xLimiter{5 / 1_s};
-//static frc::SlewRateLimiter<units::scalar> yLimiter{5 / 1_s};
-//static frc::SlewRateLimiter<units::scalar> rotLimiter{5 / 1_s};
+//static frc::SlewRateLimiter<units::scalar> xLimiter{8 / 1_s};
+//static frc::SlewRateLimiter<units::scalar> yLimiter{8 / 1_s};
+//static frc::SlewRateLimiter<units::scalar> rotLimiter{8 / 1_s};
 
+//const double deadband = 0.08;
+       // return frc::ChassisSpeeds{
+         //   -xLimiter.Calculate(frc::ApplyDeadband(controller.GetLeftY(), deadband)) * chosenMaxVelocity,
+           // -yLimiter.Calculate(frc::ApplyDeadband(controller.GetLeftX(), deadband)) * chosenMaxVelocity,
+            //-rotLimiter.Calculate(frc::ApplyDeadband(controller.GetRightX(), deadband)) *
+                //chosenRotationSpeed};//
+ 
 
 
 // 1) Move according to joystick input - joystick
@@ -26,17 +33,17 @@ const double chosenRotationSpeed{M_PI*2};
 void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_IMU& gyro){
 
     // will need to actually convert the double output from joystick to a meters per sec velocity later
-    //double xSpeed = (-1.0*DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
-    //double ySpeed = (-1.0*DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
+    double xSpeed = (-1.0*DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
+    double ySpeed = (-1.0*DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
     //assuming joystick twist is one to negative one
 
     //* will need to actually convert the double output from joystick to a meters per sec velocity later
-    double xSpeed = (-1.0*DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
-    double ySpeed = (-1.0*DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
+    //double xSpeed = xLimiter.Calculate(-1.0*DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
+    //double ySpeed = yLimiter.Calculate(-1.0*DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
     //assuming joystick twist is one to negative one*/
 
-    double rotationSpeed = (-1*DeadBand(joystick.GetTwist(), 0.2) * chosenRotationSpeed);
-    //double rotationSpeed = rotLimiter.Calculate(-1*DeadBand(joystick.GetTwist(), 0.1) * chosenRotationSpeed);
+    double rotationSpeed = (-1.0*DeadBand(joystick.GetTwist(), 0.5) * chosenRotationSpeed);
+    //double rotationSpeed = rotLimiter.Calculate(-1.0*DeadBand(joystick.GetTwist(), 0.1) * chosenRotationSpeed);
     
     std::cout << "xSpeed " << xSpeed << " ySpeed " << ySpeed << " rotation Speed " << rotationSpeed << std::endl;
 
