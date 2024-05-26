@@ -51,6 +51,7 @@ void Robot::RobotInit() {
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
+  //gyro.Reset(); // TODO - check if we need to reset gyro
   gyro.Calibrate();
 
   driveTrain.InitialiseAllModules();
