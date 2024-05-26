@@ -33,9 +33,10 @@ public:
            0.0,
            0.0,
           {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}}
-{
+    {
     }
 
+    public:
     // Ki is enough
     // sets the drive of all motors to zero    
     void Stop();
@@ -45,11 +46,11 @@ public:
     void SetModulePositionToZeroDistance();
 
 public:
-    std::string m_name; 
     TalonFX m_speedMotor;
     TalonFX m_directionMotor;
     CANcoder m_directionEncoder;
     double m_magOffset;
+    std::string m_name; 
     frc::ProfiledPIDController<units::radians> m_turningPIDController;
     //const units::meter_t WHEEL_RADIUS = 0.0508_m;
     // CIRCUMFERECNE calc here

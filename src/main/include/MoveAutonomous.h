@@ -5,7 +5,7 @@
 #include "DriveModule.h"
 #include <frc/motorcontrol/VictorSP.h>
 
-#include <frc/kinematics/SwerveDriveKinematics.h>
+#include <frc/kinematics/SwerveDriveKinematics.h> //TODO - check if in drivetrain.h + can be removed
 #include <frc/kinematics/SwerveModuleState.h>
 #include <ctre/phoenix6/TalonFX.hpp>
 #include <ctre/phoenix6/CANcoder.hpp>
