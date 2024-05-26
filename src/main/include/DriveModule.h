@@ -36,8 +36,7 @@ public:
     {
     }
 
-    public:
-    // Ki is enough
+public:
     // sets the drive of all motors to zero    
     void Stop();
     void Initialise();
@@ -54,12 +53,12 @@ public:
     frc::ProfiledPIDController<units::radians> m_turningPIDController;
     //const units::meter_t WHEEL_RADIUS = 0.0508_m;
     // CIRCUMFERECNE calc here
-     private:
-  // Mechanical Constants
-  static constexpr double TURNING_GEAR_RATIO = 150.0 / 7.0;
-  static constexpr double DRIVE_GEAR_RATIO = 6.75;  // L2 - Fast kit check the gear ratio
-  static constexpr units::meter_t WHEEL_RADIUS = 0.0508_m;
-  static constexpr units::meter_t WHEEL_CIRCUMFERENCE = 2 * std::numbers::pi * WHEEL_RADIUS;
+private:
+    // Mechanical Constants
+    static constexpr double TURNING_GEAR_RATIO = 150.0 / 7.0;
+    static constexpr double DRIVE_GEAR_RATIO = 6.75;  // L2 - Fast kit check the gear ratio
+    static constexpr units::meter_t WHEEL_RADIUS = 0.0508_m;
+    static constexpr units::meter_t WHEEL_CIRCUMFERENCE = 2 * std::numbers::pi * WHEEL_RADIUS;
 };
 
 
