@@ -31,5 +31,5 @@ class Robot : public frc::TimedRobot {
     std::string m_autoSelected;
 
   public:
-    DriveTrain m_driveTrain;
+    class DriveTrain m_driveTrain;
 };
