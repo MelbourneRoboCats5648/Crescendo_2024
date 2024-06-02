@@ -9,6 +9,7 @@
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include "DriveTrain.h"
+#include "Climb.h"
 
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
@@ -46,5 +47,6 @@ class Robot : public frc::TimedRobot {
     // Controllers
     frc::XboxController m_xbox{xboxControllerPort};
     frc::Joystick m_driveJoyStick{driveJoystickPort};
+    Climb m_climb;
 
 };

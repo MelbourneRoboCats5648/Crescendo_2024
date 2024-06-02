@@ -103,7 +103,7 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-  Climb(m_driveJoyStick);
+  m_climb.ClimbFunctions(m_driveJoyStick);
   Intake(m_xbox, motorIntakeArm, motorIntakeWheel);
   Shooter(m_xbox, motorShooterLeft, motorShooterRight);
   
