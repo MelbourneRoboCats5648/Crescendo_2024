@@ -21,9 +21,6 @@
 const int driveJoystickPort = 0;
 const int xboxControllerPort = 1;
 
-//Drivetrain
-DriveTrain driveTrain{};
-
 //gyro
 frc::ADIS16470_IMU gyro{};
 
@@ -54,8 +51,8 @@ void Robot::RobotInit() {
   //gyro.Reset(); // TODO - check if we need to reset gyro
   gyro.Calibrate();
 
-  driveTrain.InitialiseAllModules();
-  driveTrain.StopAllModules();
+  m_driveTrain.InitialiseAllModules();
+  m_driveTrain.StopAllModules();
 
   cs::UsbCamera usbCamera = frc::CameraServer::StartAutomaticCapture();
   usbCamera.SetResolution(640, 480);
@@ -96,7 +93,7 @@ void Robot::AutonomousInit() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    AutoInit(driveTrain);
+    AutoInit(m_driveTrain);
   }
 }
 
@@ -105,7 +102,7 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    AutoYay(driveTrain, motorShooterLeft, motorShooterRight, motorIntakeArm, motorIntakeWheel);
+    AutoYay(m_driveTrain, motorShooterLeft, motorShooterRight, motorIntakeArm, motorIntakeWheel);
   
   }
   }
@@ -113,7 +110,7 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
 
-  driveTrain.StopAllModules();
+  m_driveTrain.StopAllModules();
 
 }
 
@@ -122,7 +119,7 @@ void Robot::TeleopPeriodic() {
   Intake(xbox, motorIntakeArm, motorIntakeWheel);
   Shooter(xbox, motorShooterLeft, motorShooterRight);
   
-  MoveTeleop(driveTrain, driveJoyStick, gyro);
+  MoveTeleop(m_driveTrain, driveJoyStick, gyro);
 }
 
 void Robot::DisabledInit() {}
