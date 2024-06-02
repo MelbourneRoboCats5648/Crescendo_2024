@@ -12,21 +12,9 @@
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-#include <frc/Joystick.h>
-#include <frc/XboxController.h>
 
 #include "cameraserver/CameraServer.h"
 
-// USB ports - TODO Check
-const int driveJoystickPort = 0;
-const int xboxControllerPort = 1;
-
-//gyro
-frc::ADIS16470_IMU gyro{};
-
-// Controllers
-frc::XboxController xbox{xboxControllerPort};
-frc::Joystick driveJoyStick{driveJoystickPort};
 
 //MotorPorts
 // PWM ports - TODO Check
@@ -49,7 +37,7 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
   //gyro.Reset(); // TODO - check if we need to reset gyro
-  gyro.Calibrate();
+  m_gyro.Calibrate();
 
   m_driveTrain.InitialiseAllModules();
   m_driveTrain.StopAllModules();
@@ -115,11 +103,11 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-  Climb(driveJoyStick);
-  Intake(xbox, motorIntakeArm, motorIntakeWheel);
-  Shooter(xbox, motorShooterLeft, motorShooterRight);
+  Climb(m_driveJoyStick);
+  Intake(m_xbox, motorIntakeArm, motorIntakeWheel);
+  Shooter(m_xbox, motorShooterLeft, motorShooterRight);
   
-  MoveTeleop(m_driveTrain, driveJoyStick, gyro);
+  MoveTeleop(m_driveTrain, m_driveJoyStick, m_gyro);
 }
 
 void Robot::DisabledInit() {}

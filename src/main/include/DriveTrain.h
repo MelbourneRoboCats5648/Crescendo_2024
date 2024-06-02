@@ -5,6 +5,7 @@
 #include <units/angle.h>
 
 #include <frc/kinematics/SwerveDriveKinematics.h>
+#include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc/controller/ProfiledPIDController.h>
 
 #include "DriveModule.h"
@@ -61,10 +62,10 @@ public:
     DriveModule m_backRightModule;
 
 public:
-
-const frc::SwerveDriveKinematics<4> kinematics{
+    const frc::SwerveDriveKinematics<4> kinematics{
                                         frontLeftLocation, 
                                         frontRightLocation, 
                                         backLeftLocation,
                                         backRightLocation};
+
 };

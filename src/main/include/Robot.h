@@ -10,6 +10,14 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include "DriveTrain.h"
 
+#include <frc/Joystick.h>
+#include <frc/XboxController.h>
+#include <frc/ADIS16470_IMU.h>
+
+// USB ports - TODO Check
+const int driveJoystickPort = 0;
+const int xboxControllerPort = 1;
+
 class Robot : public frc::TimedRobot {
   public:
     void RobotInit() override;
@@ -33,4 +41,10 @@ class Robot : public frc::TimedRobot {
 
   public:
     DriveTrain m_driveTrain;
+    //gyro
+    frc::ADIS16470_IMU m_gyro{};
+    // Controllers
+    frc::XboxController m_xbox{xboxControllerPort};
+    frc::Joystick m_driveJoyStick{driveJoystickPort};
+
 };
