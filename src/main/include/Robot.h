@@ -41,9 +41,9 @@ class Robot : public frc::TimedRobot {
     std::string m_autoSelected;
 
   public:
-    DriveTrain m_driveTrain;
-    //gyro
+      //gyro
     frc::ADIS16470_IMU m_gyro{};
+    DriveTrain m_driveTrain{m_gyro};
     // Controllers
     frc::XboxController m_xbox{xboxControllerPort};
     frc::Joystick m_driveJoyStick{driveJoystickPort};
