@@ -8,6 +8,7 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include "DriveTrain.h"
 
 class Robot : public frc::TimedRobot {
   public:
@@ -31,5 +32,5 @@ class Robot : public frc::TimedRobot {
     std::string m_autoSelected;
 
   public:
-    class DriveTrain m_driveTrain;
+    DriveTrain m_driveTrain;
 };
