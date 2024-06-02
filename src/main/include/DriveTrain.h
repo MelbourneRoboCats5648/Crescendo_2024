@@ -30,6 +30,13 @@ const double BACK_LEFT_MAG_OFFSET = 0.06201171875;
 const double BACK_RIGHT_MAG_OFFSET = 0.012451171875; // this mag offset has been set by the phoenix tuner set the new offsets
 // set the offsets by using pheonix tuner
 
+// Locations for the swerve drive modules relative to the robot center.
+// TODO - the below fails build if static keyword not used
+static frc::Translation2d backLeftLocation{-0.26_m, +0.26_m};
+static frc::Translation2d backRightLocation{-0.26_m, -0.26_m};
+static frc::Translation2d frontLeftLocation{+0.26_m, +0.26_m};
+static frc::Translation2d frontRightLocation{+0.26_m, -0.26_m};
+
 class DriveTrain{
 public:
     DriveTrain() :
@@ -52,4 +59,12 @@ public:
     DriveModule m_frontRightModule;
     DriveModule m_backLeftModule;
     DriveModule m_backRightModule;
+
+public:
+
+const frc::SwerveDriveKinematics<4> kinematics{
+                                        frontLeftLocation, 
+                                        frontRightLocation, 
+                                        backLeftLocation,
+                                        backRightLocation};
 };
