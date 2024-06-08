@@ -22,6 +22,9 @@ void DriveTrain::SetAllModules(frc::ChassisSpeeds chassisSpeed){
 
 void DriveTrain::InitialiseAllModules()
 {
+  //gyro.Reset(); // TODO - check if we need to reset gyro
+  m_gyro.Calibrate();
+  
   m_frontLeftModule.Initialise();
   m_frontRightModule.Initialise();
   m_backLeftModule.Initialise();

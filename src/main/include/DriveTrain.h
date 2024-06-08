@@ -3,6 +3,7 @@
 #include <ctre/phoenix6/TalonFX.hpp>
 #include <ctre/phoenix6/CANcoder.hpp>
 #include <units/angle.h>
+#include <frc/ADIS16470_IMU.h>
 
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveDriveOdometry.h>
@@ -40,8 +41,8 @@ static frc::Translation2d frontRightLocation{+0.26_m, -0.26_m};
 
 class DriveTrain{
 public:
-    DriveTrain(frc::ADIS16470_IMU& gyro) :
-        m_gyro(gyro)
+    DriveTrain() :
+        m_gyro()
     {
     }
 
@@ -53,7 +54,7 @@ public:
     void SetPositionToZeroDistance();
 
 public:
-    frc::ADIS16470_IMU& m_gyro;
+    frc::ADIS16470_IMU m_gyro;
 
     DriveModule m_frontLeftModule{FRONT_LEFT_SPEED_MOTOR_ID, FRONT_LEFT_DIRECTION_MOTOR_ID, FRONT_LEFT_DIRECTION_ENCODER_ID, FRONT_LEFT_MAG_OFFSET, "Front Left"};
     DriveModule m_frontRightModule{FRONT_RIGHT_SPEED_MOTOR_ID, FRONT_RIGHT_DIRECTION_MOTOR_ID, FRONT_RIGHT_DIRECTION_ENCODER_ID, FRONT_RIGHT_MAG_OFFSET, "Front Right"};
