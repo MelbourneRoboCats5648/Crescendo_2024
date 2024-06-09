@@ -10,6 +10,7 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include "DriveTrain.h"
 #include "Climb.h"
+#include "ShootAndIntake.h"
 
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
@@ -42,6 +43,7 @@ class Robot : public frc::TimedRobot {
 
   public:
     DriveTrain m_driveTrain;
+    ShootAndIntake m_shootAndIntake;
     //gyro
     frc::ADIS16470_IMU m_gyro{};
     // Controllers
