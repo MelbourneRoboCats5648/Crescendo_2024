@@ -1,9 +1,7 @@
 #pragma once
 #include "DriveTrain.h"
-#include "Intake.h"
-#include "Shooter.h"
+#include "ShootAndIntake.h"
 #include "DriveModule.h"
-#include <frc/motorcontrol/VictorSP.h>
 
 #include <frc/kinematics/SwerveDriveKinematics.h> //TODO - check if in drivetrain.h + can be removed
 #include <frc/kinematics/SwerveModuleState.h>
@@ -17,8 +15,5 @@
 
 void AutoInit(DriveTrain& driveTrain);
 void AutoYay(DriveTrain& driveTrain,
-            frc::VictorSP& motorShooterLeft, 
-            frc::VictorSP& motorShooterRight,
-            frc::VictorSP& motorIntakeArm, 
-            frc::VictorSP& motorIntakeWheel);
+            ShootAndIntake& shootAndIntake);
 

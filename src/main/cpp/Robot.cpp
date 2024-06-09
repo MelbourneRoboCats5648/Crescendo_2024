@@ -3,9 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
-#include "Climb.h"
-#include "Intake.h"
-#include "Shooter.h"
 #include "MoveTeleop.h"
 #include "MoveAutonomous.h"
 
@@ -75,7 +72,7 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    //AutoYay(m_driveTrain, motorShooterLeft, motorShooterRight, motorIntakeArm, motorIntakeWheel);
+    AutoYay(m_driveTrain, m_shootAndIntake);
 
   
   }
@@ -90,9 +87,8 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
   m_climb.ClimbFunctions(m_driveJoyStick);
-  //Intake(m_xbox);
-  //Shooter(m_xbox, motorShooterLeft, motorShooterRight);
-  
+  m_shootAndIntake.m_intake.DoIntake(m_xbox);
+  m_shootAndIntake.m_shooter.DoShoot(m_xbox);
   MoveTeleop(m_driveTrain, m_driveJoyStick, m_gyro);
 }
 

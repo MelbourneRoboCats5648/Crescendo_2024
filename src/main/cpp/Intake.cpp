@@ -17,7 +17,7 @@
  * Triggers are for note in and out (wheel spinning)
  * Plus button for arm in and out
 **/
-void DoIntake(frc::XboxController& xbox, frc::VictorSP& motorIntakeArm, frc::VictorSP& motorIntakeWheel) 
+void Intake::DoIntake(frc::XboxController& xbox) 
 {
     // arm in and out
 

@@ -27,11 +27,7 @@ void AutoInit(DriveTrain& driveTrain)
 
 
 // Do our autonomous, called from AutoPeriodic
-void AutoYay(DriveTrain& driveTrain,
-            frc::VictorSP& motorShooterLeft, 
-            frc::VictorSP& motorShooterRight,
-            frc::VictorSP& motorIntakeArm, 
-            frc::VictorSP& motorIntakeWheel)
+void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
 
 {
     frc::ChassisSpeeds speeds{3.0_mps, 0.0_mps,
@@ -42,18 +38,18 @@ void AutoYay(DriveTrain& driveTrain,
 
     if(seconds<15_s&&seconds>0_s)
     {
-        motorShooterLeft.Set(1.0);
-        motorShooterRight.Set(-1.0*1.0);
+        shootAndIntake.m_shooter.motorShooterLeft.Set(1.0);
+        shootAndIntake.m_shooter.motorShooterRight.Set(-1.0*1.0);
     }
     else
     {
-        motorShooterLeft.Set(0.0);
-        motorShooterRight.Set(0.0);
+        shootAndIntake.m_shooter.motorShooterLeft.Set(0.0);
+        shootAndIntake.m_shooter.motorShooterRight.Set(0.0);
     }
     
 //intake wheels
     if(seconds<6_s&&seconds>4_s){
-        motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
+        shootAndIntake.m_intake.motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
     }
     //else if(seconds<9_s && seconds>7_s){
        // motorIntakeWheel.Set(intakeWheelInSpeed);
@@ -62,7 +58,7 @@ void AutoYay(DriveTrain& driveTrain,
        // motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
     //}
     else{
-        motorIntakeWheel.Set(0);
+        shootAndIntake.m_intake.motorIntakeWheel.Set(0);
     }
 
 //swerve drive
