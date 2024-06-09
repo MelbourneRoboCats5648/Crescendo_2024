@@ -5,7 +5,7 @@
 //When Shooting, the Y and A buttons will control the speed for the shooter
 //When The driver wants to shoot the note, they will use the intake release button
 //Make sure the shooter wheels are running before releasing intake to shoot
-void Shooter(frc::XboxController& xbox, frc::VictorSP& motorShooterLeft, frc::VictorSP& motorShooterRight){
+void DoShoot(frc::XboxController& xbox, frc::VictorSP& motorShooterLeft, frc::VictorSP& motorShooterRight){
 
 //Speaker
 if (true == xbox.GetYButton())

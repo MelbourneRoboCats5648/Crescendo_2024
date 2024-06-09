@@ -16,16 +16,6 @@
 #include "cameraserver/CameraServer.h"
 
 
-//MotorPorts
-// PWM ports - TODO Check
-const int motorShooterLeftPort = 4;
-const int motorShooterRightPort = 5;
-
-
-
-frc::VictorSP motorShooterLeft{motorShooterLeftPort};
-frc::VictorSP motorShooterRight{motorShooterRightPort};
-
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
@@ -100,7 +90,7 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
   m_climb.ClimbFunctions(m_driveJoyStick);
   //Intake(m_xbox);
-  Shooter(m_xbox, motorShooterLeft, motorShooterRight);
+  //Shooter(m_xbox, motorShooterLeft, motorShooterRight);
   
   MoveTeleop(m_driveTrain, m_driveJoyStick, m_gyro);
 }
