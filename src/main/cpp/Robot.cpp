@@ -20,13 +20,8 @@
 // PWM ports - TODO Check
 const int motorShooterLeftPort = 4;
 const int motorShooterRightPort = 5;
-//PWM Ports
-const int motorIntakeArmPort = 2;
-const int motorIntakeWheelPort = 3;
 
-//Motors
-frc::VictorSP motorIntakeArm{motorIntakeArmPort};
-frc::VictorSP motorIntakeWheel{motorIntakeWheelPort};
+
 
 frc::VictorSP motorShooterLeft{motorShooterLeftPort};
 frc::VictorSP motorShooterRight{motorShooterRightPort};
@@ -90,7 +85,7 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    AutoYay(m_driveTrain, motorShooterLeft, motorShooterRight, motorIntakeArm, motorIntakeWheel);
+    //AutoYay(m_driveTrain, motorShooterLeft, motorShooterRight, motorIntakeArm, motorIntakeWheel);
   
   }
   }
@@ -104,7 +99,7 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
   m_climb.ClimbFunctions(m_driveJoyStick);
-  Intake(m_xbox, motorIntakeArm, motorIntakeWheel);
+  //Intake(m_xbox);
   Shooter(m_xbox, motorShooterLeft, motorShooterRight);
   
   MoveTeleop(m_driveTrain, m_driveJoyStick, m_gyro);
