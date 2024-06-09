@@ -9,7 +9,6 @@
 #include <fmt/core.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-
 #include "cameraserver/CameraServer.h"
 
 
@@ -17,9 +16,6 @@ void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
-
-  //gyro.Reset(); // TODO - check if we need to reset gyro
-  m_gyro.Calibrate();
 
   m_driveTrain.InitialiseAllModules();
   m_driveTrain.StopAllModules();
@@ -89,7 +85,8 @@ void Robot::TeleopPeriodic() {
   m_climb.ClimbFunctions(m_driveJoyStick);
   m_shootAndIntake.m_intake.DoIntake(m_xbox);
   m_shootAndIntake.m_shooter.DoShoot(m_xbox);
-  MoveTeleop(m_driveTrain, m_driveJoyStick, m_gyro);
+  MoveTeleop(m_driveTrain, m_driveJoyStick, m_driveTrain.m_gyro);
+
 }
 
 void Robot::DisabledInit() {}

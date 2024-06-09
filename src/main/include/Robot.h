@@ -14,7 +14,6 @@
 
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
-#include <frc/ADIS16470_IMU.h>
 
 // USB ports - TODO Check
 const int driveJoystickPort = 0;
@@ -42,10 +41,8 @@ class Robot : public frc::TimedRobot {
     std::string m_autoSelected;
 
   public:
-    DriveTrain m_driveTrain;
     ShootAndIntake m_shootAndIntake;
-    //gyro
-    frc::ADIS16470_IMU m_gyro{};
+    DriveTrain m_driveTrain{};
     // Controllers
     frc::XboxController m_xbox{xboxControllerPort};
     frc::Joystick m_driveJoyStick{driveJoystickPort};
