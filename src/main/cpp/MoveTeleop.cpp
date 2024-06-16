@@ -53,8 +53,8 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     // measured robot angle - TODO reenable
     units::angle::degree_t robotAngle = gyro.GetAngle();
 
-const int THROTTLE_LEVER_ACTIVE = 70; // throttle lever 
-bool doChassisCentric = joystick.GetThrottle() > THROTTLE_LEVER_ACTIVE;
+const double THROTTLE_LEVER_ACTIVE = 0.0; // throttle lever 
+bool doChassisCentric = joystick.GetThrottle() < THROTTLE_LEVER_ACTIVE;
 
 if (doChassisCentric)
 {
