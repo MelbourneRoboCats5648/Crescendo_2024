@@ -85,6 +85,7 @@ void Robot::TeleopPeriodic() {
   m_climb.ClimbFunctions(m_driveJoyStick);
   m_shootAndIntake.m_intake.DoIntake(m_xbox);
   m_shootAndIntake.m_shooter.DoShoot(m_xbox);
+  m_shootAndIntake.ShootAndIntakeFunctions(m_xbox);
   MoveTeleop(m_driveTrain, m_driveJoyStick, m_driveTrain.m_gyro);
 
 }

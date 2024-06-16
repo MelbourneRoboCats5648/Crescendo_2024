@@ -8,7 +8,7 @@ frc::Timer shooterTimer{};
 
 void ShootAndIntake::ShootAndIntakeFunctions(frc::XboxController& xbox)
 {
-    if (xbox.GetAButtonPressed() == true)
+    if (xbox.GetLeftStickButtonPressed() == true)
     {
         shooterTimer.Reset();
         shooterTimer.Start();
