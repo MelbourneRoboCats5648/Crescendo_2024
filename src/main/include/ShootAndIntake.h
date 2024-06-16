@@ -2,6 +2,7 @@
 
 #include <frc/XboxController.h>
 #include <frc/motorcontrol/VictorSP.h>
+#include <frc/Timer.h>
 
 #include "Shooter.h"
 #include "Intake.h"
