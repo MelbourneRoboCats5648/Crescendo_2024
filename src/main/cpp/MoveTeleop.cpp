@@ -53,20 +53,30 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     // measured robot angle - TODO reenable
     units::angle::degree_t robotAngle = gyro.GetAngle();
 
-    //getting the chassis speed based on the field centric speeds
+const int THROTTLE_LEVER_ACTIVE = 70; // throttle lever 
+bool doChassisCentric = joystick.GetThrottle() > THROTTLE_LEVER_ACTIVE;
+
+if (doChassisCentric)
+{
+     frc::ChassisSpeeds chassisSpeed(
+        units::meters_per_second_t{ySpeed}, 
+        units::meters_per_second_t{xSpeed}, 
+        units::radians_per_second_t{rotationSpeed});
+    // command the drive train to move based on the the required field oriented speed
+    driveTrain.SetAllModules(chassisSpeed);
+}
+else 
+{
+//getting the chassis speed based on the field centric speeds
     frc::ChassisSpeeds chassisSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(
             units::meters_per_second_t{ySpeed}, 
             units::meters_per_second_t{xSpeed}, 
             units::radians_per_second_t{rotationSpeed}, 
             frc::Rotation2d{robotAngle});
-
- /*frc::ChassisSpeeds chassisSpeed(
-        units::meters_per_second_t{ySpeed}, 
-        units::meters_per_second_t{xSpeed}, 
-        units::radians_per_second_t{rotationSpeed});
-*/
     // command the drive train to move based on the the required field oriented speed
     driveTrain.SetAllModules(chassisSpeed);
+}
+
 }
 
 double DeadBand(double joystickValue, double deadbandRange)
