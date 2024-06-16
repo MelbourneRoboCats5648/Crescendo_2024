@@ -11,6 +11,7 @@
 
 #include "cameraserver/CameraServer.h"
 
+const int JOYSTICK_BUTTON_11 = 11;
 
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
@@ -18,6 +19,7 @@ void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
   m_driveTrain.InitialiseAllModules();
+  m_driveTrain.ResetGyro();
   m_driveTrain.StopAllModules();
 
   cs::UsbCamera usbCamera = frc::CameraServer::StartAutomaticCapture();
@@ -86,6 +88,10 @@ void Robot::TeleopPeriodic() {
   m_shootAndIntake.m_intake.DoIntake(m_xbox);
   m_shootAndIntake.m_shooter.DoShoot(m_xbox);
   MoveTeleop(m_driveTrain, m_driveJoyStick, m_driveTrain.m_gyro);
+  if (m_driveJoyStick.GetRawButtonPressed(JOYSTICK_BUTTON_11) == true)
+  {
+    m_driveTrain.ResetGyro();
+  }
 
 }
 

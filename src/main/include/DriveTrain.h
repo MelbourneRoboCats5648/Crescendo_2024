@@ -50,6 +50,7 @@ public:
     void SetAllModules(frc::ChassisSpeeds chasisSpeed);
     void StopAllModules();
     void InitialiseAllModules();
+    void ResetGyro();
     double GetPositionDistance();
     void SetPositionToZeroDistance();
 
