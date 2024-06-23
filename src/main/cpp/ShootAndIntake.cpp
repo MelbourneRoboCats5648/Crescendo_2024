@@ -18,29 +18,20 @@ void ShootAndIntake::ShootAndIntakeFunctions(frc::XboxController& xbox)
 
     if (milliseconds > 0_s)
     {
-        if(milliseconds < SHOOT_DURATION && milliseconds > 0_s)
-        {
-            m_shooter.motorShooterLeft.Set(speakerShooterSpeed);
-            m_shooter.motorShooterRight.Set(-1.0*speakerShooterSpeed);
-        }
-        else
-        {
-            m_shooter.motorShooterLeft.Set(0.0);
-            m_shooter.motorShooterRight.Set(0.0);
-            //TODO - maybe stop and reset timer here???
-        }
+        m_shooter.motorShooterLeft.Set(speakerShooterSpeed);
+        m_shooter.motorShooterRight.Set(-1.0*speakerShooterSpeed);
 
-        if(milliseconds < SHOOT_DURATION && milliseconds > INTAKE_START)
-        { 
-            m_intake.motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
-        }
-        else
+        if(milliseconds > INTAKE_START)
         {
-            m_intake.motorIntakeWheel.Set(0.0);
+            m_intake.motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
         }
 
         if(milliseconds > SHOOT_DURATION)
         {
+            m_shooter.motorShooterLeft.Set(0.0);
+            m_shooter.motorShooterRight.Set(0.0);
+            m_intake.motorIntakeWheel.Set(0.0);
+
             shooterTimer.Stop();
             shooterTimer.Reset();
         }
