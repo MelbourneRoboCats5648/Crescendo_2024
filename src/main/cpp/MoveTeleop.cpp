@@ -43,7 +43,7 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     //assuming joystick twist is one to negative one*/
 
     //double rotationSpeed = (-1.0*DeadBand(joystick.GetTwist(), 0.5) * chosenRotationSpeed);
-    double rotationSpeed = rotLimiter.Calculate(-1.0*DeadBand(joystick.GetTwist(), 0.1) * chosenRotationSpeed);
+    double rotationSpeed = rotLimiter.Calculate(-1.0*DeadBand(joystick.GetTwist(), 0.2) * chosenRotationSpeed);
     
     std::cout << "xSpeed " << xSpeed << " ySpeed " << ySpeed << " rotation Speed " << rotationSpeed << std::endl;
 
