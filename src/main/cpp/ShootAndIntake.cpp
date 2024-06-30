@@ -1,18 +1,12 @@
 #include "ShootAndIntake.h"
 
-frc::Timer shooterTimer{};
-
 // TODO - add consts for timings
 const auto SHOOT_DURATION = 1_s;
 const auto INTAKE_START = 0.4_s;
 
-void ShootAndIntake::ShootAndIntakeFunctions(frc::XboxController& xbox)
+void ShootAndIntake::ShootAndIntakeFunctions(frc::Timer& shooterTimer)
 {
-    if (xbox.GetLeftStickButtonPressed() == true)
-    {
-        shooterTimer.Reset();
-        shooterTimer.Start();
-    }
+
     
     auto milliseconds = shooterTimer.Get();
 

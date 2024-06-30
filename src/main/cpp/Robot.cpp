@@ -13,6 +13,8 @@
 
 const int JOYSTICK_BUTTON_11 = 11;
 
+frc::Timer shooterTimer{};
+
 void Robot::RobotInit() {
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
@@ -87,7 +89,15 @@ void Robot::TeleopPeriodic() {
   m_climb.ClimbFunctions(m_driveJoyStick);
   m_shootAndIntake.m_intake.DoIntake(m_xbox);
   m_shootAndIntake.m_shooter.DoShoot(m_xbox);
-  m_shootAndIntake.ShootAndIntakeFunctions(m_xbox);
+  //fyifyif
+  if (m_xbox.GetLeftStickButtonPressed() == true)
+    {
+        shooterTimer.Reset();
+        shooterTimer.Start();
+    }
+  
+   m_shootAndIntake.ShootAndIntakeFunctions(shooterTimer);
+
   MoveTeleop(m_driveTrain, m_driveJoyStick, m_driveTrain.m_gyro);
   if (m_driveJoyStick.GetRawButtonPressed(JOYSTICK_BUTTON_11) == true)
   {

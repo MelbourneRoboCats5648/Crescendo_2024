@@ -15,20 +15,18 @@
 
 frc::Timer autoTimer{};
 
-
 void AutoInit(DriveTrain& driveTrain)
 //timer
 {
     autoTimer.Reset();
     autoTimer.Start();
-    frc::DriverStation::GetAlliance();    
+    frc::DriverStation::GetAlliance();
     driveTrain.SetPositionToZeroDistance();
 }
 
 
 // Do our autonomous, called from AutoPeriodic
 void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
-
 {
     frc::ChassisSpeeds speeds{3.0_mps, 0.0_mps,
      units::radians_per_second_t(0)};
@@ -36,10 +34,10 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
     auto seconds = autoTimer.Get();
     // shooter always on
 
-    if(seconds<15_s&&seconds>0_s)
+    if(seconds<15_s && seconds>0_s)
     {
         shootAndIntake.m_shooter.motorShooterLeft.Set(1.0);
-        shootAndIntake.m_shooter.motorShooterRight.Set(-1.0*1.0);
+        shootAndIntake.m_shooter.motorShooterRight.Set(-1.0);
     }
     else
     {
@@ -59,7 +57,7 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
     //}
     else{
         shootAndIntake.m_intake.motorIntakeWheel.Set(0);
-    }
+    }                                       
 
 //swerve drive
     double position = driveTrain.GetPositionDistance();
