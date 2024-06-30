@@ -6,10 +6,9 @@ const auto INTAKE_START = 0.4_s;
 
 void ShootAndIntake::ShootAndIntakeFunctions(frc::Timer& shooterTimer)
 {
-
-    
     auto milliseconds = shooterTimer.Get();
 
+    // if milliseconds is above 0 to check if the timer has started
     if (milliseconds > 0_s)
     {
         m_shooter.motorShooterLeft.Set(speakerShooterSpeed);

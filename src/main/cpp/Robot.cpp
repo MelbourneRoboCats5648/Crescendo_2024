@@ -89,13 +89,13 @@ void Robot::TeleopPeriodic() {
   m_climb.ClimbFunctions(m_driveJoyStick);
   m_shootAndIntake.m_intake.DoIntake(m_xbox);
   m_shootAndIntake.m_shooter.DoShoot(m_xbox);
-  //fyifyif
-  if (m_xbox.GetLeftStickButtonPressed() == true)
-    {
-        shooterTimer.Reset();
-        shooterTimer.Start();
-    }
   
+  //when xbox button is pressed it starts the timer which lets the shootandintakefunction know when to shoot
+  if (m_xbox.GetLeftStickButtonPressed() == true)
+  {
+    shooterTimer.Reset();
+    shooterTimer.Start();
+  }
    m_shootAndIntake.ShootAndIntakeFunctions(shooterTimer);
 
   MoveTeleop(m_driveTrain, m_driveJoyStick, m_driveTrain.m_gyro);

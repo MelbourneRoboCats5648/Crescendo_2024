@@ -14,6 +14,24 @@
 **/
 
 frc::Timer autoTimer{};
+frc::Timer autoShooterTimer{};
+
+const auto TOL = 20_ms;
+const auto SHOOT_TIME_1 = 1_s;
+const auto DRIVE_TIME_START_1 = 2_s;
+const auto DRIVE_TIME_END_1 = 3_s;
+const auto ARM_OUT_START = 4_s;
+const auto ARM_OUT_TIME_END = 5_s;
+const auto COLLECT_TIME_START = 4_s;
+const auto COLLECT_TIME_END = 5_s;
+const auto ARM_IN_TIME_START = 5_s;
+const auto ARM_IN_TIME_END = 9_s;
+const auto DRIVE_TIME_START_2 = 5_s;
+const auto DRIVE_TIME_END_2 = 9_s;
+const auto SHOOT_TIME_2 = 9_s;
+const auto DRIVE_TIME_START_3 = 9_s;
+const auto DRIVE_TIME_END_3 = 12_s;
+
 
 void AutoInit(DriveTrain& driveTrain)
 //timer
@@ -34,34 +52,30 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
     auto seconds = autoTimer.Get();
     // shooter always on
 
-    if(seconds<15_s && seconds>0_s)
+    if( (seconds > SHOOT_TIME_1) && (seconds < SHOOT_TIME_1 + TOL))
     {
-        shootAndIntake.m_shooter.motorShooterLeft.Set(1.0);
-        shootAndIntake.m_shooter.motorShooterRight.Set(-1.0);
+        autoShooterTimer.Reset();
+        autoShooterTimer.Start();
     }
-    else
+    else if ( (seconds > SHOOT_TIME_2) && (seconds < SHOOT_TIME_2 + TOL))
     {
-        shootAndIntake.m_shooter.motorShooterLeft.Set(0.0);
-        shootAndIntake.m_shooter.motorShooterRight.Set(0.0);
+        autoShooterTimer.Reset();
+        autoShooterTimer.Start();
     }
-    
+    shootAndIntake.ShootAndIntakeFunctions(autoShooterTimer);
+
 //intake wheels
-    if(seconds<6_s&&seconds>4_s){
-        shootAndIntake.m_intake.motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
+     if(seconds<COLLECT_TIME_START && seconds>COLLECT_TIME_END)
+    {
+        shootAndIntake.m_intake.motorIntakeWheel.Set(intakeWheelInSpeed);
     }
-    //else if(seconds<9_s && seconds>7_s){
-       // motorIntakeWheel.Set(intakeWheelInSpeed);
-   // }
-   // else if(seconds<14_s && seconds>12_s){
-       // motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
-    //}
     else{
         shootAndIntake.m_intake.motorIntakeWheel.Set(0);
     }                                       
 
 //swerve drive
     double position = driveTrain.GetPositionDistance();
-    if( seconds>5_s && seconds<10_s)
+    if(seconds>DRIVE_TIME_START_1 && seconds<DRIVE_TIME_END_1)
     {        
             std::cout << "DRIVING "<< std::endl;
         if(position>5.00)
@@ -76,24 +90,32 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
         }
 
     }
+    /*else if(seconds>DRIVE_TIME_START_2 && seconds<DRIVE_TIME_END_2)
+    {
+
+    }
+    else if (seconds>DRIVE_TIME_START_3 && seconds<DRIVE_TIME_END_3)
+    {
+
+    }*/
 
 //Intake arm extending/retracting
-    /*if(seconds>6_s && seconds<7_s)
+    if(seconds>ARM_OUT_START && seconds<ARM_OUT_TIME_END)
     {
-        motorIntakeArm.Set(intakeArmExtendSpeed);
+        shootAndIntake.m_intake.motorIntakeArm.Set(intakeArmExtendSpeed);
     }
 
-    else if(seconds>9_s && seconds<10_s)
+    else if(seconds>ARM_IN_TIME_START && seconds<ARM_IN_TIME_END)
     {
-        motorIntakeArm.Set(intakeArmRetractSpeed);
+        shootAndIntake.m_intake.motorIntakeArm.Set(intakeArmRetractSpeed);
     }
     else 
     {
-        motorIntakeArm.Set(0);
+        shootAndIntake.m_intake.motorIntakeArm.Set(0);
     }
 
     //swerve drive
-    if( seconds>9_s && seconds<12_s)
+    /*if( seconds>9_s && seconds<12_s)
     {        
             std::cout << "DRIVING "<< std::endl;
         if(position<-1.130)
