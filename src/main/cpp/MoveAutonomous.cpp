@@ -65,7 +65,7 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
         autoShooterTimer.Start();
     }
     shootAndIntake.ShootAndIntakeFunctions(autoShooterTimer);
-
+/*
 //intake wheels
     if(seconds>COLLECT_TIME_START && seconds<COLLECT_TIME_END)
     {
@@ -118,6 +118,7 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
         driveTrain.StopAllModules();        
         std::cout << "STOP "<< std::endl;
     }
+*/
 }
 
 
