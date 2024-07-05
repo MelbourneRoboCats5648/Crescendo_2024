@@ -20,8 +20,8 @@ const auto TOL = 20_ms;
 const auto SHOOT_TIME_1 = 1_s; //we shoot at 1 second
 const auto DRIVE_TIME_START_1 = 2_s; //drive forward at 2 seconds
 const auto DRIVE_TIME_END_1 = 3_s;
-const auto ARM_OUT_START = 2_s;//arm extends alongsixe drive at 2 seconds
-const auto ARM_OUT_TIME_END = 4_s;
+const auto ARM_OUT_START = 2_s;//arm extends alongside drive at 2 seconds
+const auto ARM_OUT_TIME_END = 3_s;
 const auto COLLECT_TIME_START = 2.5_s;//wheels start spinning at 2.5
 const auto COLLECT_TIME_END = 5_s; //collecting finishes
 const auto ARM_IN_TIME_START = 5_s; //start moving backwards
@@ -78,12 +78,12 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
 //Intake arm extending/retracting
     if(seconds>ARM_OUT_START && seconds<ARM_OUT_TIME_END)
     {
-        shootAndIntake.m_intake.motorIntakeArm.Set(intakeArmExtendSpeed);
+        shootAndIntake.m_intake.motorIntakeArm.Set(-0.3);
     }
 
     else if(seconds>ARM_IN_TIME_START && seconds<ARM_IN_TIME_END)
     {
-        shootAndIntake.m_intake.motorIntakeArm.Set(intakeArmRetractSpeed);
+        shootAndIntake.m_intake.motorIntakeArm.Set(0.3);
     }
     else 
     {
