@@ -102,7 +102,15 @@ void Robot::TeleopPeriodic() {
   }
    m_shootAndIntake.ShootAndIntakeFunctions(shooterTimer);
 
-  MoveTeleop(m_driveTrain, m_driveJoyStick, m_driveTrain.m_gyro);
+  if (m_xbox.GetRightTriggerAxis())
+  {
+    IntakingButton(m_shootAndIntake, m_driveTrain);
+  }
+  else 
+  {
+      MoveTeleop(m_driveTrain, m_driveJoyStick, m_driveTrain.m_gyro);
+  }
+
   if (m_driveJoyStick.GetRawButtonPressed(JOYSTICK_BUTTON_11) == true)
   {
     m_driveTrain.ResetGyro();
