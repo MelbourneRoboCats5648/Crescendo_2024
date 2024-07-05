@@ -65,6 +65,10 @@ void Robot::AutonomousInit() {
     // Default Auto goes here
     AutoInit(m_driveTrain);
   }
+  m_driveTrain.InitialiseAllModules();
+  m_driveTrain.ResetGyro();
+  m_driveTrain.StopAllModules();
+
 }
 
 void Robot::AutonomousPeriodic() {
