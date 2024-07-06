@@ -3,6 +3,9 @@
 #include "frc/DriverStation.h"
 #include <iostream>
 #include "IntakingButton.h"
+#include <frc/filter/SlewRateLimiter.h>
+
+ #include "frc/geometry/Rotation2d.h"
 
 /**The Autonomous Timeline :)))))
  * Shooter wheels always running
@@ -36,6 +39,8 @@ const auto SHOOT_TIME_2 = 7_s; //shoot
 const auto DRIVE_TIME_START_3 = 9_s;
 const auto DRIVE_TIME_END_3 = 11_s;
 
+static frc::SlewRateLimiter<units::meters_per_second> autoSpeedLimiter{2_mps / 1_s};
+
 
 void AutoInit(DriveTrain& driveTrain)
 //timer
@@ -44,6 +49,7 @@ void AutoInit(DriveTrain& driveTrain)
     autoTimer.Start();
     frc::DriverStation::GetAlliance();
     driveTrain.SetPositionToZeroDistance();
+    driveTrain.m_gyro.Reset();
 }
  
 
@@ -96,7 +102,21 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
     //double position = driveTrain.GetPositionDistance();
     if(seconds>DRIVE_TIME_START_3 && seconds<DRIVE_TIME_END_3)
     {
-        IntakingButton(shootAndIntake, driveTrain, 0.7_mps);
+       // IntakingButton(shootAndIntake, driveTrain, 0.7_mps);
+        // limit rate to 2mps per second
+        
+
+        units::angle::degree_t robotAngle = driveTrain.m_gyro.GetAngle();
+
+        units::meters_per_second_t desiredSpeed = autoSpeedLimiter.Calculate(0.7_mps);
+
+        frc::ChassisSpeeds autoSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(
+            units::meters_per_second_t{desiredSpeed}, 
+            units::meters_per_second_t{0}, 
+            units::radians_per_second_t{0}, 
+            frc::Rotation2d{robotAngle});
+    // command the drive train to move based on the the required field oriented speed
+    driveTrain.SetAllModules(autoSpeed);
     }
 /*
     else if(seconds>DRIVE_TIME_START_2 && seconds<DRIVE_TIME_END_2)
