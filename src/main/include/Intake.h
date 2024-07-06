@@ -14,8 +14,8 @@ const double speakerIntakeWheelOutSpeed = -1.0;
 
 
 //PWM Ports
-const int motorIntakeArmPort = 2;
-const int motorIntakeWheelPort = 3;
+const int motorIntakeArmPort = 3;
+const int motorIntakeWheelPort = 2;
 
 /** Intake encoder
 const int aChannel = 0; 
