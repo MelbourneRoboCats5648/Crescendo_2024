@@ -5,4 +5,5 @@
 
 
 void IntakingButton(ShootAndIntake& shootAndIntake, 
-                    DriveTrain& driveTrain);
+                    DriveTrain& driveTrain,
+                    units::meters_per_second_t desiredSpeed);
