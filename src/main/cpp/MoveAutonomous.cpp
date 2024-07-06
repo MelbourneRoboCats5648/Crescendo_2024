@@ -22,7 +22,7 @@ const auto DRIVE_TIME_START_1 = 2_s; //drive forward at 2 seconds
 const auto ARM_OUT_START = 2_s;//arm extends alongside drive at 2 seconds
 const auto COLLECT_TIME_START = 2.5_s;//wheels start spinning at 2.5
 
-const auto DRIVE_TIME_END_1 = 3_s;
+const auto DRIVE_TIME_END_1 = 4_s;
 const auto ARM_OUT_TIME_END = 3_s;
 
 const auto COLLECT_TIME_END = 5_s; //collecting finishes
@@ -44,7 +44,7 @@ void AutoInit(DriveTrain& driveTrain)
     frc::DriverStation::GetAlliance();
     driveTrain.SetPositionToZeroDistance();
 }
-
+ 
 
 // Do our autonomous, called from AutoPeriodic
 void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
@@ -91,15 +91,16 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
         shootAndIntake.m_intake.motorIntakeArm.Set(0);
     }
 
-
+*/
 //swerve drive
-    double position = driveTrain.GetPositionDistance();
-    if(seconds>DRIVE_TIME_START_1 && seconds<DRIVE_TIME_END_1 && position<1.130)
-    {        
-        driveTrain.SetAllModules(speeds);
-         std::cout << "driveTrainPosition " << position << std::endl;
-    }
+    //double position = driveTrain.GetPositionDistance();
+    if(seconds>DRIVE_TIME_START_3 && seconds<DRIVE_TIME_END_3)
+    {
+        frc::ChassisSpeeds speed2{0.7_mps, 0.0_mps, units::radians_per_second_t(0)};
 
+        driveTrain.SetAllModules(speed2);
+    }
+/*
     else if(seconds>DRIVE_TIME_START_2 && seconds<DRIVE_TIME_END_2)
     {      
         driveTrain.SetAllModules(-speeds);
@@ -112,13 +113,13 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
         driveTrain.SetAllModules(speeds);
         std::cout << "driveTrainPosition " << position << std::endl;
     }
-
-    else 
+*/
+    else
     {
-        driveTrain.StopAllModules();        
+        driveTrain.StopAllModules();
         std::cout << "STOP "<< std::endl;
     }
-*/
+
 }
 
 
