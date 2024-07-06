@@ -2,6 +2,7 @@
 #include <frc/Timer.h>
 #include "frc/DriverStation.h"
 #include <iostream>
+#include "IntakingButton.h"
 
 /**The Autonomous Timeline :)))))
  * Shooter wheels always running
@@ -49,10 +50,9 @@ void AutoInit(DriveTrain& driveTrain)
 // Do our autonomous, called from AutoPeriodic
 void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
 {
-    frc::ChassisSpeeds speeds{3.0_mps, 0.0_mps, units::radians_per_second_t(0)};
+    //frc::ChassisSpeeds speeds{3.0_mps, 0.0_mps, units::radians_per_second_t(0)};
 
     auto seconds = autoTimer.Get();
-    // shooter always on
 
     if( (seconds > SHOOT_TIME_1) && (seconds < SHOOT_TIME_1 + TOL))
     {
@@ -96,9 +96,7 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
     //double position = driveTrain.GetPositionDistance();
     if(seconds>DRIVE_TIME_START_3 && seconds<DRIVE_TIME_END_3)
     {
-        frc::ChassisSpeeds speed2{0.7_mps, 0.0_mps, units::radians_per_second_t(0)};
-
-        driveTrain.SetAllModules(speed2);
+        IntakingButton(shootAndIntake, driveTrain, 0.7_mps);
     }
 /*
     else if(seconds>DRIVE_TIME_START_2 && seconds<DRIVE_TIME_END_2)
