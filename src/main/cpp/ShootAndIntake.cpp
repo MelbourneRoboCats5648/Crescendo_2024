@@ -1,8 +1,8 @@
 #include "ShootAndIntake.h"
 
 // TODO - add consts for timings
-const auto SHOOT_DURATION = 1_s;
-const auto INTAKE_START = 0.4_s;
+const auto SHOOT_DURATION = 1.3_s;
+const auto INTAKE_START = 0.7_s;
 
 void ShootAndIntake::ShootAndIntakeFunctions(frc::Timer& shooterTimer)
 {
