@@ -60,9 +60,10 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
 
     auto seconds = autoTimer.Get();
 
-    units::angle::degree_t robotAngle = driveTrain.m_gyro.GetAngle()+units::angle::degree_t(30);
+    units::angle::degree_t robotAngle = driveTrain.m_gyro.GetAngle();
 
-    units::meters_per_second_t desiredSpeed = autoSpeedLimiter.Calculate(0.7_mps);
+    units::meters_per_second_t desiredSpeed = autoSpeedLimiter.Calculate(0.5_mps);
+
 
     if( (seconds > SHOOT_TIME_1) && (seconds < SHOOT_TIME_1 + TOL))
     {
@@ -105,7 +106,7 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
 
 //swerve drive
     //double position = driveTrain.GetPositionDistance();
-    if(seconds>DRIVE_TIME_START_1 && seconds<DRIVE_TIME_END_1)
+    if(seconds>DRIVE_TIME_START_3 && seconds<DRIVE_TIME_END_3)
     {
        // IntakingButton(shootAndIntake, driveTrain, 0.7_mps);
         // limit rate to 2mps per second
