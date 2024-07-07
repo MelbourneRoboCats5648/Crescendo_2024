@@ -21,7 +21,7 @@ frc::Timer autoTimer{};
 frc::Timer autoShooterTimer{};
 
 const auto TOL = 20_ms;
-const auto SHOOT_TIME_1 = 1_s; //we shoot at 1 second
+const auto SHOOT_TIME_1 = 3_s; //we shoot at 1 second
 const auto DRIVE_TIME_START_1 = 2_s; //drive forward at 2 seconds
 const auto ARM_OUT_START = 2_s;//arm extends alongside drive at 2 seconds
 const auto COLLECT_TIME_START = 2.5_s;//wheels start spinning at 2.5
@@ -36,8 +36,8 @@ const auto ARM_IN_TIME_END = 6.5_s;
 const auto DRIVE_TIME_END_2 = 6_s;
 
 const auto SHOOT_TIME_2 = 7_s; //shoot
-const auto DRIVE_TIME_START_3 = 9_s;
-const auto DRIVE_TIME_END_3 = 11_s;
+const auto DRIVE_TIME_START_3 = 13_s;
+const auto DRIVE_TIME_END_3 = 14.5_s;
 
 static frc::SlewRateLimiter<units::meters_per_second> autoSpeedLimiter{2_mps / 1_s};
 
@@ -62,7 +62,7 @@ void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
 
     units::angle::degree_t robotAngle = driveTrain.m_gyro.GetAngle();
 
-    units::meters_per_second_t desiredSpeed = autoSpeedLimiter.Calculate(0.5_mps);
+    units::meters_per_second_t desiredSpeed = autoSpeedLimiter.Calculate(1.0_mps);
 
 
     if( (seconds > SHOOT_TIME_1) && (seconds < SHOOT_TIME_1 + TOL))
