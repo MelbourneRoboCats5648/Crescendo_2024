@@ -26,10 +26,10 @@ const int FRONT_RIGHT_DIRECTION_ENCODER_ID = 10;
 const int BACK_LEFT_DIRECTION_ENCODER_ID = 12;
 const int BACK_RIGHT_DIRECTION_ENCODER_ID = 11;
 
-const double FRONT_LEFT_MAG_OFFSET = 0.2939453125;
-const double FRONT_RIGHT_MAG_OFFSET = 0.346435546875;
-const double BACK_LEFT_MAG_OFFSET = 0.06201171875;
-const double BACK_RIGHT_MAG_OFFSET = 0.012451171875; // this mag offset has been set by the phoenix tuner set the new offsets
+const double FRONT_LEFT_MAG_OFFSET = 0.303955;
+const double FRONT_RIGHT_MAG_OFFSET = 0.346436;
+const double BACK_LEFT_MAG_OFFSET = 0.064697;
+const double BACK_RIGHT_MAG_OFFSET = 0.015381; // this mag offset has been set by the phoenix tuner set the new offsets
 // set the offsets by using pheonix tuner
 
 // Locations for the swerve drive modules relative to the robot center.

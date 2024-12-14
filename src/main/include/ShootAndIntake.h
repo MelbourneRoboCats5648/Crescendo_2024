@@ -16,7 +16,7 @@ class ShootAndIntake{
         {     
         }
     public:
-        void ShootAndIntakeFunctions(frc::XboxController& xbox);
+        void ShootAndIntakeFunctions(frc::Timer& shooterTimer);
 
     public:
         Shooter m_shooter;

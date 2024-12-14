@@ -9,8 +9,8 @@
 //const double L2GearRatio(6.75/1);
 //const double L3GearRatio(6.12/1);
 //const units::meters_per_second_t maxVelocity{((falcon500RPM/L1GearRatio)/60_s) * wheelCircumference}; // fixme - Limit this to half??
-const double chosenMaxVelocity{8.0};
-const double chosenRotationSpeed{M_PI*2};
+const double chosenMaxVelocity{2.0};
+const double chosenRotationSpeed{M_PI*0.5};
 
  //for smoother ride
 static frc::SlewRateLimiter<units::scalar> xLimiter{2 / 1_s};
@@ -43,7 +43,7 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     //assuming joystick twist is one to negative one*/
 
     //double rotationSpeed = (-1.0*DeadBand(joystick.GetTwist(), 0.5) * chosenRotationSpeed);
-    double rotationSpeed = rotLimiter.Calculate(-1.0*DeadBand(joystick.GetTwist(), 0.1) * chosenRotationSpeed);
+    double rotationSpeed = rotLimiter.Calculate(-1.0*DeadBand(joystick.GetTwist(), 0.6) * chosenRotationSpeed);
     
     std::cout << "xSpeed " << xSpeed << " ySpeed " << ySpeed << " rotation Speed " << rotationSpeed << std::endl;
 

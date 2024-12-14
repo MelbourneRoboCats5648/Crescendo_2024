@@ -14,10 +14,10 @@ using namespace ctre::phoenix6::hardware;
 
 //Module constants defining
  static constexpr auto kModuleMaxAngularVelocity =
-      std::numbers::pi * 1_rad_per_s;  // radians per second
+      std::numbers::pi * 4_rad_per_s;  // radians per second
 
  static constexpr auto kModuleMaxAngularAcceleration =
-    std::numbers::pi * 2_rad_per_s / 1_s;  // radians per second^2
+    std::numbers::pi * 8_rad_per_s / 1_s;  // radians per second^2
 
 
 class DriveModule{
@@ -29,7 +29,7 @@ public:
         m_magOffset(magOffset),
         m_name(name),
         m_turningPIDController{
-           1,
+           6,
            0.0,
            0.0,
           {kModuleMaxAngularVelocity, kModuleMaxAngularAcceleration}}

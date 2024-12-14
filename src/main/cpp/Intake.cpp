@@ -40,7 +40,7 @@ void Intake::DoIntake(frc::XboxController& xbox)
     // josh help how to fix
     if (xbox.GetRightTriggerAxis())
     {
-    motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
+    //motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
     }
 
     else if (xbox.GetRightBumperPressed())

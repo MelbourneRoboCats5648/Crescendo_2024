@@ -1,8 +1,8 @@
 #include "CLimb.h"
 
 // Speeds
-const double climbUpSpeed = 0.25;
-const double climbDownSpeed = -0.25;
+const double climbUpSpeed = 1.0; //was 0.25
+const double climbDownSpeed = -1.0;
 
 
 // Joystick buttons - TODO Check

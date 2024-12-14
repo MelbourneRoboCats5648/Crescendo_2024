@@ -11,6 +11,7 @@
 #include "DriveTrain.h"
 #include "Climb.h"
 #include "ShootAndIntake.h"
+#include "IntakingButton.h"
 
 #include "NewAuto.h"
 
