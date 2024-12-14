@@ -13,17 +13,19 @@
 #include <frc/geometry/Rotation2d.h>
 #include <frc/kinematics/ChassisSpeeds.h>
 
+enum AutoState
+{
+    DEFAULT,
+    STOP,
+    MOVE_FORWARD,
+    RUN_SHOOTER,
+    MOVE_BACKWARD,
+    FINISHED
+};
+
 class NewAuto {
     private:
-        enum State
-        {
-            DoNothing,
-            MoveForward,
-            RunShooter,
-            MoveBackward,
-            Finished
-        };
-        State m_state = DoNothing;
+        AutoState m_state = AutoState::DEFAULT;
         frc::Timer m_AutoTimer = frc::Timer();
         void ResetTimer();
     
