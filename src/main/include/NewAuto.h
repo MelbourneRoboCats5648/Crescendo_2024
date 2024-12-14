@@ -32,4 +32,5 @@ class NewAuto {
     public:
         void AutoInit(DriveTrain& driveTrain);
         void Run(DriveTrain& driveTrain, ShootAndIntake& ShootAndIntake);
+        void StopRobot(DriveTrain& driveTrain, ShootAndIntake& ShootAndIntake);
 };
