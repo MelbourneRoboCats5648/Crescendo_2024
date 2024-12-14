@@ -39,6 +39,20 @@ void NewAuto::Run(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
             else
             {
                 StopRobot(driveTrain, shootAndIntake);
+                m_state = AutoState::SUCK_INTAKE; 
+                RestartTimer();
+            }
+            break;
+        
+        case AutoState::SUCK_INTAKE: //should be after EXTEND_INTAKE
+            if(timeSeconds <=2_s)
+            {
+                shootAndIntake.m_intake.motorIntakeWheel.Set(0.7);
+                std::cout << "suck intake" << std::endl;
+            }
+            else
+            {
+                StopRobot(driveTrain, shootAndIntake);
                 m_state = AutoState::RUN_SHOOTER;
                 RestartTimer();
             }

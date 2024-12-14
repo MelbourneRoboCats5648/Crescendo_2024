@@ -18,6 +18,7 @@ enum AutoState
     DEFAULT,
     STOP,
     MOVE_FORWARD,
+    SUCK_INTAKE, 
     RUN_SHOOTER,
     MOVE_BACKWARD,
     FINISHED
