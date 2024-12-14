@@ -43,7 +43,20 @@ void NewAuto::Run(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
                 RestartTimer();
             }
             break;
-
+//retract intake; Babette & Aditi 14/12/2024
+        case AutoState::RETRACT_INTAKE: 
+            if (timeSeconds <= 2_s) 
+            {
+                shootAndIntake.m_intake.motorIntakeArm.Set(0.4);
+            }
+            else
+            {
+                StopRobot(driveTrain, shootAndIntake);
+                m_state = AutoState::RUN_SHOOTER;
+                RestartTimer();
+            }
+            break;
+//
         case AutoState::RUN_SHOOTER:
             if (timeSeconds <= 5_s)
             {
