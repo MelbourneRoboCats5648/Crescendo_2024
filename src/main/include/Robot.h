@@ -12,6 +12,8 @@
 #include "Climb.h"
 #include "ShootAndIntake.h"
 
+#include "NewAuto.h"
+
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
 
@@ -39,6 +41,8 @@ class Robot : public frc::TimedRobot {
     const std::string kAutoNameDefault = "Default";
     const std::string kAutoNameCustom = "My Auto";
     std::string m_autoSelected;
+
+    NewAuto m_newAuto = NewAuto();
 
   public:
     ShootAndIntake m_shootAndIntake;

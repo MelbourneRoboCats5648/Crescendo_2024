@@ -61,7 +61,7 @@ void Robot::AutonomousInit() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    AutoInit(m_driveTrain);
+    m_newAuto.AutoInit(m_driveTrain);
   }
 }
 
@@ -70,7 +70,7 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    AutoYay(m_driveTrain, m_shootAndIntake);
+    m_newAuto.AutoYay(m_driveTrain, m_shootAndIntake);
 
   
   }
