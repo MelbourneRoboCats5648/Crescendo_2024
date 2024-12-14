@@ -3,7 +3,7 @@
 #include "frc/DriverStation.h"
 #include <iostream>
 
-void NewAuto::ResetTimer()
+void NewAuto::RestartTimer()
 {
     m_AutoTimer.Reset();
     m_AutoTimer.Start();
@@ -11,18 +11,22 @@ void NewAuto::ResetTimer()
 
 void NewAuto::AutoInit(DriveTrain& driveTrain)
 {
-    ResetTimer();
     frc::DriverStation::GetAlliance();
-    driveTrain.SetPositionToZeroDistance();
-
-    m_state = AutoState::MOVE_FORWARD;
+    m_state = AutoState::DEFAULT;
 }
 
-void NewAuto::AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
+void NewAuto::Run(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
 {
     units::time::second_t seconds = m_AutoTimer.Get();
     switch(m_state)
     {
+        case AutoState::DEFAULT:
+            driveTrain.SetPositionToZeroDistance();
+            // Transition to first state
+            m_state = AutoState::MOVE_FORWARD;
+            RestartTimer();
+            break;
+
         case AutoState::MOVE_FORWARD:
             if (seconds <= 2_s)
             {
@@ -34,7 +38,7 @@ void NewAuto::AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
                 driveTrain.SetAllModules(frc::ChassisSpeeds{0.0_mps, 0.0_mps, units::radians_per_second_t(0)});
                 
                 m_state = AutoState::RUN_SHOOTER;
-                ResetTimer();
+                RestartTimer();
             }
             break;
 
@@ -50,10 +54,10 @@ void NewAuto::AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
                 shootAndIntake.m_shooter.motorShooterLeft.Set(0.0);
                 shootAndIntake.m_shooter.motorShooterRight.Set(0.0);
                 m_state = AutoState::MOVE_BACKWARD;
-                ResetTimer();
+                RestartTimer();
             }
             break;
-            
+
         case AutoState::MOVE_BACKWARD:
             if (seconds <= 2_s)
             {
@@ -64,7 +68,7 @@ void NewAuto::AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
             {
                 driveTrain.SetAllModules(frc::ChassisSpeeds{0.0_mps, 0.0_mps, units::radians_per_second_t(0)});
                 m_state = AutoState::FINISHED;
-                ResetTimer();
+                RestartTimer();
             }
             break;
 

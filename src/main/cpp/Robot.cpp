@@ -76,7 +76,7 @@ void Robot::AutonomousPeriodic() {
     // Custom Auto goes here
   } else {
     // Default Auto goes here
-    m_newAuto.AutoYay(m_driveTrain, m_shootAndIntake);
+    m_newAuto.Run(m_driveTrain, m_shootAndIntake);
 
   
   }

@@ -27,9 +27,9 @@ class NewAuto {
     private:
         AutoState m_state = AutoState::DEFAULT;
         frc::Timer m_AutoTimer = frc::Timer();
-        void ResetTimer();
+        void RestartTimer();
     
     public:
         void AutoInit(DriveTrain& driveTrain);
-        void AutoYay(DriveTrain& driveTrain, ShootAndIntake& ShootAndIntake);
+        void Run(DriveTrain& driveTrain, ShootAndIntake& ShootAndIntake);
 };
