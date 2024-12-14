@@ -44,6 +44,20 @@ void NewAuto::Run(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
             }
             break;
 
+        case AutoState::EXTEND_INTAKE:
+            if (timeSeconds <= 3_s)
+            {
+                shootAndIntake.m_intake.motorIntakeArm.Set(-0.4);
+                std::cout << "extending intake" << std::endl;
+            }
+            else
+            {
+                StopRobot(driveTrain, shootAndIntake);
+                m_state = AutoState::RUN_SHOOTER;
+                RestartTimer();
+            }
+            break;
+
         case AutoState::RUN_SHOOTER:
             if (timeSeconds <= 5_s)
             {

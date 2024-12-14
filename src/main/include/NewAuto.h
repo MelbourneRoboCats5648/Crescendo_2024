@@ -16,8 +16,8 @@
 enum AutoState
 {
     DEFAULT,
-    STOP,
     MOVE_FORWARD,
+    EXTEND_INTAKE,
     RUN_SHOOTER,
     MOVE_BACKWARD,
     FINISHED
