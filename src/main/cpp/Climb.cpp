@@ -1,4 +1,4 @@
-#include "CLimb.h"
+#include "Climb.h"
 
 // Speeds
 const double climbUpSpeed = 1.0; //was 0.25

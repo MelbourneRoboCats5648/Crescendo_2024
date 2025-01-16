@@ -22,7 +22,7 @@ using namespace ctre::phoenix6::hardware;
 
 class DriveModule{
 public:
-    DriveModule(int speedMotorID, int directionMotorID, int directionEncoderID, double magOffset, std::string name) :
+    DriveModule(int speedMotorID, int directionMotorID, int directionEncoderID, units::angle::turn_t magOffset, std::string name) :
         m_speedMotor(speedMotorID, "rio"),
         m_directionMotor(directionMotorID, "rio"),
         m_directionEncoder(directionEncoderID, "rio"),
@@ -48,7 +48,7 @@ public:
     TalonFX m_speedMotor;
     TalonFX m_directionMotor;
     CANcoder m_directionEncoder;
-    double m_magOffset;
+    units::angle::turn_t m_magOffset;
     std::string m_name; 
     frc::ProfiledPIDController<units::radians> m_turningPIDController;
     //const units::meter_t WHEEL_RADIUS = 0.0508_m;

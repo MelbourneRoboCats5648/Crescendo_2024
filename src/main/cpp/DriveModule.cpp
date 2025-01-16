@@ -14,6 +14,7 @@ void DriveModule::Stop()
 
 void DriveModule::Initialise()
 {
+  
     // Wait for at most 250ms for a CAN position update
     // From:
     // https://www.chiefdelphi.com/t/converting-c-swerve-code-from-phoenix-5-to-phoenix-6-not-pro/450050/2
@@ -21,7 +22,7 @@ void DriveModule::Initialise()
     
     // Config CANCoder   
     CANcoderConfiguration cancoderConfig;
-    cancoderConfig.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue::Signed_PlusMinusHalf;
+    cancoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.5_tr;
     cancoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue::CounterClockwise_Positive;
     cancoderConfig.MagnetSensor.MagnetOffset = m_magOffset;
     m_directionEncoder.GetConfigurator().Apply(cancoderConfig);
@@ -37,9 +38,9 @@ void DriveModule::Initialise()
     speedMotorConfig.Slot0.kD = 0.0;
     speedMotorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
     speedMotorConfig.Slot0.kV = 0.1;
-    speedMotorConfig.CurrentLimits.SupplyCurrentLimit = 50;      // Amps
-    speedMotorConfig.CurrentLimits.SupplyCurrentThreshold = 60;  // Amps
-    speedMotorConfig.CurrentLimits.SupplyTimeThreshold = 0.1;    // Seconds
+    speedMotorConfig.CurrentLimits.SupplyCurrentLimit = 50_A;      // Amps
+    speedMotorConfig.CurrentLimits.SupplyCurrentLowerLimit = 60_A;  // Amps
+    speedMotorConfig.CurrentLimits.SupplyCurrentLowerTime = 0.1_s;    // Seconds
     speedMotorConfig.MotorOutput.Inverted = true;  // +V should rotate the motor counter-clockwise
     speedMotorConfig.MotorOutput.NeutralMode = NeutralModeValue::Brake;
     m_speedMotor.GetConfigurator().Apply(speedMotorConfig);
@@ -57,6 +58,7 @@ void DriveModule::Initialise()
 }
 
 void DriveModule::SetModule(frc::SwerveModuleState state) {
+  // std::cout << "directionEncoder: " << m_directionEncoder.GetAbsolutePosition().GetValueAsDouble() << std::endl;
   // encoder range -0.5 +0.5,  GetValue returns rotation
   // encoder current angle is -pi to +pi
   units::angle::radian_t encoderCurrentAngleRadians = units::angle::radian_t{m_directionEncoder.GetAbsolutePosition().GetValueAsDouble()*2*M_PI};
@@ -85,14 +87,14 @@ void DriveModule::SetModule(frc::SwerveModuleState state) {
   //double normalisedAngle = error / units::angle::radian_t(10*M_PI);
   //driveModule.m_directionMotor.Set(normalisedAngle);
 
-  /*std::cout << "State speed " << double{state.speed} << std::endl;
-  std::cout << "desiredANGLE " << double{optimizedState.angle.Radians()} << std::endl;
-  std::cout << "State angle " << double{state.angle.Radians()} << std::endl;
-  std::cout << "Turn output " << double{-1.0 * turnOutput} << std::endl << std::endl;*/
+  // std::cout << "State speed " << double{state.speed} << std::endl;
+  // std::cout << "desiredANGLE " << double{optimizedState.angle.Radians()} << std::endl;
+  // std::cout << "State angle " << double{state.angle.Radians()} << std::endl;
+  // std::cout << "Turn output " << double{-1.0 * turnOutput} << std::endl << std::endl;
     
   
   // alternative to using negative voltage is to invert the motor with motorConfig.MotorOutput.Inverted = true; when setting up the configs.
-  m_directionMotor.SetVoltage(units::voltage::volt_t{-1.0 * turnOutput});
+  m_directionMotor.SetVoltage(units::voltage::volt_t{1.0 * turnOutput}); // FIX: direction motors were going in the wrong way, possibly due to 2024->2025 API changes - we need to invert the voltage
 }
 
 double DriveModule::GetModulePositionDistance()
