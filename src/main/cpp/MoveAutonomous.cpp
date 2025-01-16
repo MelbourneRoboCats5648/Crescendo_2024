@@ -2,6 +2,10 @@
 #include <frc/Timer.h>
 #include "frc/DriverStation.h"
 #include <iostream>
+#include "IntakingButton.h"
+#include <frc/filter/SlewRateLimiter.h>
+
+ #include "frc/geometry/Rotation2d.h"
 
 /**The Autonomous Timeline :)))))
  * Shooter wheels always running
@@ -14,6 +18,28 @@
 **/
 
 frc::Timer autoTimer{};
+frc::Timer autoShooterTimer{};
+
+const auto TOL = 20_ms;
+const auto SHOOT_TIME_1 = 3_s; //we shoot at 1 second
+const auto DRIVE_TIME_START_1 = 2_s; //drive forward at 2 seconds
+const auto ARM_OUT_START = 2_s;//arm extends alongside drive at 2 seconds
+const auto COLLECT_TIME_START = 2.5_s;//wheels start spinning at 2.5
+
+const auto DRIVE_TIME_END_1 = 4_s;
+const auto ARM_OUT_TIME_END = 3_s;
+
+const auto COLLECT_TIME_END = 5_s; //collecting finishes
+const auto ARM_IN_TIME_START = 5_s; //start moving backwards
+const auto DRIVE_TIME_START_2 = 5_s;
+const auto ARM_IN_TIME_END = 6.5_s;
+const auto DRIVE_TIME_END_2 = 6_s;
+
+const auto SHOOT_TIME_2 = 7_s; //shoot
+const auto DRIVE_TIME_START_3 = 13_s;
+const auto DRIVE_TIME_END_3 = 14.5_s;
+
+static frc::SlewRateLimiter<units::meters_per_second> autoSpeedLimiter{2_mps / 1_s};
 
 
 void AutoInit(DriveTrain& driveTrain)
@@ -21,101 +47,110 @@ void AutoInit(DriveTrain& driveTrain)
 {
     autoTimer.Reset();
     autoTimer.Start();
-    frc::DriverStation::GetAlliance();    
+    frc::DriverStation::GetAlliance();
     driveTrain.SetPositionToZeroDistance();
+    driveTrain.m_gyro.Reset();
 }
-
+ 
 
 // Do our autonomous, called from AutoPeriodic
 void AutoYay(DriveTrain& driveTrain, ShootAndIntake& shootAndIntake)
-
 {
-    frc::ChassisSpeeds speeds{3.0_mps, 0.0_mps,
-     units::radians_per_second_t(0)};
+    //frc::ChassisSpeeds speeds{3.0_mps, 0.0_mps, units::radians_per_second_t(0)};
 
     auto seconds = autoTimer.Get();
-    // shooter always on
 
-    if(seconds<15_s&&seconds>0_s)
+    units::angle::degree_t robotAngle = driveTrain.m_gyro.GetAngle();
+
+    units::meters_per_second_t desiredSpeed = autoSpeedLimiter.Calculate(1.0_mps);
+
+
+    if( (seconds > SHOOT_TIME_1) && (seconds < SHOOT_TIME_1 + TOL))
     {
-        shootAndIntake.m_shooter.motorShooterLeft.Set(1.0);
-        shootAndIntake.m_shooter.motorShooterRight.Set(-1.0*1.0);
+        autoShooterTimer.Reset();
+        autoShooterTimer.Start();
     }
-    else
+    else if ( (seconds > SHOOT_TIME_2) && (seconds < SHOOT_TIME_2 + TOL))
     {
-        shootAndIntake.m_shooter.motorShooterLeft.Set(0.0);
-        shootAndIntake.m_shooter.motorShooterRight.Set(0.0);
+        autoShooterTimer.Reset();
+        autoShooterTimer.Start();
     }
-    
-//intake wheels
-    if(seconds<6_s&&seconds>4_s){
-        shootAndIntake.m_intake.motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
-    }
-    //else if(seconds<9_s && seconds>7_s){
-       // motorIntakeWheel.Set(intakeWheelInSpeed);
-   // }
-   // else if(seconds<14_s && seconds>12_s){
-       // motorIntakeWheel.Set(speakerIntakeWheelOutSpeed);
-    //}
-    else{
-        shootAndIntake.m_intake.motorIntakeWheel.Set(0);
-    }
+    shootAndIntake.ShootAndIntakeFunctions(autoShooterTimer);
 
-//swerve drive
-    double position = driveTrain.GetPositionDistance();
-    if( seconds>5_s && seconds<10_s)
-    {        
-            std::cout << "DRIVING "<< std::endl;
-        if(position>5.00)
-        {
-            driveTrain.SetAllModules(frc::ChassisSpeeds{0.0_mps, 0.0_mps, units::radians_per_second_t(0)});
-            std::cout << "STOP POSITION REACHED"<< std::endl;
-        }
-        if(seconds>5_s && position<1.130)
-        {
-            driveTrain.SetAllModules(speeds);
-            std::cout << "driveTrainPosition " << position << std::endl;
-        }
-
-    }
-
-//Intake arm extending/retracting
-    /*if(seconds>6_s && seconds<7_s)
+/*//intake wheels
+    if(seconds>COLLECT_TIME_START && seconds<COLLECT_TIME_END)
     {
-        motorIntakeArm.Set(intakeArmExtendSpeed);
+        shootAndIntake.m_intake.motorIntakeWheel.Set(intakeWheelInSpeed);
     }
-
-    else if(seconds>9_s && seconds<10_s)
+    else if (seconds>(SHOOT_TIME_2 + TOL) && seconds < (SHOOT_TIME_2 + 2*TOL))
     {
-        motorIntakeArm.Set(intakeArmRetractSpeed);
+        shootAndIntake.m_intake.motorIntakeWheel.Set(0); //CHECK idk if this might break the shoot thing
+    }     
+
+
+/Intake arm extending/retracting
+    if(seconds>ARM_OUT_START && seconds<ARM_OUT_TIME_END)
+    {
+        shootAndIntake.m_intake.motorIntakeArm.Set(-0.3);
+    }
+    else if(seconds>ARM_IN_TIME_START && seconds<ARM_IN_TIME_END)
+    {
+        shootAndIntake.m_intake.motorIntakeArm.Set(0.3);
     }
     else 
     {
-        motorIntakeArm.Set(0);
+        shootAndIntake.m_intake.motorIntakeArm.Set(0);
     }
 
-    //swerve drive
-    if( seconds>9_s && seconds<12_s)
-    {        
-            std::cout << "DRIVING "<< std::endl;
-        if(position<-1.130)
-        {
-            driveTrain.SetAllModules(frc::ChassisSpeeds{0.0_mps, 0.0_mps, units::radians_per_second_t(0)});
-            std::cout << "STOP POSITION REACHED"<< std::endl;
-        }
-        if(seconds>9_s && position>-1.130)
-        {
-            driveTrain.SetAllModules(-speeds);
-            std::cout << "driveTrainPosition " << position << std::endl;
-        }
+*/
+
+//swerve drive
+    //double position = driveTrain.GetPositionDistance();
+    if(seconds>DRIVE_TIME_START_3 && seconds<DRIVE_TIME_END_3)
+    {
+       // IntakingButton(shootAndIntake, driveTrain, 0.7_mps);
+        // limit rate to 2mps per second
+       
+        frc::ChassisSpeeds autoSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(
+            units::meters_per_second_t{desiredSpeed}, 
+            units::meters_per_second_t{0}, 
+            units::radians_per_second_t{0}, 
+            frc::Rotation2d{robotAngle});
+    // command the drive train to move based on the the required field oriented speed
+    driveTrain.SetAllModules(autoSpeed);
+    }
+/*
+    else if(seconds>DRIVE_TIME_START_2 && seconds<DRIVE_TIME_END_2)
+    {      
+        
+        frc::ChassisSpeeds autoSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(
+            units::meters_per_second_t{-desiredSpeed}, 
+            units::meters_per_second_t{0}, 
+            units::radians_per_second_t{0}, 
+            frc::Rotation2d{robotAngle});
+    // command the drive train to move based on the the required field oriented speed
+    driveTrain.SetAllModules(autoSpeed);
+        
     }
     
-    } else {
-       // driveTrain.StopAllModules();        
-        //    std::cout << "STOP "<< std::endl;
-    //}
-    */
-   
+    else if (seconds>DRIVE_TIME_START_3 && seconds<DRIVE_TIME_END_3)
+    {
+       
+        frc::ChassisSpeeds autoSpeed = frc::ChassisSpeeds::FromFieldRelativeSpeeds(
+            units::meters_per_second_t{desiredSpeed}, 
+            units::meters_per_second_t{0}, 
+            units::radians_per_second_t{0}, 
+            frc::Rotation2d{robotAngle});
+    // command the drive train to move based on the the required field oriented speed
+    driveTrain.SetAllModules(autoSpeed);
+    }
+_*/
+    else
+    {
+        driveTrain.StopAllModules();
+        std::cout << "STOP "<< std::endl;
+    }
+
 }
 
 
