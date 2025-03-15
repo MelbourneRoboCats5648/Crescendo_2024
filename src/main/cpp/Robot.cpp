@@ -109,7 +109,7 @@ void Robot::TeleopPeriodic() {
   }
   else 
   {
-    MoveTeleop(m_driveTrain, m_driveJoyStick, m_driveTrain.m_gyro);
+    MoveTeleop(m_driveTrain, m_driveJoyStick, m_xbox, m_driveTrain.m_gyro);
   }
 
   if (m_driveJoyStick.GetRawButtonPressed(JOYSTICK_BUTTON_11) == true)

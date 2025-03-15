@@ -30,7 +30,7 @@ static frc::SlewRateLimiter<units::scalar> rotLimiter{2 / 1_s};
 // 2) Translate movement into field oriented drive for each module - gyro angle and the physical dimensions of the robot
 // 3) Each module needs to move according to the speed and angle calculated - module motors and the current angle of the wheel
 
-void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_IMU& gyro){
+void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::XboxController& xbox, frc::ADIS16470_IMU& gyro){
 
     // will need to actually convert the double output from joystick to a meters per sec velocity later
     //double xSpeed = (-1.0*DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
@@ -38,13 +38,16 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
     //assuming joystick twist is one to negative one
 
     //* will need to actually convert the double output from joystick to a meters per sec velocity later
-    double xSpeed = xLimiter.Calculate(-1.0*DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
-    double ySpeed = yLimiter.Calculate(-1.0*DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
+    //double xSpeed = xLimiter.Calculate(-1.0*DeadBand(joystick.GetX(),0.1) * chosenMaxVelocity);
+    //double ySpeed = yLimiter.Calculate(-1.0*DeadBand(joystick.GetY(),0.1) * chosenMaxVelocity); // consider inverting
+
+    double xSpeed = xLimiter.Calculate(-1.0*DeadBand(xbox.GetLeftX(),0.1) * chosenMaxVelocity);
+    double ySpeed = yLimiter.Calculate(-1.0*DeadBand(xbox.GetLeftY(),0.1) * chosenMaxVelocity); // consider inverting
     //assuming joystick twist is one to negative one*/
 
     //double rotationSpeed = (-1.0*DeadBand(joystick.GetTwist(), 0.5) * chosenRotationSpeed);
-    double rotationSpeed = rotLimiter.Calculate(-1.0*DeadBand(joystick.GetTwist(), 0.6) * chosenRotationSpeed);
-    
+    //double rotationSpeed = rotLimiter.Calculate(-1.0*DeadBand(joystick.GetTwist(), 0.6) * chosenRotationSpeed);
+    double rotationSpeed = rotLimiter.Calculate(-1.0*DeadBand(xbox.GetRightX(), 0.1) * chosenRotationSpeed);
     std::cout << "xSpeed " << xSpeed << " ySpeed " << ySpeed << " rotation Speed " << rotationSpeed << std::endl;
 
     // May need to limit acceleration with something like this https://github.com/Liam-Stow/flex-commandsInSubsystems/blob/e150c482f54ff3f080e057e53795809a7af17466/src/main/cpp/subsystems/DriveBase.cpp#L108
@@ -56,6 +59,7 @@ void MoveTeleop(DriveTrain& driveTrain, frc::Joystick& joystick, frc::ADIS16470_
 const double THROTTLE_LEVER_ACTIVE = 0.0; // throttle lever 
 bool doChassisCentric = joystick.GetThrottle() < THROTTLE_LEVER_ACTIVE;
 
+doChassisCentric = false;
 if (doChassisCentric)
 {
      frc::ChassisSpeeds chassisSpeed(
